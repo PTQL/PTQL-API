@@ -22,8 +22,8 @@ public class VoluntarioService {
     public List<Voluntario> getAll(){
         return iVoluntarioRepository.findAll();
     }
-    public void saveVoluntario(Voluntario voluntario) {
-        iVoluntarioRepository.save(voluntario);
+    public Voluntario saveVoluntario(Voluntario voluntario) {
+       return iVoluntarioRepository.save(voluntario);
     }
 
 }

@@ -21,8 +21,8 @@ public class ParticipanteService {
     public List<Participante> getAll(){
         return iParticipanteRepository.findAll();
     }
-    public void saveParticipante(Participante participante) {
-        iParticipanteRepository.save(participante);
+    public Participante saveParticipante(Participante participante) {
+        return iParticipanteRepository.save(participante);
     }
 
 }

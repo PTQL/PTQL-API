@@ -23,10 +23,9 @@ public class ActividadService {
 	public List<Actividad> getAll(){
 		return iActividadRepository.findAll();
 	}
-	public void saveActividad(Actividad actividad) {
-		iActividadRepository.save(actividad);
+	public Actividad saveActividad(Actividad actividad) {
+		return iActividadRepository.save(actividad);
 	}
-
 
 
 }

@@ -1,7 +1,4 @@
-package com.sebasgoy.Models;
-
-import java.time.LocalDate;
-import java.time.LocalTime;
+package com.sebasgoy.dto;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

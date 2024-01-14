@@ -1,10 +1,8 @@
-package com.sebasgoy.Service;
+package com.sebasgoy.service;
 
 
-import com.sebasgoy.Models.Participante;
-import com.sebasgoy.Models.Voluntario;
-import com.sebasgoy.Repository.IParticipanteRepository;
-import com.sebasgoy.Repository.IVoluntarioRepository;
+import com.sebasgoy.dto.Voluntario;
+import com.sebasgoy.repository.IVoluntarioRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

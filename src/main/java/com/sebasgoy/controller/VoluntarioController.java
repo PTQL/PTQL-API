@@ -1,10 +1,7 @@
-package com.sebasgoy.Controllers;
+package com.sebasgoy.controller;
 
-import com.sebasgoy.Models.Actividad;
-import com.sebasgoy.Models.Participante;
-import com.sebasgoy.Models.Voluntario;
-import com.sebasgoy.Service.ParticipanteService;
-import com.sebasgoy.Service.VoluntarioService;
+import com.sebasgoy.dto.Voluntario;
+import com.sebasgoy.service.VoluntarioService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

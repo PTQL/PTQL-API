@@ -1,4 +1,4 @@
-package com.sebasgoy.Models;
+package com.sebasgoy.dto;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

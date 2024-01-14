@@ -1,12 +1,12 @@
-package com.sebasgoy.Service;
+package com.sebasgoy.service;
 
 import java.util.List;
 
-import com.sebasgoy.Repository.IActividadRepository;
+import com.sebasgoy.repository.IActividadRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import com.sebasgoy.Models.Actividad;
+import com.sebasgoy.dto.Actividad;
 
 
 /*En un service va la logica de negocio*/

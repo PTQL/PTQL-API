@@ -19,5 +19,8 @@ public class Voluntario {
 	private String Apellido;
 	private String Dni;
 	private String Edad;
+
+
+
 	
 }

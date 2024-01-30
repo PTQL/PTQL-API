@@ -6,6 +6,7 @@ import com.sebasgoy.dto.response.ExcelResponse;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -27,7 +28,7 @@ import java.util.concurrent.RecursiveTask;
 public class ExcelMapper {
 
     public static ExcelResponse LeerExcel(MultipartFile archivoExcel){
-
+    	DataFormatter dataFormatter = new DataFormatter();
         List<Voluntario> listaValidos = new ArrayList<>();
         List<Voluntario> listaInvalidos = new ArrayList<>();
         try {
@@ -49,10 +50,10 @@ public class ExcelMapper {
                 /*Depende de la estructura del Excel*/
                 Voluntario voluntario = new Voluntario();
                 
-                voluntario.setNombre(getCellValueAsString(fila.getCell(0)));
-                voluntario.setApellido(getCellValueAsString(fila.getCell(1)));
-                voluntario.setEdad(getCellValueAsString(fila.getCell(2)));
-                voluntario.setDni(getCellValueAsString(fila.getCell(3)));
+				voluntario.setNombre(dataFormatter.formatCellValue(fila.getCell(0)));
+				voluntario.setApellido(dataFormatter.formatCellValue(fila.getCell(1)));
+				voluntario.setEdad(dataFormatter.formatCellValue(fila.getCell(2)));
+				voluntario.setDni(dataFormatter.formatCellValue(fila.getCell(3)));
 
                 if (ValoresPersonaRegex.isValidVoluntario(voluntario) ){
                     listaValidos.add(voluntario);
@@ -72,22 +73,8 @@ public class ExcelMapper {
                 .build() ;
     }
     
-    private static String getCellValueAsString(Cell cell) {
-        if (cell == null) {
-            return "";
-        }
-        switch (cell.getCellType()) {
-            case STRING:
-                return cell.getStringCellValue();
-            case NUMERIC:
-                // Manejar valores numéricos aquí (por ejemplo, convertirlos a cadena)
-                return String.valueOf(cell.getNumericCellValue());
-            case BOOLEAN:
-                return String.valueOf(cell.getBooleanCellValue());
-            default:
-                return "";
-        }
-    }
+ 
+
     
 
 

@@ -13,10 +13,10 @@ public class Voluntario {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long Id;
-	private String Nombre;
-	private String Apellido;
-	private String Dni;
-	private String Edad;
+	private String nombre;
+	private String apellido;
+	private String dni;
+	private String edad;
 
 	@OneToMany(mappedBy = "voluntario" )
 	private List<Participante> participante;

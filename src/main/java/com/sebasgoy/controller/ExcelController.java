@@ -25,12 +25,15 @@ public class ExcelController {
             // Procesar el archivo Excel según tus necesidades
 			ExcelResponse excelResponse = ExcelMapper.LeerExcel(file);       	        	
         	
-        	model.addAttribute("result",excelResponse.getTotalPersonas());
-        	
+         	model.addAttribute("excelResponse",excelResponse);
+        	System.out.println(excelResponse.getTotalPersonas());
+         	return "dashboard";
+         	
          } catch (Exception e) {
             model.addAttribute("result", "Error processing the Excel file."+ e.toString());
+            return "lectorExcel";
         }
-        return "lectorExcel";
+
     }
 	
 

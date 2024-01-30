@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Dashboard</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+</head>
+<body>
+    <div class="container mt-5">
+ 
+     <h3>Listado de Voluntarios Válidos</h3>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Dni</th>
+            <th>Edad</th>
+
+        </tr>
+        </thead>
+        <tbody>
+             <tr th:each="voluntario, iterStat : ${excelResponse.listVoluntarioValido}">
+                <td th:text="${iterStat.count}"></td>
+                <td th:text="${voluntario.nombre}"></td>
+                <td th:text="${voluntario.apellido}"></td>
+                <td th:text="${voluntario.dni}"></td>
+                <td th:text="${voluntario.edad}"></td>
+
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>Listado de Voluntarios Inválidos</h3>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Dni</th>
+            <th>Edad</th>
+        </tr>
+        </thead>
+        <tbody>
+             <tr th:each="voluntario, iterStat : ${excelResponse.listVoluntarioInvalido}">
+                <td th:text="${iterStat.count}"></td>
+                <td th:text="${voluntario.nombre}"></td>
+                <td th:text="${voluntario.apellido}"></td>
+                <td th:text="${voluntario.dni}"></td>
+                <td th:text="${voluntario.edad}"></td>
+            </tr>
+        </tbody>
+    </table>
+
+	</div>
+
+</body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</html>

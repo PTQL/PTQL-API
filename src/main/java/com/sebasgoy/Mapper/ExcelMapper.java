@@ -3,12 +3,18 @@ package com.sebasgoy.Mapper;
 import Regex.ValoresPersonaRegex;
 import com.sebasgoy.dto.Voluntario;
 import com.sebasgoy.dto.response.ExcelResponse;
+
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -20,13 +26,20 @@ import java.util.concurrent.RecursiveTask;
 @Component
 public class ExcelMapper {
 
-    public static ExcelResponse LeerExcel(FileInputStream archivoExcel){
+    public static ExcelResponse LeerExcel(MultipartFile archivoExcel){
 
-         List<Voluntario> listaValidos = new ArrayList<>();
+        List<Voluntario> listaValidos = new ArrayList<>();
         List<Voluntario> listaInvalidos = new ArrayList<>();
         try {
-            Workbook libro = WorkbookFactory.create(archivoExcel);
-            Sheet hoja =  libro.getSheetAt(0);
+            Workbook libro;
+
+        	if (archivoExcel.getOriginalFilename().endsWith(".xlsx")) {
+                libro = new XSSFWorkbook(archivoExcel.getInputStream());
+            } else if (archivoExcel.getOriginalFilename().endsWith(".xls")) {
+                libro = new HSSFWorkbook(archivoExcel.getInputStream());
+            } else {
+                throw new IllegalArgumentException("El archivo no tiene una extensión de Excel válida.");
+            }            Sheet hoja =  libro.getSheetAt(0);
             Iterator<Row>   filas = hoja.iterator();
 
             filas.next(); // Salta la primera fila (encabezados)
@@ -35,10 +48,11 @@ public class ExcelMapper {
                 Row fila = filas.next();
                 /*Depende de la estructura del Excel*/
                 Voluntario voluntario = new Voluntario();
-                voluntario.setNombre(fila.getCell(0).getStringCellValue());
-                voluntario.setApellido(fila.getCell(1).getStringCellValue());
-                voluntario.setEdad(fila.getCell(2).getStringCellValue());
-                voluntario.setDni(fila.getCell(3).getStringCellValue());
+                
+                voluntario.setNombre(getCellValueAsString(fila.getCell(0)));
+                voluntario.setApellido(getCellValueAsString(fila.getCell(1)));
+                voluntario.setEdad(getCellValueAsString(fila.getCell(2)));
+                voluntario.setDni(getCellValueAsString(fila.getCell(3)));
 
                 if (ValoresPersonaRegex.isValidVoluntario(voluntario) ){
                     listaValidos.add(voluntario);
@@ -54,9 +68,27 @@ public class ExcelMapper {
                 .fecha(LocalDateTime.now())
                 .listVoluntarioInvalido(listaInvalidos)
                 .listVoluntarioValido(listaValidos)
-                .totalPersonas( listaInvalidos.size()+listaInvalidos.size())
+                .totalPersonas( listaValidos.size()+listaInvalidos.size())
                 .build() ;
     }
+    
+    private static String getCellValueAsString(Cell cell) {
+        if (cell == null) {
+            return "";
+        }
+        switch (cell.getCellType()) {
+            case STRING:
+                return cell.getStringCellValue();
+            case NUMERIC:
+                // Manejar valores numéricos aquí (por ejemplo, convertirlos a cadena)
+                return String.valueOf(cell.getNumericCellValue());
+            case BOOLEAN:
+                return String.valueOf(cell.getBooleanCellValue());
+            default:
+                return "";
+        }
+    }
+    
 
 
 }

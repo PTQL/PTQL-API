@@ -1,11 +1,9 @@
 package com.sebasgoy.dto;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
+
+import java.util.List;
 
 @Entity
 @Data
@@ -20,6 +18,8 @@ public class Voluntario {
 	private String Dni;
 	private String Edad;
 
+	@OneToMany(mappedBy = "voluntario" )
+	private List<Participante> participante;
 
 
 	

@@ -19,12 +19,8 @@ import java.util.List;
 public class ExcelResponse {
 
     public LocalDateTime fecha;
-
     public int totalPersonas;
-
     public List<Voluntario> listVoluntarioValido;
-
     public List<Voluntario> listVoluntarioInvalido;
-
 
 }

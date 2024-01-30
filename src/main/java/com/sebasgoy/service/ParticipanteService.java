@@ -13,7 +13,6 @@ import java.util.List;
 public class ParticipanteService {
 
     private IParticipanteRepository iParticipanteRepository;
-
     public Participante findById(Long id){
         return  iParticipanteRepository.findById(id).orElse(new Participante());
     }

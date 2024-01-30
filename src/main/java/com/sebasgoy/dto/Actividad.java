@@ -1,13 +1,13 @@
 package com.sebasgoy.dto;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.time.Duration;
+import java.time.LocalTime;
+import java.util.List;
 
 @Data
 @Entity
@@ -25,6 +25,17 @@ public class Actividad {
 	private String horaIncio;
 	private String horaFin;
 
-	
-	
+	@OneToMany(mappedBy = "actividad" )
+	private List<Participante> participante;
+
+	@ManyToOne
+	@JoinColumn(name = "modulo_id")
+	private Modulo modulo;
+
+	private long obtenerDuracionActividad(){
+		LocalTime  inicio = LocalTime.parse(horaIncio);
+		LocalTime  fin = LocalTime.parse(horaFin);
+		return Duration.between(inicio,fin).toHours();
+	}
+
 }

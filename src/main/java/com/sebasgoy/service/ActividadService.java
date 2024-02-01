@@ -16,12 +16,30 @@ public class ActividadService {
 
 	private final IActividadRepository iActividadRepository;
 
+	public Long UltimoId() {
+		List<Actividad> activos = findActivos();
+		    
+	    if (activos.isEmpty()) {
+	        return 1L;
+	    }
+	     
+	    Actividad ultimoElemento = activos.get(activos.size() - 1);
+	    
+	    return ultimoElemento.getId() + 1;
+	}
+	
+	
 	public Actividad findById(Long id){
 		return  iActividadRepository.findById(id).orElse(new Actividad());
 	}
 
-	public List<Actividad> getAll(){
+	public List<Actividad> findActivos(){
 		return iActividadRepository.findAll();
+	}
+	
+	public List<Actividad> findActivosSinModulo(){
+
+		return iActividadRepository.findByModuloIdIsNull();
 	}
 	public Actividad saveActividad(Actividad actividad) {
 		return iActividadRepository.save(actividad);

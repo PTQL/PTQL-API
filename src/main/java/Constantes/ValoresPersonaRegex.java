@@ -1,4 +1,4 @@
-package Regex;
+package Constantes;
 
 import com.sebasgoy.dto.Voluntario;
 
@@ -16,9 +16,7 @@ public class ValoresPersonaRegex {
 
     public static boolean isValidVoluntario(Voluntario voluntario){
 
-        return voluntario.getNombre().matches(ValoresPersonaRegex.NOMBRE) &&
-                voluntario.getApellido().matches(ValoresPersonaRegex.NOMBRE) &&
-                voluntario.getDni().matches(ValoresPersonaRegex.DNI) &&
+        return  voluntario.getDni().matches(ValoresPersonaRegex.DNI) &&
                 voluntario.getEdad().matches(ValoresPersonaRegex.EDAD);
     }
 

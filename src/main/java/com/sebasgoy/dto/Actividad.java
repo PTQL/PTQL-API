@@ -13,27 +13,34 @@ import java.util.List;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name="tb_actividad")
+@Table(name="actividad")
 public class Actividad {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long Id;
-	private String nombreActivdad;
+	@Column(name = "nombreActividad")
+	private String nombreActividad;
+	@Column(name = "ubicacionActividad")
 	private String ubicacionActividad;
+	@Column(name = "fechaActividad")
 	private String fechaActividad;
-	private String horaIncio;
+	@Column(name = "horaInicio")
+	private String horaInicio;
+	@Column(name = "horaFin")
 	private String horaFin;
-
+	@Column(name = "estado")
+	private int estado = 1;
+	
 	@OneToMany(mappedBy = "actividad" )
 	private List<Participante> participante;
 
 	@ManyToOne
-	@JoinColumn(name = "modulo_id")
+	@JoinColumn(name = "moduloId")
 	private Modulo modulo;
 
-	private long obtenerDuracionActividad(){
-		LocalTime  inicio = LocalTime.parse(horaIncio);
+	public long obtenerDuracionActividad(){
+		LocalTime  inicio = LocalTime.parse(horaInicio);
 		LocalTime  fin = LocalTime.parse(horaFin);
 		return Duration.between(inicio,fin).toHours();
 	}

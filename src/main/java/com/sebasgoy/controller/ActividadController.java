@@ -1,28 +1,25 @@
 package com.sebasgoy.controller;
 
-import java.util.List;
+
 
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 import com.sebasgoy.dto.Actividad;
 import com.sebasgoy.service.ActividadService;
 
+import Constantes.Mensajes;
+
  
-@RestController
-@RequestMapping("/api/actividad")
+@Controller
 @AllArgsConstructor
 public class ActividadController {
 
 	private final ActividadService actividadService;
-	
-	@GetMapping
-	public List<Actividad> getAllActividades(){
-		return actividadService.getAll();
-	}
 
+	
+	/*
 	@PostMapping("/registro")
 	public  ResponseEntity<Actividad> guardarActividad(@RequestBody Actividad actividad) {
 		Actividad response = null;
@@ -32,6 +29,29 @@ public class ActividadController {
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
+	}*/
+	
+	@GetMapping("/generar_actividad")
+	public String cargarCrudActividad(Model model) {
+		model.addAttribute("actividad", new Actividad());
+		return "CRUD_Actividad";
+	}
+	
+	@PostMapping("/guardar_actividad")
+	public String guardar_actividad(@ModelAttribute Actividad actividad,Model model) {
+	
+		try {
+			
+			actividadService.saveActividad(actividad);
+			System.out.println(Mensajes.ACTIVIDAD_OK_REGISTRO);
+			model.addAttribute("mensaje", Mensajes.ACTIVIDAD_OK_REGISTRO);
+		} catch (Exception e) {
+			System.out.println(Mensajes.ACTIVIDAD_ERROR_REGISTRO.concat(e.toString()));
+
+			model.addAttribute("mensaje", Mensajes.ACTIVIDAD_ERROR_REGISTRO.concat(e.toString()) );
+		}
+		
+		return "redirect:/";
 	}
 
 

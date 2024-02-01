@@ -1,8 +1,9 @@
 package com.sebasgoy.Mapper;
 
-import Regex.ValoresPersonaRegex;
 import com.sebasgoy.dto.Voluntario;
 import com.sebasgoy.dto.response.ExcelResponse;
+
+import Constantes.ValoresPersonaRegex;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;

@@ -5,7 +5,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.sebasgoy.Mapper.ExcelMapper;
@@ -24,10 +23,8 @@ public class ExcelController {
         try {
             // Procesar el archivo Excel según tus necesidades
 			ExcelResponse excelResponse = ExcelMapper.LeerExcel(file);       	        	
-        	
          	model.addAttribute("excelResponse",excelResponse);
-        	System.out.println(excelResponse.getTotalPersonas());
-         	return "dashboard";
+          	return "dashboard";
          	
          } catch (Exception e) {
             model.addAttribute("result", "Error processing the Excel file."+ e.toString());

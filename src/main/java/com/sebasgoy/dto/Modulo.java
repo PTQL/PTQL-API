@@ -16,14 +16,17 @@ import java.util.List;
 public class Modulo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long Id;
+    private long id;
 	@Column(name = "nombre")
     private String Nombre;
 	@Column(name = "estado")
-	private int estado = 1;
+	private boolean estado = true;
     
     @OneToMany(mappedBy = "modulo")
     private List<Actividad> actividad;
-
+    
+    
+    
+    
 
 }

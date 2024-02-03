@@ -11,34 +11,40 @@
 <div class="container mt-5">
     <h1>Formulario Actividad</h1>
     <form action="/guardar_actividad" method="post" th:object="${actividad}">
+		
+        <!-- Campo Id de Actividad -->
+        <div class="mb-3">
+            <label for="idActividad" class="form-label">Id de Actividad</label>
+            <input type="text" th:field="${actividad.Id}" class="form-control" id="idActividad" name="idActividad" readonly>
+        </div>
         <!-- Campo Nombre de Actividad -->
         <div class="mb-3">
             <label for="nombreActividad" class="form-label">Nombre de Actividad</label>
-            <input type="text" class="form-control" id="nombreActividad" name="nombreActividad" required>
+            <input type="text" th:field="${actividad.nombreActividad}" class="form-control" id="nombreActividad" name="nombreActividad" required>
         </div>
 
         <!-- Campo Ubicación de Actividad -->
         <div class="mb-3">
             <label for="ubicacionActividad" class="form-label">Ubicación de Actividad</label>
-            <input type="text" class="form-control" id="ubicacionActividad" name="ubicacionActividad" required>
+            <input type="text" th:field="${actividad.ubicacionActividad}" class="form-control" id="ubicacionActividad" name="ubicacionActividad" required>
         </div>
 
         <!-- Campo Fecha de Actividad -->
         <div class="mb-3">
             <label for="fechaActividad" class="form-label">Fecha de Actividad</label>
-            <input type="date" class="form-control" id="fechaActividad" name="fechaActividad" required>
+            <input type="date" th:field="${actividad.fechaActividad}" class="form-control" id="fechaActividad" name="fechaActividad" required>
         </div>
 
         <!-- Campo Hora de Inicio -->
         <div class="mb-3">
             <label for="horaInicio" class="form-label">Hora de Inicio</label>
-            <input type="time" class="form-control" id="horaInicio" name="horaInicio" required>
+            <input type="time" th:field="${actividad.horaInicio}" class="form-control" id="horaInicio" name="horaInicio" required>
         </div>
 
         <!-- Campo Hora de Fin -->
         <div class="mb-3">
             <label for="horaFin" class="form-label">Hora de Fin</label>
-            <input type="time" class="form-control" id="horaFin" name="horaFin" required>
+            <input type="time" th:field="${actividad.horaFin}" class="form-control" id="horaFin" name="horaFin" required>
         </div>
 
         <!-- Botón para enviar el formulario -->

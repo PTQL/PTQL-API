@@ -66,6 +66,8 @@
 			                <td th:text="${actividad.nombreActividad}"></td>
 			                <td th:text="${actividad.ubicacionActividad}"></td>
 			                <td th:text="${actividad.fechaActividad}"></td>
+							<td><a th:href="@{/deleteActividadToModulo/{actividadId}(actividadId=${actividad.id}, moduloId=${modulo.Id})}">Quitar</a></td>
+
 			            </tr>
 			        </tbody>
                 </table>
@@ -75,6 +77,7 @@
 
         <!-- Botón para enviar el formulario -->
         <button type="submit" class="btn btn-primary">Guardar Módulo</button>
+        <a class="btn btn-primary" th:href="@{/regresar_dashboard/}+${modulo.id}">Cancelar</a>
     </form>
 </div>
 

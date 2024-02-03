@@ -3,10 +3,13 @@ package com.sebasgoy.controller;
 
 
 import lombok.AllArgsConstructor;
+
+import org.apache.commons.compress.harmony.unpack200.bytecode.forms.ThisFieldRefForm;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import com.sebasgoy.dto.Actividad;
+import com.sebasgoy.repository.IActividadRepository;
 import com.sebasgoy.service.ActividadService;
 
 import Constantes.Mensajes;
@@ -19,23 +22,35 @@ public class ActividadController {
 	private final ActividadService actividadService;
 
 	
-	/*
-	@PostMapping("/registro")
-	public  ResponseEntity<Actividad> guardarActividad(@RequestBody Actividad actividad) {
-		Actividad response = null;
-		try {
-			response = actividadService.saveActividad(actividad);
-			return ResponseEntity.ok(response);
-		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-		}
-	}*/
-	
+ 	
 	@GetMapping("/generar_actividad")
 	public String cargarCrudActividad(Model model) {
-		model.addAttribute("actividad", new Actividad());
-		return "CRUD_Actividad";
+		
+		
+		model.addAttribute("actividad", Actividad
+				.builder()
+				.id(actividadService.UltimoId())
+				.estado(true)
+				.build()
+				);
+		return "FormNewActividad";
 	}
+	
+	@GetMapping("/editar_actividad/{id}")
+	public String cargarCrudActividadEdit(@PathVariable("id") Long id, Model model) {
+		
+		model.addAttribute("actividad", actividadService.findById(id));
+		
+		return "FormNewActividad";
+	}
+	
+	@GetMapping("/dashboard_actividad")	
+	public String cargarDashboardActividad(Model model) {
+			
+		model.addAttribute("listaActividades", actividadService.findActivos() );
+		return "DashboardActividades";
+	}
+	
 	
 	@PostMapping("/guardar_actividad")
 	public String guardar_actividad(@ModelAttribute Actividad actividad,Model model) {
@@ -51,12 +66,31 @@ public class ActividadController {
 			model.addAttribute("mensaje", Mensajes.ACTIVIDAD_ERROR_REGISTRO.concat(e.toString()) );
 		}
 		
-		return "redirect:/";
+		return "redirect:/dashboard_actividad";
 	}
 
-
-
-
+	@GetMapping("/desactivar_actividad/{id}")
+	public String desactivar_Actividad(@PathVariable("id") Long id,Model model  ){
+		try {
+			Actividad actividad =  actividadService.findById(id);
+			
+			actividad.setEstado(false);
+			
+			
+			actividadService.saveActividad(actividad);
+			
+			System.out.println(Mensajes.ACTIVIDAD_OK_REGISTRO);
+			model.addAttribute("mensaje", Mensajes.ACTIVIDAD_OK_REGISTRO);
+			
+		} catch (Exception e) {
+			System.out.println(Mensajes.ACTIVIDAD_ERROR_REGISTRO.concat(e.toString()));
+			model.addAttribute("mensaje", Mensajes.ACTIVIDAD_ERROR_REGISTRO.concat(e.toString()) );
+		}
+		
+		
+		return "redirect:/dashboard_actividad";
+		
+	}
 
 
 	

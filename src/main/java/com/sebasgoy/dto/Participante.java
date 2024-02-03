@@ -14,8 +14,6 @@ public class Participante {
 	@Column(name = "isParticipant")
 	private Boolean isParticipant;
 	
-	@Column(name = "estado")
-	private int estado = 1;
 	@ManyToOne
 	@JoinColumn(name="idActividad",insertable = false, updatable = false)
 	private Actividad actividad;
@@ -24,6 +22,9 @@ public class Participante {
 	@JoinColumn(name="idVoluntario",insertable = false, updatable = false)
 	private Voluntario voluntario;
 
+	@ManyToOne
+	@JoinColumn(name="tipoParticipacion" ,insertable = false,updatable = false)
+	private TipoParticipacion tipoParticipacion;
 
 
 }

@@ -37,14 +37,21 @@ public class ModuloController {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
 	}*/
+	@GetMapping("/dashboard_modulo")
+	public String cargarDashboardModulo(Model model) {
+		model.addAttribute("listaModulo", moduloService.findActivos() );
+		return "DashboardModulo";
+	}
+	
+	
 	
 	@GetMapping("/generar_modulo")
 	public String cargarCrudModulo(Model model) {
 		try {
 			
-			Modulo modulo = Modulo.builder().Id(moduloService.UltimoId()).build();
+			Modulo modulo = Modulo.builder().id(moduloService.UltimoId()).build();
 			moduloService.saveModulo(modulo);
-			
+
 			model.addAttribute("listaActividades",actividadService.findActivosSinModulo());
 			model.addAttribute("modulo", modulo);
 			System.out.println( Mensajes.MODULO_OK_REGISTRO);
@@ -54,10 +61,27 @@ public class ModuloController {
 
 			model.addAttribute("mensaje", Mensajes.MODULO_ERROR_REGISTRO.concat(e.toString()) );
 		}
-		return "CRUD_Modulo";
+		return "FormNewModulo";
 	}
 	
+	@GetMapping("/editar_modulo/{id}")
+	public String cargarCrudModulo(@PathVariable("id") Long id,Model model) {
+		try {
+			
+			Modulo modulo = moduloService.findById(id) ;
 
+			model.addAttribute("listaActividades",actividadService.findActivosSinModulo());
+			model.addAttribute("modulo", modulo);
+			System.out.println( Mensajes.MODULO_OK_REGISTRO);
+			model.addAttribute("mensaje", Mensajes.MODULO_OK_REGISTRO);
+		} catch (Exception e) {
+			System.out.println(Mensajes.MODULO_ERROR_REGISTRO.concat(e.toString()));
+
+			model.addAttribute("mensaje", Mensajes.MODULO_ERROR_REGISTRO.concat(e.toString()) );
+		}
+		return "FormNewModulo";
+	}
+	
 	@GetMapping("/addActividadToModulo/{actividadId}")
 	public String agregarActividad(@PathVariable Long actividadId , @RequestParam Long moduloId ,Model model){
 		
@@ -74,22 +98,36 @@ public class ModuloController {
 			modulo.setActividad(ListActividad );
 			model.addAttribute("modulo", modulo);
 			model.addAttribute("listaActividades",actividadService.findActivosSinModulo());
+		
+		}else {
+			model.addAttribute("modulo", modulo);
+			model.addAttribute("listaActividades",actividadService.findActivosSinModulo());
+		}
+		return "FormNewModulo";
+	}
+	
+	@GetMapping("/deleteActividadToModulo/{actividadId}")
+	public String quitarActividad(@PathVariable Long actividadId , @RequestParam Long moduloId ,Model model){
+		
+		Modulo modulo = moduloService.findById(moduloId);		
+		Actividad actividad = actividadService.findById(actividadId);
+
+		List<Actividad> ListActividad = modulo.getActividad();	
+		if (ListActividad.contains(actividad) ) {
+			actividad.setModulo(null);
+			actividadService.saveActividad(actividad);
+			
+			ListActividad.remove(actividad);
+			modulo.setActividad(ListActividad );
+			model.addAttribute("modulo", modulo);
+			model.addAttribute("listaActividades",actividadService.findActivosSinModulo());
 
 		}else {
 			model.addAttribute("modulo", modulo);
 			model.addAttribute("listaActividades",actividadService.findActivosSinModulo());
 			
 		}
-		
-		
-
-		
-		
-
-		
-		
-
-		return "CRUD_Modulo";
+		return "FormNewModulo";
 	}
 	
 	@PostMapping("/guardar_modulo")
@@ -103,11 +141,39 @@ public class ModuloController {
 			System.out.println( Mensajes.MODULO_OK_REGISTRO);
 			model.addAttribute("mensaje", Mensajes.MODULO_OK_REGISTRO);
 		} catch (Exception e) {
+			System.out.println( Mensajes.MODULO_OK_REGISTRO.concat(e.toString()) );
+
 			model.addAttribute("mensaje", Mensajes.MODULO_ERROR_REGISTRO.concat(e.toString()) );
 		}
 		
-		return "redirect:/";
+		return "redirect:/dashboard_modulo";
 	}
+
+	@GetMapping("/regresar_dashboard/{id}")
+	public String regresar_dashboard(@PathVariable("id") Long id,Model model) {
+	
+		try {
+			Modulo modulo = moduloService.findById(id);		
+			if (
+					modulo.getNombre().isEmpty() &&
+					modulo.getActividad().isEmpty()
+					) {				
+				moduloService.deleteModulo(modulo);
+				System.out.println( Mensajes.MODULO_OK_DELETE);
+				model.addAttribute("mensaje", Mensajes.MODULO_OK_DELETE);
+			}
+			
+			
+			
+		} catch (Exception e) {
+			System.out.println( Mensajes.MODULO_ERROR_DELETE.concat(e.toString()) );
+
+			model.addAttribute("mensaje", Mensajes.MODULO_ERROR_DELETE.concat(e.toString()) );
+		}
+		
+		return "redirect:/dashboard_modulo";
+	}
+
 
 
 

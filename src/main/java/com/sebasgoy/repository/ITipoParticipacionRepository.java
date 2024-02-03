@@ -4,19 +4,17 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import com.sebasgoy.dto.Actividad;
+import com.sebasgoy.dto.TipoParticipacion;
 
 import java.util.List;
 import java.util.Optional;
 
 
 @Repository
-public interface IActividadRepository extends JpaRepository<Actividad, Long>{
-    @Override
-    Optional<Actividad> findById(Long aLong);
+public interface ITipoParticipacionRepository extends JpaRepository<TipoParticipacion, Long>{
     
-    List<Actividad> findByEstadoIsTrue();
-    
-    List<Actividad> findByModuloIdIsNull();
+	@Override
+    Optional<TipoParticipacion> findById(Long aLong);
  
 }
 

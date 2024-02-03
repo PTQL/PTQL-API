@@ -15,7 +15,7 @@ import lombok.AllArgsConstructor;
 public class ModuloService {
     private IModuloRepository iModuloRepository;
 	public Long UltimoId() {
-		List<Modulo> activos = getAll();
+		List<Modulo> activos = findAll();
 		    
 	    if (activos.isEmpty()) {
 	        return 1L;
@@ -29,10 +29,20 @@ public class ModuloService {
     public Modulo findById(Long id){
         return iModuloRepository.findById(id).orElse(new Modulo());
     }
-    public List<Modulo> getAll(){
-        return iModuloRepository.findAll();
+    
+    public List<Modulo> findAll(){
+    	return iModuloRepository.findAll();
+    }
+    
+    public List<Modulo> findActivos(){
+        return iModuloRepository.findByEstadoIsTrue();
     }
     public Modulo saveModulo(Modulo modulo) {
         return iModuloRepository.save(modulo);
+    }
+    
+    public void deleteModulo(Modulo modulo) {
+    	
+    	iModuloRepository.delete(modulo);
     }
 }

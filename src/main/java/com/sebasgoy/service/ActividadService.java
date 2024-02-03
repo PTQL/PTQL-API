@@ -34,7 +34,7 @@ public class ActividadService {
 	}
 
 	public List<Actividad> findActivos(){
-		return iActividadRepository.findAll();
+		return iActividadRepository.findByEstadoIsTrue();
 	}
 	
 	public List<Actividad> findActivosSinModulo(){

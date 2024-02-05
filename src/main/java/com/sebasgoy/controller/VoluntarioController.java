@@ -1,36 +1,48 @@
 package com.sebasgoy.controller;
 
+ 
+import com.sebasgoy.dto.Participante;
 import com.sebasgoy.dto.Voluntario;
+import com.sebasgoy.service.ParticipanteService;
 import com.sebasgoy.service.VoluntarioService;
+
+import Constantes.Mensajes;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+ 
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+ 
 
-@RestController
-@RequestMapping("/api/voluntario")
+@Controller
 @AllArgsConstructor
 public class VoluntarioController {
-
-	private final VoluntarioService voluntarioService;
 	
-	@GetMapping
-	public List<Voluntario> getAllVoluntarios(){
-		return voluntarioService.getAll();
-	}
-	@PostMapping("/registro")
-	public ResponseEntity<Voluntario> guardarVoluntario(@RequestBody Voluntario voluntario){
-		Voluntario response = null;
+	
+	private final VoluntarioService voluntarioService;
+
+	
+	@PostMapping("/guardar_voluntario")
+	public String guardar_voluntario(@ModelAttribute Voluntario voluntario,
+			 Model model ) {
+		
 		try {
-			response = voluntarioService.saveVoluntario(voluntario);
-			return ResponseEntity.ok(response);
+			
+			voluntarioService.saveVoluntario(voluntario);
+			
+			System.out.println(Mensajes.success("VOLUNTARIO", "REGISTRO"));
+			
+			
 		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+			System.out.println(Mensajes.error("VOLUNTARIO", "REGISTRO"));
 		}
+		
+		return "redirect:/dashboard_actividad";
+		
 	}
 
+	
 
 
 

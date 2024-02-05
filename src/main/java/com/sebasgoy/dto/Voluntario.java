@@ -1,16 +1,24 @@
 package com.sebasgoy.dto;
 
-import jakarta.persistence.*;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-@Entity
+import jakarta.persistence.*;
 @Data
+@Entity
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name="voluntario")
 public class Voluntario {
 
-	@Id
+	@jakarta.persistence.Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long Id;
 	@Column(name = "nombre")
@@ -22,7 +30,8 @@ public class Voluntario {
 	@Column(name = "edad")
 	private String edad;
 	@Column(name = "estado")
-	private int estado = 1;
+	private boolean estado = false;
+	
 	@OneToMany(mappedBy = "voluntario" )
 	private List<Participante> participante;
 

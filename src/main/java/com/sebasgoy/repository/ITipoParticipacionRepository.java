@@ -15,7 +15,7 @@ public interface ITipoParticipacionRepository extends JpaRepository<TipoParticip
     
 	@Override
     Optional<TipoParticipacion> findById(Long aLong);
- 
+	Optional<TipoParticipacion> findByDescripcionParticipacion(String descripcionParticipacion);
 }
 
 

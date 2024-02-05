@@ -18,7 +18,7 @@ public class Modulo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 	@Column(name = "nombre")
-    private String Nombre;
+    private String nombre;
 	@Column(name = "estado")
 	private boolean estado = true;
     

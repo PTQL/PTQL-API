@@ -11,6 +11,7 @@
 	<div class="container mt-5">
     	<a href="/generar_modulo" class="btn btn-primary">Generar Modulo</a>	
      	<a href="/reactivar_modulo" class="btn btn-primary">Reactivar Modulos</a>	
+    	<a href="/" class="btn btn-secondary">Regresar</a>	
 
 	</div>
 	<div class="container mt-5">
@@ -30,9 +31,8 @@
 	                <td th:text="${modulo.Nombre}"></td>
 	                <td th:text="${modulo.actividad.size()}"></td>
 					<td>
-						<a class="btn btn-secondary" th:value="${modulo.id}" th:href="@{/editar_modulo/}+${modulo.id}">Editar</a>
-						<!--Solo deberia aparecer si no tiene voluntarios-->
-						<a th:if="${modulo.actividad.size() <= 0 }" > Ingresar Voluntarios</a>
+						<a class="btn btn-primary" th:value="${modulo.id}" th:href="@{/editar_modulo/}+${modulo.id}">Editar</a>
+ 						<a class="btn btn-secondary" th:value="${modulo.id}" th:href="@{/info_modulo/}+${modulo.id}"  >Detalles</a>
 						<a  class="btn btn-danger"   th:value="${modulo.id}" th:href="@{/desactivar_modulo/}+${modulo.id}" >Eliminar</a>
 					</td>
            		</tr>

@@ -34,6 +34,10 @@ public class TipoParticipacionService {
 		return  iTipoParticipacionRepository.findById(id).orElse(new TipoParticipacion());
 	}
 
+	public TipoParticipacion findByDescripcion(String des){
+		return  iTipoParticipacionRepository.findByDescripcionParticipacion(des).orElse(new TipoParticipacion());
+	}
+	
 	public List<TipoParticipacion> findActivos(){
 		return iTipoParticipacionRepository.findAll();
 	}

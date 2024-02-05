@@ -11,9 +11,8 @@
 	<div class="container mt-5">
     	<a href="/generar_actividad" class="btn btn-primary">Generar Actividad</a>	
     	<a href="/ingresar_excel_actividad" class="btn btn-primary">Ingresar Excel de Actividades</a>	
-    	<a href="/ingresar_excel_actividad" class="btn btn-primary">Reactivar Actividades</a>	
-
-	</div>
+    	<a href="/" class="btn btn-secondary">Regresar</a>	
+ 	</div>
 	<div class="container mt-5">
 		<h3>Listado General de Actividades</h3>
 		<table class="table">
@@ -23,6 +22,7 @@
 	                <th>Nombre</th>
 	                <th>Ubicación</th>
 	                <th>Fecha</th>
+	                <th>Estado</th>
 	                <th>Opciones</th>
 				</tr>
 			</thead>
@@ -32,11 +32,12 @@
 	                <td th:text="${actividad.nombreActividad}"></td>
 	                <td th:text="${actividad.ubicacionActividad}"></td>
 	                <td th:text="${actividad.fechaActividad}"></td>
+	                <td th:text="${actividad.estado} ? 'Activo' : 'Inactivo'"></td>
 					<td>
 						<a th:value="${actividad.id}" th:href="@{/editar_actividad/}+${actividad.id}">Editar</a>
 						<!--Solo deberia aparecer si no tiene voluntarios-->
-						<a th:if="${actividad.participante.size() <= 0 }" > Ingresar Voluntarios</a>
-						<a th:value="${actividad.id}" th:href="@{/desactivar_actividad/}+${actividad.id}" >Eliminar</a>
+						<a th:value="${actividad.id}" th:href="@{/info_actividad/}+${actividad.id}" >Detalles</a>
+						<a th:value="${actividad.id}" th:href="@{/desactivar_actividad/}+${actividad.id}" >Desactivar</a>
 					</td>
            		</tr>
 

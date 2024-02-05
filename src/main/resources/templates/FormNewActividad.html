@@ -46,9 +46,16 @@
             <label for="horaFin" class="form-label">Hora de Fin</label>
             <input type="time" th:field="${actividad.horaFin}" class="form-control" id="horaFin" name="horaFin" required>
         </div>
+        
+        <!-- Campo Estado-->
+        <div class="mb-3">
+            <label for="estado" class="form-label">Estado</label>
+            <input type="checkbox" checked th:field="${actividad.estado}" class="form-check" id="estado" name="estado" required>
+        </div>
 
         <!-- Botón para enviar el formulario -->
         <button type="submit" class="btn btn-primary">Guardar Actividad</button>
+        <a class="btn btn-primary" th:href="@{/dashboard_actividad}">Cancelar</a>
     </form>
 </div>
 

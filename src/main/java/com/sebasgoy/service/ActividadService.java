@@ -1,6 +1,7 @@
 package com.sebasgoy.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.sebasgoy.repository.IActividadRepository;
 import lombok.AllArgsConstructor;
@@ -32,10 +33,21 @@ public class ActividadService {
 	public Actividad findById(Long id){
 		return  iActividadRepository.findById(id).orElse(new Actividad());
 	}
+	
+	public Optional<Actividad> findByIdOptional(Long id){
+		return  iActividadRepository.findById(id);
+	}
+
 
 	public List<Actividad> findActivos(){
 		return iActividadRepository.findByEstadoIsTrue();
 	}
+	
+
+	public List<Actividad> findAll(){
+		return iActividadRepository.findAll();
+	}
+	
 	
 	public List<Actividad> findActivosSinModulo(){
 

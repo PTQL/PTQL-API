@@ -15,7 +15,9 @@ public class ValoresPersonaRegex {
     public static final String NOMBRE = "^([a-zA-Z\\s]{0,50})$";
 
     public static boolean isValidVoluntario(Voluntario voluntario){
+    	
 
+    
         return  voluntario.getDni().matches(ValoresPersonaRegex.DNI) &&
                 voluntario.getEdad().matches(ValoresPersonaRegex.EDAD);
     }

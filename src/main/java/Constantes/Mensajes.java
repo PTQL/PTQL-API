@@ -2,11 +2,11 @@ package Constantes;
 
 public class Mensajes {
 
-	public static final String ACTIVIDAD_ERROR_REGISTRO = "Error al registrar una actividad :";
-	public static final String ACTIVIDAD_OK_REGISTRO = "Registro de actividad OK :";
-	public static final String MODULO_ERROR_REGISTRO = "Error al registrar una modulo :";
-	public static final String MODULO_OK_REGISTRO = "Registro de modulo OK :";
-	public static final String MODULO_ERROR_DELETE= "Error al eliminar una modulo :";
-	public static final String MODULO_OK_DELETE = "Eliminacion de modulo OK :";
-
+	public static String success(String entidad,String accion) {
+		return accion+" de "+entidad+" OK :";
+	}
+	public static String error(String entidad,String accion) {
+		return "Error al "+accion+" una "+entidad+" :";
+	}
+	
 }

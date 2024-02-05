@@ -45,7 +45,21 @@ public class InitService {
 					.estado(true)
 					.build()
 					);
-						
+			iActividadRepository.save(
+					Actividad.builder()
+					.nombreActividad("Limpieza de playa las miramar")
+					.fechaActividad( java.sql.Date.valueOf("2024-02-02"))
+					.horaInicio(LocalTime.parse("16:00"))
+					.horaFin(LocalTime.parse("20:00"))
+					.ubicacionActividad("Ancon,Lima")
+					.modulo(null)
+					.estado(true)
+					.build()
+					);
+			
+			
+			
+									
 		} catch (Exception e) {
 			System.out.println("Error en initService :"+e.toString());
 		}

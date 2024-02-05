@@ -2,35 +2,66 @@ package com.sebasgoy.controller;
 
 import com.sebasgoy.dto.Participante;
 import com.sebasgoy.service.ParticipanteService;
+
+import Constantes.Mensajes;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
-@RequestMapping("/api/participante")
+@Controller
 @AllArgsConstructor
 public class ParticipanteController {
 
 	private final ParticipanteService participanteService;
 	
-	@GetMapping
-	public List<Participante> getAllParticipantes(){
-		return participanteService.getAll();
-	}
-	@PostMapping("/registro")
-	public ResponseEntity<Participante> guardarParticipante(@RequestBody Participante participante){
-		Participante response = null;
+
+	@GetMapping("/change_participacion/{id}")
+	public String change_participacion(@PathVariable("id") Long idParticipante ,Model model) {
+		
 		try {
-			response = participanteService.saveParticipante(participante);
-			return ResponseEntity.ok(response);
+			Participante participante = participanteService.findById(idParticipante);
+			participante.changeParticipacion();
+			participanteService.saveParticipante(participante);
+				
+			
+			
+			System.out.println(Mensajes.success("PARTICIPANTE", "BUSQUEDA"));
+
+			return "redirect:/info_actividad/".concat(participante.getIdActividad().toString());
 		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-		}	}
+			// TODO: handle exception
+			System.out.println(Mensajes.error("PARTICIPANTE", "BUSQUEDA"));
 
+		}
+		
+		return "redirect:/dashboard_actividad/";
+	}
+	
+	
+	@GetMapping("/editar_voluntario/{id}")
+	public String editar_voluntario(@PathVariable("id")Long idParticipante,Model model) {
+		
+		Participante participante = participanteService.findById(idParticipante);
 
+		try {
+ 			model.addAttribute("voluntario", participante.getVoluntario());
+			model.addAttribute("actividad",participante.getActividad());
+ 			System.out.println(Mensajes.success("PARTICIPANTE","BUSQUEDA"));
+
+			return "FormNewVoluntario";
+		} catch (Exception e) {
+			
+			System.out.println(Mensajes.error("PARTICIPANTE","BUSQUEDA") +e.toString());
+		}
+		return "/info_actividad/".concat(participante.getIdActividad().toString());
+		
+	}
+	
 
 
 

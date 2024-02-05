@@ -54,12 +54,12 @@ public class ModuloController {
 
 			model.addAttribute("listaActividades",actividadService.findActivosSinModulo());
 			model.addAttribute("modulo", modulo);
-			System.out.println( Mensajes.MODULO_OK_REGISTRO);
-			model.addAttribute("mensaje", Mensajes.MODULO_OK_REGISTRO);
+			System.out.println(Mensajes.success("MODULO", "REGISTRO"));
+			model.addAttribute("mensaje",Mensajes.success("MODULO", "REGISTRO"));
 		} catch (Exception e) {
-			System.out.println(Mensajes.MODULO_ERROR_REGISTRO.concat(e.toString()));
+			System.out.println(Mensajes.error("MODULO", "REGISTRO").concat(e.toString()));
 
-			model.addAttribute("mensaje", Mensajes.MODULO_ERROR_REGISTRO.concat(e.toString()) );
+			model.addAttribute("mensaje", Mensajes.error("MODULO", "REGISTRO").concat(e.toString()) );
 		}
 		return "FormNewModulo";
 	}
@@ -72,15 +72,36 @@ public class ModuloController {
 
 			model.addAttribute("listaActividades",actividadService.findActivosSinModulo());
 			model.addAttribute("modulo", modulo);
-			System.out.println( Mensajes.MODULO_OK_REGISTRO);
-			model.addAttribute("mensaje", Mensajes.MODULO_OK_REGISTRO);
+			System.out.println( Mensajes.success("MODULO", "REGISTRO"));
+			model.addAttribute("mensaje", Mensajes.success("MODULO", "REGISTRO"));
 		} catch (Exception e) {
-			System.out.println(Mensajes.MODULO_ERROR_REGISTRO.concat(e.toString()));
+			System.out.println(Mensajes.error("MODULO", "REGISTRO").concat(e.toString()));
 
-			model.addAttribute("mensaje", Mensajes.MODULO_ERROR_REGISTRO.concat(e.toString()) );
+			model.addAttribute("mensaje", Mensajes.error("MODULO", "REGISTRO").concat(e.toString()) );
 		}
 		return "FormNewModulo";
 	}
+	
+	@GetMapping("/info_modulo/{id}")
+	public String infoModulo(@PathVariable("id") Long id,Model model) {
+		
+		try {
+			model.addAttribute("modulo", moduloService.findById(id));
+			System.out.println( Mensajes.success("MODULO", "BUSQUEDA"));
+			model.addAttribute("mensaje",  Mensajes.success("MODULO", "BUSQUEDA"));
+			
+			return "/InfoModulo";
+			
+		} catch (Exception e) {
+			System.out.println(Mensajes.error("MODULO", "BUSQUEDA").concat(e.toString()));
+
+			model.addAttribute("mensaje", Mensajes.error("MODULO", "BUSQUEDA").concat(e.toString()) );
+		}
+		return "redirect:/dashboard_modulo";
+		
+		
+	}
+	
 	
 	@GetMapping("/addActividadToModulo/{actividadId}")
 	public String agregarActividad(@PathVariable Long actividadId , @RequestParam Long moduloId ,Model model){
@@ -138,12 +159,12 @@ public class ModuloController {
 			moduloService.saveModulo(modulo);
 			
 			
-			System.out.println( Mensajes.MODULO_OK_REGISTRO);
-			model.addAttribute("mensaje", Mensajes.MODULO_OK_REGISTRO);
+			System.out.println( Mensajes.success("MODULO", "REGISTRO"));
+			model.addAttribute("mensaje", Mensajes.success("MODULO", "REGISTRO"));
 		} catch (Exception e) {
-			System.out.println( Mensajes.MODULO_OK_REGISTRO.concat(e.toString()) );
+			System.out.println( Mensajes.error("MODULO", "REGISTRO").concat(e.toString()) );
 
-			model.addAttribute("mensaje", Mensajes.MODULO_ERROR_REGISTRO.concat(e.toString()) );
+			model.addAttribute("mensaje",Mensajes.error("MODULO", "REGISTRO").concat(e.toString()) );
 		}
 		
 		return "redirect:/dashboard_modulo";
@@ -159,16 +180,16 @@ public class ModuloController {
 					modulo.getActividad().isEmpty()
 					) {				
 				moduloService.deleteModulo(modulo);
-				System.out.println( Mensajes.MODULO_OK_DELETE);
-				model.addAttribute("mensaje", Mensajes.MODULO_OK_DELETE);
+				System.out.println(Mensajes.error("MODULO", "ELIMINACION"));
+				model.addAttribute("mensaje", Mensajes.error("MODULO", "ELIMINACION"));
 			}
 			
 			
 			
 		} catch (Exception e) {
-			System.out.println( Mensajes.MODULO_ERROR_DELETE.concat(e.toString()) );
+			System.out.println( Mensajes.error("MODULO", "ELIMINACION").concat(e.toString()) );
 
-			model.addAttribute("mensaje", Mensajes.MODULO_ERROR_DELETE.concat(e.toString()) );
+			model.addAttribute("mensaje", Mensajes.error("MODULO", "ELIMINACION").concat(e.toString()) );
 		}
 		
 		return "redirect:/dashboard_modulo";

@@ -47,7 +47,7 @@ public class ActividadController {
 	@GetMapping("/dashboard_actividad")	
 	public String cargarDashboardActividad(Model model) {
 			
-		model.addAttribute("listaActividades", actividadService.findActivos() );
+		model.addAttribute("listaActividades", actividadService.findAll() );
 		return "DashboardActividades";
 	}
 	
@@ -58,16 +58,34 @@ public class ActividadController {
 		try {
 			
 			actividadService.saveActividad(actividad);
-			System.out.println(Mensajes.ACTIVIDAD_OK_REGISTRO);
-			model.addAttribute("mensaje", Mensajes.ACTIVIDAD_OK_REGISTRO);
+			System.out.println(Mensajes.success("ACTIVIDAD", "REGISTRO"));
+			model.addAttribute("mensaje",Mensajes.success("ACTIVIDAD", "REGISTRO"));
 		} catch (Exception e) {
-			System.out.println(Mensajes.ACTIVIDAD_ERROR_REGISTRO.concat(e.toString()));
+			System.out.println(Mensajes.error("ACTIVIDAD", "REGISTRO").concat(e.toString()));
 
-			model.addAttribute("mensaje", Mensajes.ACTIVIDAD_ERROR_REGISTRO.concat(e.toString()) );
+			model.addAttribute("mensaje", Mensajes.error("ACTIVIDAD", "REGISTRO").concat(e.toString()) );
 		}
 		
 		return "redirect:/dashboard_actividad";
 	}
+	
+	@GetMapping("/info_actividad/{id}")
+	public String info_actividad(@PathVariable("id")Long id,Model model) {
+		try {
+			model.addAttribute("actividad", actividadService.findById(id));
+			System.out.println(Mensajes.success("ACTIVIDAD", "BUSQUEDA"));
+			model.addAttribute("mensaje", Mensajes.success("ACTIVIDAD", "BUSQUEDA"));
+			
+			return "/InfoActividad";
+			
+		} catch (Exception e) {
+			System.out.println(Mensajes.error("ACTIVIDAD", "BUSQUEDA").concat(e.toString()));
+
+			model.addAttribute("mensaje", Mensajes.error("ACTIVIDAD", "BUSQUEDA").concat(e.toString()) );
+		}
+		return "redirect:/dashboard_actividad";
+	}
+	
 
 	@GetMapping("/desactivar_actividad/{id}")
 	public String desactivar_Actividad(@PathVariable("id") Long id,Model model  ){
@@ -79,12 +97,12 @@ public class ActividadController {
 			
 			actividadService.saveActividad(actividad);
 			
-			System.out.println(Mensajes.ACTIVIDAD_OK_REGISTRO);
-			model.addAttribute("mensaje", Mensajes.ACTIVIDAD_OK_REGISTRO);
+			System.out.println(Mensajes.success("ACTIVIDAD", "REGISTRO"));
+			model.addAttribute("mensaje", Mensajes.success("ACTIVIDAD", "REGISTRO"));
 			
 		} catch (Exception e) {
-			System.out.println(Mensajes.ACTIVIDAD_ERROR_REGISTRO.concat(e.toString()));
-			model.addAttribute("mensaje", Mensajes.ACTIVIDAD_ERROR_REGISTRO.concat(e.toString()) );
+			System.out.println(Mensajes.error("ACTIVIDAD", "REGISTRO").concat(e.toString()));
+			model.addAttribute("mensaje", Mensajes.error("ACTIVIDAD", "REGISTRO").concat(e.toString()) );
 		}
 		
 		

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <title>Detalle de Modulo</title>
+</head>
+<body>
+ 	
+<div class="container mt-5">
+    <div class="row">
+		<div class="col-md-10 offset-md-1">
+			<a class="btn btn-primary mb-3" th:href="@{/dashboard_modulo}">Regresar</a>
+			<a class="btn btn-secondary mb-3" th:href="@{/editar_modulo/}+${modulo.id}">Editar Modulo</a> 
+
+        	<div class="card">
+                <div class="card-header">
+                    Detalle de Modulo
+                </div>
+                <div class="card-body">
+                    <p><strong>ID:</strong> <span th:text="${modulo.id}"></span></p>
+                    <p><strong>Nombre de Modulo:</strong> <span th:text="${modulo.nombre}"></span></p>
+                    <p><strong>Estado:</strong> <span th:text="${modulo.estado} ? 'Activo' : 'Inactivo'"></span></p>
+					<p th:if="${modulo.actividad != null}"><strong>Actividades Asociadas</strong> <span th:text="${modulo.actividad.size()}">0</span></p>
+					<p th:if="${modulo.actividad == null}"><strong>Sin Actividades Asociadas</strong></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-10 offset-md-1">
+			<div class="card mt-3">
+                <div class="card-header">
+                    Listado de Actividades
+                </div>
+                <div class="card-body">
+					<table class="table">
+						<thead>
+							<tr>
+								<th>ID</th>
+				                <th>Nombre</th>
+				                <th>Ubicación</th>
+				                <th>Fecha</th>
+				                <th>Opciones</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="actividad : ${modulo.actividad}">
+				                <td th:text="${actividad.id}"></td>
+				                <td th:text="${actividad.nombreActividad}"></td>
+				                <td th:text="${actividad.ubicacionActividad}"></td>
+				                <td th:text="${actividad.fechaActividad}"></td>
+ 								<td>
+									
+								</td>
+			           		</tr>
+			
+						</tbody>
+					</table>
+                </div>
+                <div class="card-footer">
+                    <a class="btn btn-primary" th:if="${modulo.actividad.size() == 0 }" onclick="mostrarInput()">Agregar Excel de Actividades</a>
+                    <a class="btn btn-danger">Eliminar Todos</a>
+                </div>
+            </div>	
+			<div class="card mt-3" id="inputContainer" style="display: none;">
+                <div class="card-header">
+               		Subir Excel
+            	</div>
+				<div class="card-body">		 
+					<form th:action="@{/cargarExceltoModulo/}+${modulo.id}" method="post" enctype="multipart/form-data">
+						<div class="mb-3">
+							<label for="excelFile" class="form-label">Ingrese Archivo Excel:</label>
+							<input type="file" class="form-control" name="excelFile" accept=".xlsx, .xls">
+						</div>
+						<button type="submit" class="btn btn-primary" name="actionType" value="verEstado">Ver Estado</button>
+						<button type="submit" class="btn btn-primary" name="actionType" value="insertarVoluntario">Insertar Voluntarios</button>
+						<button type="button" class="btn btn-secondary ms-2" onclick="ocultarInput()">Cancelar</button>
+					</form>
+				</div>
+            </div>
+		</div>
+        
+        
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+<script>
+    function mostrarInput() {
+        document.getElementById('inputContainer').style.display = 'block';
+    }
+
+    function ocultarInput() {
+        document.getElementById('inputContainer').style.display = 'none';
+    }
+</script>
+</body>
+</html>

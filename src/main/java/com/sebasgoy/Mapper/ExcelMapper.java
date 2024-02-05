@@ -28,7 +28,7 @@ import java.util.concurrent.RecursiveTask;
 @Component
 public class ExcelMapper {
 
-    public static ExcelResponse LeerExcel(MultipartFile archivoExcel){
+    public static ExcelResponse LeerExcel(MultipartFile archivoExcel,Long id){
     	DataFormatter dataFormatter = new DataFormatter();
         List<Voluntario> listaValidos = new ArrayList<>();
         List<Voluntario> listaInvalidos = new ArrayList<>();
@@ -50,17 +50,22 @@ public class ExcelMapper {
                 Row fila = filas.next();
                 /*Depende de la estructura del Excel*/
                 Voluntario voluntario = new Voluntario();
-                
+                voluntario.setEstado(true);
+                voluntario.setParticipante(new ArrayList<>());
 				voluntario.setNombre(dataFormatter.formatCellValue(fila.getCell(0)));
 				voluntario.setApellido(dataFormatter.formatCellValue(fila.getCell(1)));
 				voluntario.setEdad(dataFormatter.formatCellValue(fila.getCell(2)));
 				voluntario.setDni(dataFormatter.formatCellValue(fila.getCell(3)));
 
-                if (ValoresPersonaRegex.isValidVoluntario(voluntario) ){
-                    listaValidos.add(voluntario);
-                }else {
-                    listaInvalidos.add(voluntario);
-                }
+				
+				
+				if (areVoluntarioFieldsValid(voluntario)) {
+	                if (ValoresPersonaRegex.isValidVoluntario(voluntario) ){
+	                    listaValidos.add(voluntario);
+	                }else{
+	                	listaInvalidos.add(voluntario);
+	                }
+				}
             }
         //TODO MAPEAR EXCEPCIONES
         } catch (IOException e) {
@@ -70,8 +75,20 @@ public class ExcelMapper {
                 .fecha(LocalDateTime.now())
                 .listVoluntarioInvalido(listaInvalidos)
                 .listVoluntarioValido(listaValidos)
+                .idActividad(id)
                 .totalPersonas( listaValidos.size()+listaInvalidos.size())
                 .build() ;
+    }
+    
+    private static boolean areVoluntarioFieldsValid(Voluntario voluntario) {
+        return isStringNotBlank(voluntario.getNombre()) &&
+               isStringNotBlank(voluntario.getApellido()) &&
+               isStringNotBlank(voluntario.getEdad()) &&
+               isStringNotBlank(voluntario.getDni());
+    }
+    
+    private static boolean isStringNotBlank(String value) {
+        return value != null && !value.isEmpty();
     }
     
  

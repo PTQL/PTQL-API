@@ -13,6 +13,7 @@
 		<div class="col-md-10 offset-md-1">
 			<a class="btn btn-primary mb-3" th:href="@{/dashboard_modulo}">Regresar</a>
 			<a class="btn btn-secondary mb-3" th:href="@{/editar_modulo/}+${modulo.id}">Editar Modulo</a> 
+			<a class="btn btn-secondary mb-3" th:href="@{/generar_constancias_modulo/}+${modulo.id}">Generar Constancias Modalidad Modulo</a> 
 
         	<div class="card">
                 <div class="card-header">
@@ -79,8 +80,59 @@
 				</div>
             </div>
 		</div>
-        
-        
+		<!--Contendor de voluntarios del modulo-->
+        <div class="col-md-10 offset-md-1">
+			<div class="card mt-3">
+                <div class="card-header">
+                    Listado de Actividades
+                </div>
+                <div class="card-body">
+					<table class="table">
+						<thead>
+							<tr>
+								<th>ID</th>
+				                <th>Nombre</th>
+				                <th>Ubicación</th>
+				                <th>Fecha</th>
+				                <th>Opciones</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="actividad : ${modulo.actividad}">
+				                <td th:text="${actividad.id}"></td>
+				                <td th:text="${actividad.nombreActividad}"></td>
+				                <td th:text="${actividad.ubicacionActividad}"></td>
+				                <td th:text="${actividad.fechaActividad}"></td>
+ 								<td>
+									
+								</td>
+			           		</tr>
+			
+						</tbody>
+					</table>
+                </div>
+                <div class="card-footer">
+                    <a class="btn btn-primary" th:if="${modulo.actividad.size() == 0 }" onclick="mostrarInput()">Agregar Excel de Actividades</a>
+                    <a class="btn btn-danger">Eliminar Todos</a>
+                </div>
+            </div>	
+			<div class="card mt-3" id="inputContainer" style="display: none;">
+                <div class="card-header">
+               		Subir Excel
+            	</div>
+				<div class="card-body">		 
+					<form th:action="@{/cargarExceltoModulo/}+${modulo.id}" method="post" enctype="multipart/form-data">
+						<div class="mb-3">
+							<label for="excelFile" class="form-label">Ingrese Archivo Excel:</label>
+							<input type="file" class="form-control" name="excelFile" accept=".xlsx, .xls">
+						</div>
+						<button type="submit" class="btn btn-primary" name="actionType" value="verEstado">Ver Estado</button>
+						<button type="submit" class="btn btn-primary" name="actionType" value="insertarVoluntario">Insertar Voluntarios</button>
+						<button type="button" class="btn btn-secondary ms-2" onclick="ocultarInput()">Cancelar</button>
+					</form>
+				</div>
+            </div>
+		</div>
     </div>
 </div>
 

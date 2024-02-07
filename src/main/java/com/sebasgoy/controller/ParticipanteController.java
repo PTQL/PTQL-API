@@ -1,6 +1,8 @@
 package com.sebasgoy.controller;
 
+import com.sebasgoy.dto.Actividad;
 import com.sebasgoy.dto.Participante;
+import com.sebasgoy.service.ActividadService;
 import com.sebasgoy.service.ParticipanteService;
 
 import Constantes.Mensajes;
@@ -19,7 +21,7 @@ import java.util.List;
 public class ParticipanteController {
 
 	private final ParticipanteService participanteService;
-	
+	private final ActividadService actividadService;
 
 	@GetMapping("/change_participacion/{id}")
 	public String change_participacion(@PathVariable("id") Long idParticipante ,Model model) {
@@ -73,6 +75,28 @@ public class ParticipanteController {
 
 		} catch (Exception e) {
 			System.out.println(Mensajes.error("PARTICIPANTE","Eliminacion") +e.toString());
+		}
+		return "redirect:"+pagina_anterior;
+	}
+	
+	@GetMapping("/retirar_todos_voluntarios/{id}")
+	public String retirar_todos_voluntarios(@PathVariable("id")Long idActividad ,Model model,HttpServletRequest request)  {
+		String pagina_anterior = request.getHeader("referer");
+		
+		try {
+			
+			Actividad actividad = actividadService.findById(idActividad);
+			
+			
+			actividad.getParticipante().forEach(
+				(x) -> {
+					participanteService.deleteParticipanteById(x.getId());
+				});
+			
+ 			System.out.println(Mensajes.success("Actividad - Participante - Voluntario","Eliminacion"));
+			
+		} catch (Exception e) {
+			System.out.println(Mensajes.error("Actividad - Participante - Voluntario","Eliminacion") +e.toString());
 		}
 		return "redirect:"+pagina_anterior;
 	}

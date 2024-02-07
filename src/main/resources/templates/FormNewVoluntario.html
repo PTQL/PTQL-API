@@ -40,7 +40,8 @@
 		</div>
          <!-- Botón para enviar el formulario -->
         <button type="submit" class="btn btn-primary">Editar Voluntario</button>
-        <a class="btn btn-primary" th:href="@{/info_actividad/}+${actividad.id}">Cancelar</a>
+        <a class="btn btn-primary" th:if="${actividad != null}" th:href="@{/info_actividad/}+${actividad.id}">Regresar</a>
+        <a class="btn btn-primary" th:if="${actividad == null}" th:href="@{/dashboard_voluntario}">Regresar</a>
     </form>
 </div>
 

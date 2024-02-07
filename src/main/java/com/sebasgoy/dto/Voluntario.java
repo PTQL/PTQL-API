@@ -37,4 +37,9 @@ public class Voluntario {
 
 
 	
+	
+    
+    public void changeEstate(){
+    	setEstado( !estado);
+    }
 }

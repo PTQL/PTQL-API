@@ -28,5 +28,14 @@ public class ParticipanteService {
     public Participante saveParticipante(Participante participante) {
         return iParticipanteRepository.save(participante);
     }
+    
+    public void deleteParticipante(Participante participante) {
+    	
+    	iParticipanteRepository.delete(participante);
+    }
+    
+    public void deleteParticipanteById(Long id) {
+    	iParticipanteRepository.deleteById(id);
+    }
 
 }

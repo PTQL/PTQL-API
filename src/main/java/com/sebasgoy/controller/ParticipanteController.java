@@ -4,6 +4,7 @@ import com.sebasgoy.dto.Participante;
 import com.sebasgoy.service.ParticipanteService;
 
 import Constantes.Mensajes;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,7 +44,7 @@ public class ParticipanteController {
 	}
 	
 	
-	@GetMapping("/editar_voluntario/{id}")
+	@GetMapping("/editar_voluntario_formParticipante/{id}")
 	public String editar_voluntario(@PathVariable("id")Long idParticipante,Model model) {
 		
 		Participante participante = participanteService.findById(idParticipante);
@@ -60,6 +61,20 @@ public class ParticipanteController {
 		}
 		return "/info_actividad/".concat(participante.getIdActividad().toString());
 		
+	}
+	
+	@GetMapping("/retirar_voluntario/{id}")
+	public String retirar_voluntario(@PathVariable("id")Long idParticipante ,Model model,HttpServletRequest request)  {
+		String pagina_anterior = request.getHeader("referer");
+
+		try {
+ 			participanteService.deleteParticipanteById(idParticipante);
+			System.out.println(Mensajes.success("PARTICIPANTE","Eliminacion"));
+
+		} catch (Exception e) {
+			System.out.println(Mensajes.error("PARTICIPANTE","Eliminacion") +e.toString());
+		}
+		return "redirect:"+pagina_anterior;
 	}
 	
 

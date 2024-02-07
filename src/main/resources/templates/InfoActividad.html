@@ -57,8 +57,9 @@
 			                <td th:text="${participante.tipoParticipacion.descripcionParticipacion}"></td>
 			                <td th:text="${participante.isParticipant} ? 'Participo' : 'No Participó' "></td>
  							<td>
-								<a th:href="@{/change_participacion/}+${participante.id} " >Editar Participacion</a>
-								<a th:href="@{/editar_voluntario/}+${participante.id}">Editar Voluntario</a>
+								<a th:href="@{/change_participacion/}+${participante.id}" class="btn btn-sm btn-secondary mb-1 mr-3">Cambiar Participación</a>
+								<a th:href="@{/editar_voluntario_formParticipante/}+${participante.id}" class="btn btn-sm btn-secondary mb-1 mr-2">Editar Voluntario</a>
+								<a th:href="@{/retirar_voluntario/}+${participante.id}" class="btn btn-sm btn-warning mb-1 mr-2">Retirar Voluntario</a>
  							</td>
 							<!--Agregrar boton de generar constancia para todos y unitario , solo si la actividad es libre -->
 
@@ -80,7 +81,7 @@
 					<form th:action="@{/cargarExceltoActividad/}+${actividad.id}" method="post" enctype="multipart/form-data">
 						<div class="mb-3">
 							<label for="excelFile" class="form-label">Ingrese Archivo Excel:</label>
-							<input type="file" class="form-control" name="excelFile" accept=".xlsx, .xls">
+							<input type="file" class="form-control" name="excelFile" accept=".xlsx, .xls"  required>
 						</div>
 						<button type="submit" class="btn btn-primary" name="actionType" value="verEstado">Ver Estado</button>
 						<button type="submit" class="btn btn-primary" name="actionType" value="insertarVoluntario">Insertar Voluntarios</button>

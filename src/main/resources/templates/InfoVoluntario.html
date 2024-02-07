@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <title>Detalle de Voluntario</title> 
+</head>
+<body>
+ 	
+<div class="container mt-5">
+    <div class="row">
+		<div class="col-md-10 offset-md-1">
+			<a class="btn btn-primary mb-3" th:href="@{/dashboard_voluntario}">Regresar</a>
+			<a class="btn btn-secondary mb-3" th:href="@{/editar_voluntario/}+${voluntario.id}">Editar Voluntario</a> 
+         	<div class="card">
+                <div class="card-header">
+                    Detalle de Actividad
+                </div>
+                <div class="card-body">
+                    <p><strong>ID:</strong> <span th:text="${voluntario.id}"></span></p>
+                    <p><strong>Nombre :</strong> <span th:text="${voluntario.nombre}"></span></p>
+                    <p><strong>Apellido:</strong> <span th:text="${voluntario.apellido}"></span></p>
+                    <p><strong>Dni:</strong> <span th:text="${voluntario.dni}"></span></p>
+                    <p><strong>Edad:</strong> <span th:text="${voluntario.edad}"></span></p>
+                    <p><strong>Num Actividades Registradas:</strong> <span th:text="${actividadesVoluntario.size()}"></span></p>
+                    <p><strong>Num Modulos Registrados:</strong> <span th:text="${moduloVoluntario.size()}"></span></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-10 offset-md-1">
+			<div class="card mt-3">
+                <div class="card-header">
+                    Listado de Actividades
+                </div>
+                <div class="card-body">
+					<table class="table">
+						<thead>
+							<tr>
+								<th>Id</th>
+				                <th>Nombre</th>
+				                <th>Ubicación</th>
+				                <th>Fecha</th>
+				                <th>Estado</th>
+				                <th>Tipo</th>
+				                <th>Opciones</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="participante : ${voluntario.participante}">
+				                <td th:text="${participante.idActividad}"></td>
+				                <td th:text="${participante.actividad.nombreActividad}"></td>
+				                <td th:text="${participante.actividad.ubicacionActividad}"></td>
+				                <td th:text="${participante.actividad.fechaActividad}"></td>
+				                <td th:text="${participante.isParticipant ? 'Participó' : 'No Participo' }"></td>
+				                <td th:text="${participante.tipoParticipacion.descripcionParticipacion}"></td>
+	 							<td>
+									<a th:href="@{/change_participacion/}+${participante.id} " >Ver</a>
+									<a th:href="@{/retirar_participante/}+${participante.id}">Retirar Participacion</a>
+	 							</td>
+								<!--Agregrar boton de generar constancia para todos y unitario , solo si la actividad es libre -->
+	
+			           		</tr>
+			
+						</tbody>
+					</table>
+                </div>
+            </div>	
+ 
+		</div>
+        
+        
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+<script>
+    function mostrarInput() {
+        document.getElementById('inputContainer').style.display = 'block';
+    }
+
+    function ocultarInput() {
+        document.getElementById('inputContainer').style.display = 'none';
+    }
+</script>
+</body>
+</html>

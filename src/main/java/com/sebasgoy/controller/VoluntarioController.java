@@ -6,8 +6,8 @@ import com.sebasgoy.dto.Voluntario;
 import com.sebasgoy.service.TipoParticipacionService;
 import com.sebasgoy.service.VoluntarioService;
 
-import Constantes.Mensajes;
-import Constantes.Modalidades;
+import com.sebasgoy.constantes.Mensajes;
+import com.sebasgoy.constantes.Modalidades;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 

@@ -1,6 +1,5 @@
 package com.sebasgoy.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -8,7 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -16,13 +14,12 @@ import com.sebasgoy.Mapper.ExcelMapper;
 import com.sebasgoy.dto.Actividad;
 import com.sebasgoy.dto.Participante;
 import com.sebasgoy.dto.Voluntario;
-import com.sebasgoy.dto.response.ExcelResponse;
+import com.sebasgoy.dto.response.VoluntarioResponse;
 import com.sebasgoy.service.ActividadService;
 import com.sebasgoy.service.ParticipanteService;
 import com.sebasgoy.service.TipoParticipacionService;
 import com.sebasgoy.service.VoluntarioService;
 
-import jakarta.servlet.http.Part;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 
@@ -45,10 +42,10 @@ public class ExcelController {
     		Model model) {
     	
     	 // Procesar el archivo Excel según tus necesidades
-		ExcelResponse excelResponse = ExcelMapper.LeerExcel(file,idActividad);      
+		VoluntarioResponse voluntarioResponse = ExcelMapper.DevolverEntidadFromExcel(file,VoluntarioResponse.class);
         if (action.equals("verEstado")) {
         	try {
-    			model.addAttribute("excelResponse",excelResponse);	
+    			model.addAttribute("excelResponse", voluntarioResponse);
     			return "/GestorExcel";
              } catch (Exception e) {
                 model.addAttribute("result", "Error processing the Excel file."+ e.toString());
@@ -56,14 +53,14 @@ public class ExcelController {
              }        	
 		}else if(action.equals("insertarVoluntario")) {
 			try {
-			    if (isValid(excelResponse)) {
+			    if (isValid(voluntarioResponse)) {
 			        Optional<Actividad> optionalActividad = actividadService.findByIdOptional(idActividad);
 
 			        if (optionalActividad.isPresent()) {
 			            Actividad actividad = optionalActividad.get();
 			            List<Participante> listParticipanteActividad = actividad.getParticipante();
 
-			            for (Voluntario voluntario: excelResponse.getListVoluntarioValido()) {
+			            for (Voluntario voluntario: voluntarioResponse.getListVoluntarioValido()) {
 			                // Validar duplicación con DNI
 			                if ( !voluntarioService.existsByDni(voluntario.getDni())) {
 			                    voluntarioService.saveVoluntario(voluntario);
@@ -106,23 +103,14 @@ public class ExcelController {
 			    System.out.println("Error processing the Excel file." + e.toString());
 			}        	
         	 return "redirect:/info_actividad/".concat(idActividad.toString());
-			
-			
-			
 		}
-
         return "redirect:/info_actividad/".concat(idActividad.toString());
-    	
-    	
-    	
-        
-        
     }
 	
-    private Boolean isValid(ExcelResponse excelResponse) {
+    private Boolean isValid(VoluntarioResponse voluntarioResponse) {
     	
-    	return (excelResponse.getListVoluntarioInvalido().size() == 0) &&
-    			(excelResponse.getListVoluntarioValido().size() >= 1);
+    	return (voluntarioResponse.getListVoluntarioInvalido().isEmpty()) &&
+    			(!voluntarioResponse.getListVoluntarioValido().isEmpty());
     	
     }
 }

@@ -4,15 +4,13 @@ package com.sebasgoy.controller;
 
 import lombok.AllArgsConstructor;
 
-import org.apache.commons.compress.harmony.unpack200.bytecode.forms.ThisFieldRefForm;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import com.sebasgoy.dto.Actividad;
-import com.sebasgoy.repository.IActividadRepository;
 import com.sebasgoy.service.ActividadService;
 
-import Constantes.Mensajes;
+import com.sebasgoy.constantes.Mensajes;
 
  
 @Controller

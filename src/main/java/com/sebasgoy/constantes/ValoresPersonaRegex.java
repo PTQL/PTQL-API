@@ -1,4 +1,4 @@
-package Constantes;
+package com.sebasgoy.constantes;
 
 import com.sebasgoy.dto.Voluntario;
 

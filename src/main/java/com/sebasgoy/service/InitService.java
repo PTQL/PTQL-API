@@ -1,7 +1,6 @@
 package com.sebasgoy.service;
 
 import java.time.LocalTime;
-import java.util.Date;
 
 import org.springframework.stereotype.Service;
 
@@ -61,7 +60,7 @@ public class InitService {
 			
 									
 		} catch (Exception e) {
-			System.out.println("Error en initService :"+e.toString());
+			System.out.println("Error en initService :"+e);
 		}
 		
 		

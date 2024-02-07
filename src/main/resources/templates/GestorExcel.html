@@ -13,14 +13,14 @@
 
     <div class="container mt-5">
 
-        <a class="btn btn-primary mb-3" th:href="@{/info_actividad/}+${excelResponse.idActividad}">Regresar</a>
+        <a class="btn btn-primary mb-3" th:href="@{/info_actividad/}+${voluntarioResponse.idActividad}">Regresar</a>
 
         <div class="card mb-3">
             <div class="card-header" data-bs-toggle="collapse" href="#validVolunteers" role="button"
                 aria-expanded="false" aria-controls="validVolunteers">
                 <h3 class="card-title">Listado de Voluntarios Válidos -
-                    <span th:if="${excelResponse.listVoluntarioValido.size() > 0}"
-                        th:text="${excelResponse.listVoluntarioValido.size()}">0</span>
+                    <span th:if="${voluntarioResponse.listVoluntarioValido.size() > 0}"
+                        th:text="${voluntarioResponse.listVoluntarioValido.size()}">0</span>
                 </h3>
             </div>
             <div class="card-body collapse show" id="validVolunteers">
@@ -35,7 +35,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr th:each="voluntario, iterStat : ${excelResponse.listVoluntarioValido}">
+                        <tr th:each="voluntario, iterStat : ${voluntarioResponse.listVoluntarioValido}">
                             <td th:text="${iterStat.count}"></td>
                             <td th:text="${voluntario.nombre}"></td>
                             <td th:text="${voluntario.apellido}"></td>
@@ -51,8 +51,8 @@
             <div class="card-header" data-bs-toggle="collapse" href="#invalidVolunteers" role="button"
                 aria-expanded="false" aria-controls="invalidVolunteers">
                 <h3 class="card-title">Listado de Voluntarios Inválidos -
-                    <span th:if="${excelResponse.listVoluntarioInvalido.size() > 0}"
-                        th:text="${excelResponse.listVoluntarioInvalido.size()}">0</span>
+                    <span th:if="${voluntarioResponse.listVoluntarioInvalido.size() > 0}"
+                        th:text="${voluntarioResponse.listVoluntarioInvalido.size()}">0</span>
                 </h3>
             </div>
             <div class="card-body collapse show" id="invalidVolunteers">
@@ -67,7 +67,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr th:each="voluntario, iterStat : ${excelResponse.listVoluntarioInvalido}">
+                        <tr th:each="voluntario, iterStat : ${voluntarioResponse.listVoluntarioInvalido}">
                             <td th:text="${iterStat.count}"></td>
                             <td th:text="${voluntario.nombre}"></td>
                             <td th:text="${voluntario.apellido}"></td>

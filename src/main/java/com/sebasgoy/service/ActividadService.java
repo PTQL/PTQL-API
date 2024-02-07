@@ -53,8 +53,8 @@ public class ActividadService {
 
 		return iActividadRepository.findByModuloIdIsNull();
 	}
-	public Actividad saveActividad(Actividad actividad) {
-		return iActividadRepository.save(actividad);
+	public void saveActividad(Actividad actividad) {
+		iActividadRepository.save(actividad);
 	}
 
 

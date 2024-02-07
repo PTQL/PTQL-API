@@ -5,7 +5,7 @@ import com.sebasgoy.dto.Participante;
 import com.sebasgoy.service.ActividadService;
 import com.sebasgoy.service.ParticipanteService;
 
-import Constantes.Mensajes;
+import com.sebasgoy.constantes.Mensajes;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;

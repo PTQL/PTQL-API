@@ -14,8 +14,7 @@ import com.sebasgoy.dto.Modulo;
 import com.sebasgoy.service.ActividadService;
 import com.sebasgoy.service.ModuloService;
 
-import Constantes.Mensajes;
-
+import com.sebasgoy.constantes.Mensajes;
  
 @Controller
 @AllArgsConstructor

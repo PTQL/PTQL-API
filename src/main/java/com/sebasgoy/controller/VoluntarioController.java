@@ -11,6 +11,7 @@ import com.sebasgoy.constantes.Modalidades;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
@@ -116,7 +117,22 @@ public class VoluntarioController {
 
 	}
 	
-	
+	@GetMapping("/generar_voluntario")
+	public String generar_voluntario(
+			Model model
+	){
+		model.addAttribute("voluntario",
+
+				Voluntario.builder()
+						.Id(voluntarioService.UltimoId())
+						.estado(true)
+						.build()
+				);
+
+		return  "FormNewVoluntario";
+	}
+
+
 	@PostMapping("/guardar_voluntario")
 	public String guardar_voluntario(HttpServletRequest  request ,@ModelAttribute Voluntario voluntario,
 			 Model model ) {

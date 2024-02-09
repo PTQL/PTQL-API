@@ -23,10 +23,10 @@ public class Voluntario {
 	private Long Id;
 	@Column(name = "nombre")
 	private String nombre;
-	@Column(name = "apellido")
-	private String apellido;
 	@Column(name = "dni")
 	private String dni;
+	@Column(name="correo")
+	private String correo;
 	@Column(name = "edad")
 	private String edad;
 	@Column(name = "estado")
@@ -35,11 +35,7 @@ public class Voluntario {
 	@OneToMany(mappedBy = "voluntario" )
 	private List<Participante> participante;
 
-
-	
-	
-    
-    public void changeEstate(){
+	public void changeEstate(){
     	setEstado( !estado);
     }
 }

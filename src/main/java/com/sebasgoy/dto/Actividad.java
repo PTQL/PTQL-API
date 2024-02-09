@@ -1,5 +1,6 @@
 package com.sebasgoy.dto;
 
+import com.sebasgoy.constantes.Modalidades;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -41,6 +42,25 @@ public class Actividad {
 	@ManyToOne
 	@JoinColumn(name = "moduloId")
 	private Modulo modulo;
+
+	public int cantidadParticipanteOf(int modalidad) {
+		int contadorModulo = 0;
+		int contadorLibre = 0;
+
+		for (Participante participante : participante) {
+			if (participante.getIdTipoParticipacion() == (Modalidades.ID_MODULO)) {
+				contadorModulo++;
+			} else if (participante.getIdTipoParticipacion()  == (Modalidades.ID_LIBRE)) {
+				contadorLibre++;
+			}
+		}
+
+		if (modalidad == 1) {
+			return contadorModulo;
+		} else {
+			return contadorLibre;
+		}
+	}
 
 	public long obtenerDuracionActividad(){
  

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -51,7 +51,8 @@
 				                <td th:text="${actividad.ubicacionActividad}"></td>
 				                <td th:text="${actividad.fechaActividad}"></td>
  								<td>
-									
+									<a href="">Remover actividad</a>
+									<a>Ver actividad</a>
 								</td>
 			           		</tr>
 			
@@ -60,7 +61,7 @@
                 </div>
                 <div class="card-footer">
                     <a class="btn btn-primary" th:if="${modulo.actividad.size() == 0 }" onclick="mostrarInput()">Agregar Excel de Actividades</a>
-                    <a class="btn btn-danger">Eliminar Todos</a>
+                    <a class="btn btn-danger" th:if="${modulo.actividad.size() >= 1 }">Eliminar Todos</a>
                 </div>
             </div>	
 			<div class="card mt-3" id="inputContainer" style="display: none;">
@@ -68,13 +69,13 @@
                		Subir Excel
             	</div>
 				<div class="card-body">		 
-					<form th:action="@{/cargarExceltoModulo/}+${modulo.id}" method="post" enctype="multipart/form-data">
+					<form th:action="@{/cargarExcelActividadtoModulo/}+${modulo.id}" method="post" enctype="multipart/form-data">
 						<div class="mb-3">
 							<label for="excelFile" class="form-label">Ingrese Archivo Excel:</label>
-							<input type="file" class="form-control" name="excelFile" accept=".xlsx, .xls">
+							<input type="file" class="form-control" id="excelFile" name="excelFile" accept=".xlsx, .xls">
 						</div>
 						<button type="submit" class="btn btn-primary" name="actionType" value="verEstado">Ver Estado</button>
-						<button type="submit" class="btn btn-primary" name="actionType" value="insertarVoluntario">Insertar Voluntarios</button>
+						<button type="submit" class="btn btn-primary" name="actionType" value="insertarVoluntario">Insertar Actividades</button>
 						<button type="button" class="btn btn-secondary ms-2" onclick="ocultarInput()">Cancelar</button>
 					</form>
 				</div>
@@ -84,27 +85,27 @@
         <div class="col-md-10 offset-md-1">
 			<div class="card mt-3">
                 <div class="card-header">
-                    Listado de Actividades
+                    Listado de Voluntarios del Modulo
                 </div>
                 <div class="card-body">
 					<table class="table">
 						<thead>
 							<tr>
-								<th>ID</th>
+								<th>DNI</th>
 				                <th>Nombre</th>
-				                <th>Ubicación</th>
-				                <th>Fecha</th>
-				                <th>Opciones</th>
+				                <th>Correo</th>
+ 				                <th>Opciones</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr th:each="actividad : ${modulo.actividad}">
-				                <td th:text="${actividad.id}"></td>
-				                <td th:text="${actividad.nombreActividad}"></td>
-				                <td th:text="${actividad.ubicacionActividad}"></td>
-				                <td th:text="${actividad.fechaActividad}"></td>
- 								<td>
-									
+							<tr th:each="voluntario : ${listaVoluntario}">
+				                <td th:text="${voluntario.dni}"></td>
+				                <td th:text="${voluntario.nombre}"></td>
+				                <td th:text="${voluntario.correo}"></td>
+  								<td>
+									<a>Generar Constancia</a>
+									<a>Ver Participaciones</a>
+									<a>Remover</a>
 								</td>
 			           		</tr>
 			
@@ -112,23 +113,23 @@
 					</table>
                 </div>
                 <div class="card-footer">
-                    <a class="btn btn-primary" th:if="${modulo.actividad.size() == 0 }" onclick="mostrarInput()">Agregar Excel de Actividades</a>
-                    <a class="btn btn-danger">Eliminar Todos</a>
+                    <a class="btn btn-primary" th:if="${listaVoluntario.size() == 0 && modulo.actividad.size() >= 1 }" onclick="mostrarInput2()">Agregar Excel de Voluntarios Modulo</a>
+                    <a class="btn btn-danger" th:if="${listaVoluntario.size() >= 1 }">Eliminar Todos</a>
                 </div>
             </div>	
-			<div class="card mt-3" id="inputContainer" style="display: none;">
+			<div class="card mt-3" id="inputContainer2" style="display: none;">
                 <div class="card-header">
                		Subir Excel
             	</div>
 				<div class="card-body">		 
-					<form th:action="@{/cargarExceltoModulo/}+${modulo.id}" method="post" enctype="multipart/form-data">
+					<form th:action="@{/cargarExcelVoluntariostoModulo/}+${modulo.id}" method="post" enctype="multipart/form-data">
 						<div class="mb-3">
 							<label for="excelFile" class="form-label">Ingrese Archivo Excel:</label>
 							<input type="file" class="form-control" name="excelFile" accept=".xlsx, .xls">
 						</div>
 						<button type="submit" class="btn btn-primary" name="actionType" value="verEstado">Ver Estado</button>
 						<button type="submit" class="btn btn-primary" name="actionType" value="insertarVoluntario">Insertar Voluntarios</button>
-						<button type="button" class="btn btn-secondary ms-2" onclick="ocultarInput()">Cancelar</button>
+						<button type="button" class="btn btn-secondary ms-2" onclick="ocultarInput2()">Cancelar</button>
 					</form>
 				</div>
             </div>
@@ -144,6 +145,15 @@
 
     function ocultarInput() {
         document.getElementById('inputContainer').style.display = 'none';
+    }
+
+
+	function mostrarInput2() {
+        document.getElementById('inputContainer2').style.display = 'block';
+    }
+
+    function ocultarInput2() {
+        document.getElementById('inputContainer2').style.display = 'none';
     }
 </script>
 </body>

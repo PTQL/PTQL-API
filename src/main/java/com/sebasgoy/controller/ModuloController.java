@@ -2,6 +2,9 @@ package com.sebasgoy.controller;
 
 import java.util.List;
 
+import com.sebasgoy.dto.Participante;
+import com.sebasgoy.dto.Voluntario;
+import com.sebasgoy.service.VoluntarioService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,27 +25,12 @@ public class ModuloController {
 
 	private final ModuloService moduloService;
 	private final ActividadService actividadService;
-	
- 
-	
-	/*
-	@PostMapping("/registro")
-	public  ResponseEntity<Actividad> guardarActividad(@RequestBody Actividad actividad) {
-		Actividad response = null;
-		try {
-			response = actividadService.saveActividad(actividad);
-			return ResponseEntity.ok(response);
-		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-		}
-	}*/
+	private final VoluntarioService voluntarioService;
 	@GetMapping("/dashboard_modulo")
 	public String cargarDashboardModulo(Model model) {
 		model.addAttribute("listaModulo", moduloService.findActivos() );
 		return "DashboardModulo";
 	}
-	
-	
 	
 	@GetMapping("/generar_modulo")
 	public String cargarCrudModulo(Model model) {
@@ -85,7 +73,16 @@ public class ModuloController {
 	public String infoModulo(@PathVariable("id") Long id,Model model) {
 		
 		try {
+			//Logica :
+			// En el modulo todas las actividades deberian tener los mismo volutnarios
+			//pero se generan las tablas participaciones en la actividad para contabilizar su participacion
+			// segun regla de negocio , deberian tener como minimo 6 actividades o 36hrs de actividad para generar constancia
+
+			List<Voluntario> listaVoluntarioModulo = voluntarioService.findVoluntarioOfModulo(id);
+
 			model.addAttribute("modulo", moduloService.findById(id));
+ 			model.addAttribute("listaVoluntario",listaVoluntarioModulo );
+
 			System.out.println( Mensajes.success("MODULO", "BUSQUEDA"));
 			model.addAttribute("mensaje",  Mensajes.success("MODULO", "BUSQUEDA"));
 			

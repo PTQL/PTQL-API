@@ -38,8 +38,11 @@ public class ExcelMapper {
 
     public static <T> T DevolverEntidadFromExcel(MultipartFile archivoExcel,Class<T> clase)  {
         if (clase.equals(VoluntarioResponse.class)) {
+            System.out.println("devolviendo  Voluntario Response");
             return clase.cast(leerExcelOfVoluntarios(archivoExcel));
         } else if (clase.equals(ActividadResponse.class)) {
+            System.out.println("devolviendo  ActividadResponse");
+
             return clase.cast(leerExcelOfActividades(archivoExcel));
         } else {
             throw new IllegalArgumentException("Tipo de clase no admitido para mapear desde el archivo Excel.");
@@ -123,13 +126,22 @@ public class ExcelMapper {
             while (filas.hasNext()){
                 Row fila = filas.next();
                 /*Depende de la estructura del Excel*/
+                //Estructura de excel :
+                // Marca temporal -
+                // Dirección de correo electrónico -
+                // Puntuación -
+                // DNI -
+                // NOMBRE Y APELLIDO COMPLETO -
+                // Distrito de residencia actual: -
+                // EDAD: -
+                // Terminos y condiciones
                 Voluntario voluntario = new Voluntario();
                 voluntario.setEstado(true);
                 voluntario.setParticipante(new ArrayList<>());
-                voluntario.setNombre(getStringFromCell( fila,0));
-                voluntario.setApellido(getStringFromCell( fila,1));
-                voluntario.setEdad(getStringFromCell( fila,2));
+                voluntario.setCorreo(getStringFromCell(fila,1));
                 voluntario.setDni(getStringFromCell( fila,3));
+                voluntario.setNombre(getStringFromCell( fila,4));
+                voluntario.setEdad(getStringFromCell( fila,6));
 
                 if (areVoluntarioFieldsValid(voluntario)) {
                     if (ValoresPersonaRegex.isValidVoluntario(voluntario) ){
@@ -138,9 +150,12 @@ public class ExcelMapper {
                         listaInvalidos.add(voluntario);
                     }
                 }
+
             }
+            System.out.println("Lectura correcta de Excel");
             //TODO MAPEAR EXCEPCIONES
         } catch (IOException e) {
+            System.out.println("Lectura Incorrecta de Excel" + e);
             throw new RuntimeException(e);
         }
         return VoluntarioResponse.builder()
@@ -165,7 +180,7 @@ public class ExcelMapper {
 
     private static boolean areVoluntarioFieldsValid(Voluntario voluntario) {
         return isStringNotBlank(voluntario.getNombre()) &&
-               isStringNotBlank(voluntario.getApellido()) &&
+               isStringNotBlank(voluntario.getCorreo()) &&
                isStringNotBlank(voluntario.getEdad()) &&
                isStringNotBlank(voluntario.getDni());
     }

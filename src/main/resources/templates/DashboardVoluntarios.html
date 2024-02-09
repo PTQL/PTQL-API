@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
 <meta charset="ISO-8859-1">
 <title>Gestionar Actividades</title>
@@ -20,7 +20,6 @@
 				<tr>
 					<th>DNI</th>
 	                <th>Nombre</th>
-	                <th>Apellido</th>                
 	                <th>Participaciones</th>
 	                <th>Estado</th>
 	                <th>Opciones</th>
@@ -30,9 +29,8 @@
 				<tr th:each="voluntario : ${listaVoluntarios}">
 	                <td th:text="${voluntario.dni}"></td>
 	                <td th:text="${voluntario.nombre}"></td>
-	                <td th:text="${voluntario.apellido}"></td>
-	                <td th:if="${voluntario.participante.size() == 0}" ><a>AÃ±adir Participacion</a></td>
-	                <td th:if="${voluntario.participante.size() >= 1}" ><a>Ver participaciones<a></td>
+	                <td th:if="${voluntario.participante.size() == 0}" ><a>Añadir Participacion</a></td>
+	                <td th:if="${voluntario.participante.size() >= 1}" ><a>Ver participaciones</a></td>
 	                <td th:text="${voluntario.estado ? 'Activo' : 'Inactivo' }"></td>
 					<td>
 						<a class="btn btn-primary" th:value="${voluntario.id}" th:href="@{/editar_voluntario/}+${voluntario.id}">Editar</a>

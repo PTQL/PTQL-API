@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -43,7 +43,6 @@
 						<tr>
 							<th>DNI</th>
 			                <th>Nombre</th>
-			                <th>Apellido</th>
 			                <th>Tipo de Participacion</th>
 			                <th>Estado</th>
 			                <th>Opciones</th>
@@ -53,7 +52,6 @@
 						<tr th:each="participante : ${actividad.participante}">
 			                <td th:text="${participante.voluntario.dni}"></td>
 			                <td th:text="${participante.voluntario.nombre}"></td>
-			                <td th:text="${participante.voluntario.apellido}"></td>
 			                <td th:text="${participante.tipoParticipacion.descripcionParticipacion}"></td>
 			                <td th:text="${participante.isParticipant} ? 'Participo' : 'No Participó' "></td>
  							<td>
@@ -69,7 +67,7 @@
 				</table>
                 </div>
                 <div class="card-footer">
-                    <a class="btn btn-primary" th:if="${actividad.participante.size() == 0}" onclick="mostrarInput()">Agregar Excel de Voluntario Libre</a>
+                    <a class="btn btn-primary" onclick="mostrarInput()">Agregar Excel de Voluntario Libre</a>
                     <a class="btn btn-danger" th:if="${actividad.participante.size() >= 1}" th:href="@{/retirar_todos_voluntarios/}+${actividad.id}">Eliminar Todos</a>
                 </div>
             </div>	
@@ -78,10 +76,10 @@
                		Subir Excel
             	</div>
 				<div class="card-body">		 
-					<form th:action="@{/cargarExceltoActividad/}+${actividad.id}" method="post" enctype="multipart/form-data">
+					<form th:action="@{/cargarExcelVoluntariostoActividad/}+${actividad.id}" method="post" enctype="multipart/form-data">
 						<div class="mb-3">
 							<label for="excelFile" class="form-label">Ingrese Archivo Excel:</label>
-							<input type="file" class="form-control" name="excelFile" accept=".xlsx, .xls"  required>
+							<input type="file" class="form-control" name="excelFile" id="excelFile" accept=".xlsx, .xls"  required>
 						</div>
 						<button type="submit" class="btn btn-primary" name="actionType" value="verEstado">Ver Estado</button>
 						<button type="submit" class="btn btn-primary" name="actionType" value="insertarVoluntario">Insertar Voluntarios</button>

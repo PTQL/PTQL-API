@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -18,20 +18,20 @@
             <label for="Id" class="form-label">Id del Voluntario</label>
             <input type="text" th:field="*{Id}" class="form-control" id="Id" name="Id" readonly >
         </div>
+         <!-- Campo Dni-->
+         <div class="mb-3">
+             <label for="dni" class="form-label">DNI del Voluntario</label>
+             <input type="text" th:field="*{dni}" class="form-control" id="dni" name="dni" required>
+         </div>
+         <!-- Campo Correo-->
+         <div class="mb-3">
+             <label for="correo" class="form-label">Correo del Voluntario</label>
+             <input type="text" th:field="*{correo}" class="form-control" id="correo" name="correo" required>
+         </div>
         <!-- Campo Nombre-->
         <div class="mb-3">
             <label for="nombre" class="form-label">Nombre del Voluntario</label>
             <input type="text" th:field="*{nombre}" class="form-control" id="nombre" name="nombre" required>
-		</div>
-		<!-- Campo Apellido-->
-        <div class="mb-3">
-            <label for="apellido" class="form-label">Apellido del Voluntario</label>
-            <input type="text" th:field="*{apellido}" class="form-control" id="apellido" name="apellido" required>
-		</div>
-		<!-- Campo Dni-->
-        <div class="mb-3">
-            <label for="dni" class="form-label">DNI del Voluntario</label>
-            <input type="text" th:field="*{dni}" class="form-control" id="dni" name="dni" required>
 		</div>
 		<!-- Campo Edad-->
         <div class="mb-3">

@@ -1,6 +1,7 @@
 package com.sebasgoy.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -29,7 +30,10 @@ public class ModuloService {
     public Modulo findById(Long id){
         return iModuloRepository.findById(id).orElse(new Modulo());
     }
-    
+    public Optional<Modulo> findByIdOptional(Long id){
+        return iModuloRepository.findById(id);
+    }
+
     public List<Modulo> findAll(){
     	return iModuloRepository.findAll();
     }

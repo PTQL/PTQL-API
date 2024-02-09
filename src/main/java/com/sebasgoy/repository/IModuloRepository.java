@@ -9,4 +9,7 @@ import java.util.List;
 
 public interface IModuloRepository  extends JpaRepository<Modulo, Long>{
 	List<Modulo> findByEstadoIsTrue();
+
+
+
 }

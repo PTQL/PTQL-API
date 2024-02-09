@@ -7,7 +7,7 @@ public class ValoresPersonaRegex {
     public static final String DNI = "^([0-9]{8})$";
     public static final String CARNET_EXTRANJERIA = "^([0]{2}[0-9]{7})$";
 
-    public static final String EDAD = "^([0-9][0-9])$";
+    public static final String EDAD = "^(\\d{2})\\s?(?:años)?$";
     public static final String CELULAR_PERUANO = "^(?:\\+?51)?(9[0-9]{8})$";
 
     //public static final String CELULAR_GLOBAL = "";

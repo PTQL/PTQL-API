@@ -22,17 +22,27 @@ public class ParticipanteService {
         return iParticipanteRepository.findByVoluntario_DniAndActividad(dni, actividad);
     }
 
+
+
     public List<Participante> getAll(){
         return iParticipanteRepository.findAll();
     }
     public Participante saveParticipante(Participante participante) {
         return iParticipanteRepository.save(participante);
     }
+
+    public boolean existeParticipanteParaVoluntarioYActividad(Long idVoluntario, Long idActividad) {
+        return iParticipanteRepository.findByVoluntarioIdAndActividadId(idVoluntario, idActividad).isPresent();
+    }
+
     
     public void deleteParticipante(Participante participante) {
     	
     	iParticipanteRepository.delete(participante);
     }
+
+
+
     
     public void deleteParticipanteById(Long id) {
     	iParticipanteRepository.deleteById(id);

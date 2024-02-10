@@ -2,10 +2,7 @@ package com.sebasgoy.dto;
 
 import com.sebasgoy.constantes.Modalidades;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.Duration;
 import java.time.LocalTime;
@@ -16,6 +13,7 @@ import java.util.List;
 @Entity
 @Builder
 @AllArgsConstructor
+@ToString
 @NoArgsConstructor
 @Table(name="actividad")
 public class Actividad {

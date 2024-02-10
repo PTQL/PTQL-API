@@ -12,6 +12,7 @@ import java.util.List;
 public interface IVoluntarioRepository extends JpaRepository<Voluntario, Long>{
 	@Query("SELECT DISTINCT p.voluntario FROM Participante p JOIN p.actividad a WHERE a.modulo.id = :idModulo AND p.tipoParticipacion.id = 1")
 	List<Voluntario> findVoluntarioByModuloId(@Param("idModulo") Long idModulo);
+
 	boolean existsByDni(String dni);
 	Voluntario findByDni(String dni);
 }

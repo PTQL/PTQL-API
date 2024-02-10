@@ -113,7 +113,7 @@
 					</table>
                 </div>
                 <div class="card-footer">
-                    <a class="btn btn-primary" th:if="${listaVoluntario.size() == 0 && modulo.actividad.size() >= 1 }" onclick="mostrarInput2()">Agregar Excel de Voluntarios Modulo</a>
+                    <a class="btn btn-primary" th:if="${modulo.actividad.size() >= 1 }" onclick="mostrarInput2()">Agregar Excel de Voluntarios Modulo</a>
                     <a class="btn btn-danger" th:if="${listaVoluntario.size() >= 1 }">Eliminar Todos</a>
                 </div>
             </div>	

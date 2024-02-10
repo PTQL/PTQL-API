@@ -1,11 +1,7 @@
 package com.sebasgoy.dto;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
@@ -13,6 +9,7 @@ import jakarta.persistence.*;
 @Data
 @Entity
 @Builder
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name="voluntario")

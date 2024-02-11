@@ -51,7 +51,7 @@
 				                <td th:text="${actividad.ubicacionActividad}"></td>
 				                <td th:text="${actividad.fechaActividad}"></td>
  								<td>
-									<a href="">Remover actividad</a>
+									<a th:href="@{/retirarActividadFromModulo/{actividadId}(actividadId=${actividad.id}, moduloId=${modulo.id})}">Remover actividad</a>
 									<a>Ver actividad</a>
 								</td>
 			           		</tr>

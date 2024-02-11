@@ -45,7 +45,17 @@ public class ParticipanteService {
     	iParticipanteRepository.deleteById(id);
     }
 
+    public List<Participante> findParticipantesFromActividad(Long idActividad){
+        return iParticipanteRepository.findByIdActividad(idActividad);
+
+    }
+    public void deleteListOfParticipante(List<Participante> lstaParticipantesFromActividad) {
+        System.out.println("Eliminando lista de participantes de una actividad");
+        for (Participante participante: lstaParticipantesFromActividad) {
+            iParticipanteRepository.delete(participante);
+
+        }
 
 
-
+    }
 }

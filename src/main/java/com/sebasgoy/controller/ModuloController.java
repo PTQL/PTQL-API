@@ -1,10 +1,15 @@
 package com.sebasgoy.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
+import com.sebasgoy.constantes.Modalidades;
 import com.sebasgoy.dto.Participante;
 import com.sebasgoy.dto.Voluntario;
+import com.sebasgoy.service.ParticipanteService;
 import com.sebasgoy.service.VoluntarioService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.Part;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +31,7 @@ public class ModuloController {
 	private final ModuloService moduloService;
 	private final ActividadService actividadService;
 	private final VoluntarioService voluntarioService;
+	private final ParticipanteService participanteService;
 	@GetMapping("/dashboard_modulo")
 	public String cargarDashboardModulo(Model model) {
 		model.addAttribute("listaModulo", moduloService.findActivos() );
@@ -97,7 +103,9 @@ public class ModuloController {
 		
 		
 	}
-	
+
+
+
 	
 	@GetMapping("/addActividadToModulo/{actividadId}")
 	public String agregarActividad(@PathVariable Long actividadId , @RequestParam Long moduloId ,Model model){
@@ -191,7 +199,31 @@ public class ModuloController {
 		return "redirect:/dashboard_modulo";
 	}
 
+	@GetMapping("/retirarActividadFromModulo/{actividadId}")
+	public String retirarActividadFromModulo(@PathVariable Long actividadId , @RequestParam Long moduloId , Model model, HttpServletRequest request){
+		String pagina_anterior = request.getHeader("referer");
+		try {
+			Modulo modulo = moduloService.findById(moduloId);
+			Actividad actividad = actividadService.findById(actividadId);
 
+
+			List<Participante> lstaParticipantesFromActividad  = participanteService.findParticipantesFromActividad(actividadId);
+
+
+			participanteService.deleteListOfParticipante(lstaParticipantesFromActividad.stream().filter(participante -> participante.getIdTipoParticipacion() == Modalidades.ID_MODULO).collect(Collectors.toList()));
+
+			actividad.setModulo(null);
+			actividadService.saveActividad(actividad);
+			modulo.getActividad().remove(actividad);
+			moduloService.saveModulo(modulo);
+
+		} catch (Exception e) {
+			System.out.println(Mensajes.error("Actividad from Modulo", "ELIMINACION").concat(e.toString()));
+			model.addAttribute("mensaje" , Mensajes.error("Actividad from Modulo" , "ELIMINACION").concat(e.toString()));
+
+		}
+		return "redirect:"+pagina_anterior;
+	}
 
 
 

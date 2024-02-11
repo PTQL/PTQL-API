@@ -62,10 +62,9 @@ public class ExcelController {
 						System.out.println("Iteracion para :"+voluntario.toString());
 						// Validar duplicación con DNI
 						if ( !voluntarioService.existsByDni(voluntario.getDni())) {
-
 							voluntarioService.saveVoluntario(voluntario);
 						}else {
-							voluntario.setId(voluntarioService.findByDni(voluntario.getDni()).getId());
+							voluntario = voluntarioService.findByDni(voluntario.getDni());
 							voluntario.setEstado(true);
 						}
 
@@ -117,25 +116,40 @@ public class ExcelController {
 						.orElseThrow(() -> new EntityNotFoundException("Modulo con ID " + idModulo + " no encontrada."));
  					List<Voluntario> listaVoluntarios = response.getListVoluntarioValido();
 					List<Actividad> listActividad = modulo.getActividad();
-
-					for(Actividad actividad :listActividad ){
+					System.out.println("Empezando registro de voluntario a modulo");
+					try {
+						voluntario_loop:
 						for ( Voluntario voluntario: listaVoluntarios) {
-
+							System.out.println(voluntario.toString());
 							if ( !voluntarioService.existsByDni(voluntario.getDni())) {
 								voluntarioService.saveVoluntario(voluntario);
 							}else {
-								voluntario.setId(voluntarioService.findByDni(voluntario.getDni()).getId());
+								voluntario = voluntarioService.findByDni(voluntario.getDni());
 								voluntario.setEstado(true);
 							}
-							if (!participanteService.existeParticipanteParaVoluntarioYActividad(voluntario.getId(),actividad.getId() )){
 
-								Participante participante = crearParticipante(actividad.getId(), voluntario.getId(),Modalidades.MODULO);
-								participanteService.saveParticipante(participante);
-							}else {
-								System.out.println("Participante Existe");
+							for(Actividad actividad :listActividad ){
+								if (voluntario.getParticipante().stream().anyMatch(participante -> participante.getActividad().getId().equals(actividad.getId()))) {
+									System.out.println("match");
+									continue voluntario_loop;
+								}else {
+									if (!participanteService.existeParticipanteParaVoluntarioYActividad(voluntario.getId(),actividad.getId() )){
+										Participante participante = crearParticipante(actividad.getId(), voluntario.getId(),Modalidades.MODULO);
+										participanteService.saveParticipante(participante);
+									}else {
+										System.out.println("Participante Existe");
+									}
+								}
+
+
+
 							}
 						}
+
+					}catch (Exception e){
+						System.out.println(e);
 					}
+
 					System.out.println("Guardado de participantes en modulo OK");
 					return "redirect:"+pagina_anterior;
 

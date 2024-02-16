@@ -226,6 +226,28 @@ public class ModuloController {
 	}
 
 
+	@GetMapping("/removeVoluntarioFromModulo/{voluntarioId}")
+	public String removeVoluntarioFromModulo(@PathVariable Long voluntarioId , @RequestParam Long moduloId ,Model model,HttpServletRequest request){
+		System.out.println("Volutnario id :" + voluntarioId);
+		System.out.println("Modulo id :" + moduloId);
+		String pagina_anterior = request.getHeader("referer");
+		Modulo modulo = moduloService.findById(moduloId);
+		List<Actividad> listActividadFromModulo = modulo.getActividad();
+		System.out.println("ITERACION ACTIVIDADES DEL MODULO INICIO");
+		for (Actividad actividad: listActividadFromModulo ) {
+			Participante participante = participanteService.findParticipanteParaVoluntarioYActividad(voluntarioId,actividad.getId());
+			participanteService.deleteParticipante(participante);
+			System.out.println("Elminacion de actividad");
+
+		}
+		System.out.println("ITERACION ACTIVIDADES DEL MODULO FIN");
+
+
+
+		return "redirect:"+pagina_anterior;
+	}
+
+
 
 
 

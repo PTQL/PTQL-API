@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -49,11 +50,17 @@ public class ParticipanteService {
         return iParticipanteRepository.findByIdActividad(idActividad);
 
     }
+
+    public List<Participante> getLibresFromListParticipante(Long idActividad){
+        List<Participante> listParticipantes = iParticipanteRepository.findByIdActividad(idActividad);
+        return listParticipantes.stream().filter( participante -> participante.getIdTipoParticipacion() == Modalidades.ID_LIBRE).collect(Collectors.toList());
+
+    }
+
     public void deleteListOfParticipante(List<Participante> lstaParticipantesFromActividad) {
         System.out.println("Eliminando lista de participantes de una actividad");
         for (Participante participante: lstaParticipantesFromActividad) {
             iParticipanteRepository.delete(participante);
-
         }
 
 

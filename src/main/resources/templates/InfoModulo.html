@@ -12,7 +12,7 @@
     <div class="row">
 		<div class="col-md-10 offset-md-1">
 			<a class="btn btn-primary mb-3" th:href="@{/dashboard_modulo}">Regresar</a>
-			<a class="btn btn-secondary mb-3" th:href="@{/editar_modulo/}+${modulo.id}">Editar Modulo</a> 
+			<a class="btn btn-secondary mb-3" th:href="@{/editar_modulo/}+${voluntario.id}">Editar Modulo</a>
 			<a class="btn btn-secondary mb-3" th:href="@{/generar_constancias_modulo/}+${modulo.id}">Generar Constancias Modalidad Modulo</a> 
 
         	<div class="card">
@@ -103,9 +103,9 @@
 				                <td th:text="${voluntario.nombre}"></td>
 				                <td th:text="${voluntario.correo}"></td>
   								<td>
-									<a>Generar Constancia</a>
-									<a>Ver Participaciones</a>
-									<a>Remover</a>
+									<a th:href="@{/generarConstanciaUnitariaModulo}">Generar Constancia</a>
+									<a th:href="@{/verEstadoVoluntarioFromModulo}">Ver Participaciones</a>
+									<a th:href="@{/removeVoluntarioFromModulo/{voluntarioId}(voluntarioId=${voluntario.id}, moduloId=${modulo.Id})}">Remover</a>
 								</td>
 			           		</tr>
 			

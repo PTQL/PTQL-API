@@ -33,9 +33,6 @@ public class ExcelMapper {
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     private static final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
 
-
-
-
     public static <T> T DevolverEntidadFromExcel(MultipartFile archivoExcel,Class<T> clase)  {
         if (clase.equals(VoluntarioResponse.class)) {
             System.out.println("devolviendo  Voluntario Response");

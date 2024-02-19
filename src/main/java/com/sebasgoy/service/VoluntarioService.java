@@ -8,7 +8,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -33,6 +35,12 @@ public class VoluntarioService {
     public Optional<Voluntario> findByIdOptional(Long id){
         return  iVoluntarioRepository.findById(id);
     }
+    
+    public void deleteVoluntario(Voluntario voluntario) {
+    	
+    	iVoluntarioRepository.delete(voluntario);
+    	
+    }
 
     public List<Voluntario> findVoluntarioOfModulo(Long idModulo){
         return iVoluntarioRepository.findVoluntarioByModuloId(idModulo);
@@ -46,6 +54,15 @@ public class VoluntarioService {
     
     public List<Voluntario> getAll(){
         return iVoluntarioRepository.findAll();
+    }
+    public List<Voluntario> getAllWithoutActivity(Actividad actividad){
+
+        List<Voluntario> listVoluntario = iVoluntarioRepository.findAll();
+
+        return listVoluntario.stream()
+                .filter(voluntario -> voluntario.getParticipante().stream()
+                        .noneMatch(participante -> Objects.equals(participante.getIdActividad(), actividad.getId())))
+                .collect(Collectors.toList());
     }
     public void saveVoluntario(Voluntario voluntario) {
         iVoluntarioRepository.save(voluntario);

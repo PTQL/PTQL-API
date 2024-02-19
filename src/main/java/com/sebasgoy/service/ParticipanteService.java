@@ -23,6 +23,8 @@ public class ParticipanteService {
         return  iParticipanteRepository.findById(id).orElse(new Participante());
     }
     
+    
+    
     public Participante findByDniAndActividad(String dni,Actividad actividad){
         return iParticipanteRepository.findByVoluntario_DniAndActividad(dni, actividad);
     }
@@ -31,6 +33,20 @@ public class ParticipanteService {
     }
     public void saveParticipante(Participante participante) {
         iParticipanteRepository.save(participante);
+    }
+    
+    public void saveVoluntariosToActividad(List<Long> ListIdVoluntarios, Long idActividad,Long idModalidad) {
+        System.out.println("Guardando lista de voluntarios en una actividad");
+        for (Long idVoluntario : ListIdVoluntarios) {
+			iParticipanteRepository.save(
+					Participante.builder()
+					.idActividad(idActividad)
+					.idVoluntario(idVoluntario)
+					.isParticipant(false)
+					.idTipoParticipacion(idModalidad)
+					.build()
+			);
+		}
     }
 
     public boolean existeParticipanteParaVoluntarioYActividad(Long idVoluntario, Long idActividad) {
@@ -53,9 +69,10 @@ public class ParticipanteService {
 
     public List<Participante> getLibresFromListParticipante(Long idActividad){
         List<Participante> listParticipantes = iParticipanteRepository.findByIdActividad(idActividad);
-        return listParticipantes.stream().filter( participante -> participante.getIdTipoParticipacion() == Modalidades.ID_LIBRE).collect(Collectors.toList());
+        return listParticipantes.stream().filter( participante -> (participante.getIdTipoParticipacion() == Modalidades.ID_LIBRE)&& (participante.getIsParticipant() == Boolean.TRUE)).collect(Collectors.toList());
 
     }
+
 
     public void deleteListOfParticipante(List<Participante> lstaParticipantesFromActividad) {
         System.out.println("Eliminando lista de participantes de una actividad");

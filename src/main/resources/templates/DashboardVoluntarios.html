@@ -10,6 +10,7 @@
 	
 	<div class="container mt-5">
     	<a href="/generar_voluntario" class="btn btn-primary">Generar Voluntario</a>	
+    	<a href="/herramienta_lectorTexto" class="btn btn-primary">Registrar Varios Voluntarios</a>	
     	<a href="/" class="btn btn-secondary">Regresar</a>	
 
 	</div>
@@ -29,13 +30,13 @@
 				<tr th:each="voluntario : ${listaVoluntarios}">
 	                <td th:text="${voluntario.dni}"></td>
 	                <td th:text="${voluntario.nombre}"></td>
-	                <td th:if="${voluntario.participante.size() == 0}" ><a>Añadir Participacion</a></td>
+	                <td th:if="${voluntario.participante.size() == 0}" ><a>Aï¿½adir Participacion</a></td>
 	                <td th:if="${voluntario.participante.size() >= 1}" ><a>Ver participaciones</a></td>
 	                <td th:text="${voluntario.estado ? 'Activo' : 'Inactivo' }"></td>
 					<td>
 						<a class="btn btn-primary" th:value="${voluntario.id}" th:href="@{/editar_voluntario/}+${voluntario.id}">Editar</a>
  						<a class="btn btn-secondary" th:value="${voluntario.id}" th:href="@{/info_voluntario/}+${voluntario.id}">Detalles</a>
-						<a  class="btn btn-danger"   th:value="${voluntario.id}" th:href="@{/desactivar_voluntario/}+${voluntario.id}" >Eliminar</a>
+						<a  class="btn btn-danger"   th:value="${voluntario.id}" th:href="@{/eliminar_voluntario/}+${voluntario.id}" >Eliminar</a>
 					</td>
            		</tr>
 				

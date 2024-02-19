@@ -1,13 +1,16 @@
 package com.sebasgoy.constantes;
 
+import com.lowagie.text.DocumentException;
 import com.sebasgoy.dto.request.PlantillaDto;
+import org.xhtmlrenderer.pdf.ITextRenderer;
 
-import java.io.FileWriter;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
+
 
 public class Plantillas {
-
-
 
     public static String GenerarPlantilla(PlantillaDto plantillaDto) {
         return "<!DOCTYPE html>\n" +
@@ -24,6 +27,37 @@ public class Plantillas {
                 "            margin: 0;\n" +
                 "            padding: 0;\n" +
                 "            box-sizing: border-box;\n" +
+                "        }"+
+                "        .titulo1{\n" +
+                "            position: absolute;\n" +
+                "            width: 1335.6px;\n" +
+                "            height: 40.3px;\n" +
+                "            left: 292.2px ;\n" +
+                "            top: 376.3px;\n" +
+                "        }\n" +
+                "\n" +
+                "        .titulo1 p{\n" +
+                "            margin: 0;\n" +
+                "            font-size: 35px;\n" +
+                "            font-family: \"Manjari\", sans-serif;\n" +
+                "            text-align: center;\n" +
+                "        }\n" +
+                "        .verde{\n" +
+                "            color:#67A234\n" +
+                "        }\n" +
+                "        .titulo2{\n" +
+                "            position: absolute;\n" +
+                "            width: 413.4px;\n" +
+                "            height: 37.6px;\n" +
+                "            left: 773.6px ;\n" +
+                "            top: 419px;\n" +
+                "        }\n" +
+                "        .titulo2 p{\n" +
+                "            margin: 0;\n" +
+                "            font-size: 35px;\n" +
+                "            font-family: \"Manjari\", sans-serif;\n" +
+                "            text-align: center;\n" +
+                "            color: #202D10;\n" +
                 "        }"+
                 "        .NombreVoluntario {\n" +
                 "            position: absolute;\n" +
@@ -63,8 +97,6 @@ public class Plantillas {
                 "\n" +
                 "        .FechaGeneralActividad {\n" +
                 "            position: absolute;\n" +
-                "            width: 262px;\n" +
-                "            height: 35.2px;\n" +
                 "            left: 447.5px;\n" +
                 "            top: 768.3px;\n" +
                 "        }\n" +
@@ -84,16 +116,17 @@ public class Plantillas {
                 "        .fechaActividad {\n" +
                 "            font-weight: 700;\n" +
                 "        }\n" +
-                "\n" +
-                "        .FechaGeneralActividad {\n" +
-                "            font-family: 'Manjari', sans-serif;\n" +
-                "            font-weight: 500;\n" +
-                "        }\n" +
                 "    </style>\n" +
                 "</head>\n" +
                 "<body>\n" +
                 "    <div class=\"fondo\">\n" +
-                "    <img class=\"img_fondo\" src=\"https://i.postimg.cc/G2vC8vmR/CONSTANCIA-DE-PARTICIPACI-N-ACTUALIZADA.png\"></img>"+
+                "    <img class=\"img_fondo\" src=\"https://i.postimg.cc/L8wxNcQT/CONSTANCIA-DE-PARTICIPACI-N-ACTUALIZADA-2.png\"></img>"+
+                "        <div class=\"titulo1\">\n" +
+                "            <p>La ONG <span class=\"verde\">\"Perú Te Quiero Limpio\"</span> dedicada a la preservación del medio ambiente</p>\n" +
+                "        </div>\n" +
+                "        <div class=\"titulo2\">\n" +
+                "            <p>Otorga esta constancia a </p>\n" +
+                "        </div>"+
                 "        <div class=\"NombreVoluntario\">\n" +
                 "            <p>" + plantillaDto.getNombreVoluntario() + "</p>\n" +
                 "        </div>\n" +
@@ -108,5 +141,30 @@ public class Plantillas {
                 "</html>";
     }
 
+    public static void convertirHTMLaPDF(String html, String rutaPDF) throws Exception {
+        System.out.println("Iniciando proceso de conversión");
 
+        // Obtenemos la ruta del directorio
+        File directorio = new File(rutaPDF).getParentFile();
+
+        // Verificamos si el directorio existe, si no, lo creamos
+        if (!directorio.exists()) {
+            if (directorio.mkdirs()) {
+                System.out.println("Directorio creado exitosamente: " + directorio.getAbsolutePath());
+            } else {
+                System.out.println("Error al crear el directorio: " + directorio.getAbsolutePath());
+                return; // Salimos del método si no se pudo crear el directorio
+            }
+        }
+
+        try (OutputStream outputStream = new FileOutputStream(rutaPDF)) {
+            ITextRenderer renderer = new ITextRenderer();
+            renderer.setDocumentFromString(html);
+            renderer.layout();
+            renderer.createPDF(outputStream, true);
+        } catch (DocumentException | IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println("Proceso de conversión finalizado");
+    }
 }

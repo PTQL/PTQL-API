@@ -16,7 +16,7 @@
         <div class="card mb-3">
             <div class="card-header" data-bs-toggle="collapse" href="#validVolunteers" role="button"
                 aria-expanded="false" aria-controls="validVolunteers">
-                <h3 class="card-title">Listado de Voluntarios Válidos -
+                <h3 class="card-title">Listado de Voluntarios Validos -
                     <span th:if="${voluntarioResponse.listVoluntarioValido.size() > 0}"
                         th:text="${voluntarioResponse.listVoluntarioValido.size()}">0</span>
                 </h3>
@@ -48,7 +48,7 @@
         <div class="card mb-3">
             <div class="card-header" data-bs-toggle="collapse" href="#invalidVolunteers" role="button"
                 aria-expanded="false" aria-controls="invalidVolunteers">
-                <h3 class="card-title">Listado de Voluntarios Inválidos -
+                <h3 class="card-title">Listado de Voluntarios Invalidos -
                     <span th:if="${voluntarioResponse.listVoluntarioInvalido.size() > 0}"
                         th:text="${voluntarioResponse.listVoluntarioInvalido.size()}">0</span>
                 </h3>
@@ -87,7 +87,7 @@
             var validVolunteersCollapse = document.getElementById('validVolunteers');
             var invalidVolunteersCollapse = document.getElementById('invalidVolunteers');
 
-            // Verifica si las listas están vacías y oculta las secciones correspondientes si es necesario
+            // Verifica si las listas estï¿½n vacï¿½as y oculta las secciones correspondientes si es necesario
             if (validVolunteersCollapse.querySelectorAll('tbody tr').length === 0) {
                 validVolunteersCollapse.classList.remove('show');
             }
@@ -96,17 +96,17 @@
                 invalidVolunteersCollapse.classList.remove('show');
             }
 
-            // Maneja la animación de mostrar/ocultar
+            // Maneja la animaciï¿½n de mostrar/ocultar
             var collapseElements = document.querySelectorAll('.collapse');
 
             collapseElements.forEach(function (collapse) {
                 collapse.addEventListener('show.bs.collapse', function () {
-                    // Se ejecuta cuando comienza la animación de mostrar
+                    // Se ejecuta cuando comienza la animaciï¿½n de mostrar
                     // Puedes personalizar con otras clases o estilos si es necesario
                 });
 
                 collapse.addEventListener('hide.bs.collapse', function () {
-                    // Se ejecuta cuando comienza la animación de ocultar
+                    // Se ejecuta cuando comienza la animaciï¿½n de ocultar
                     // Puedes personalizar con otras clases o estilos si es necesario
                 });
             });

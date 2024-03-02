@@ -1,14 +1,11 @@
 package com.sebasgoy.constantes;
-
 import com.lowagie.text.DocumentException;
 import com.sebasgoy.dto.request.PlantillaDto;
 import org.xhtmlrenderer.pdf.ITextRenderer;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-
 
 public class Plantillas {
 
@@ -61,9 +58,8 @@ public class Plantillas {
                 "        }"+
                 "        .NombreVoluntario {\n" +
                 "            position: absolute;\n" +
-                "            width: 844.7px;\n" +
+                "            width: 100%;\n" +
                 "            height: 62.1px;\n" +
-                "            left: 578.5px;\n" +
                 "            top: 480.9px;\n" +
                 "        }\n" +
                 "\n" +
@@ -128,7 +124,7 @@ public class Plantillas {
                 "            <p>Otorga esta constancia a </p>\n" +
                 "        </div>"+
                 "        <div class=\"NombreVoluntario\">\n" +
-                "            <p>" + plantillaDto.getNombreVoluntario() + "</p>\n" +
+                "            <p>" + plantillaDto.getVoluntario().getNombre() + "</p>\n" +
                 "        </div>\n" +
                 "        <div class=\"DescripcionVoluntario\">\n" +
                 "            <p>En reconocimiento a su arduo trabajo y valioso aporte personal como voluntario para el éxito de la actividad <span class=\"nombreActividad\">" + plantillaDto.getNombreActividad() + "</span> <span style=\"font-weight: 700;\">, realizada el </span><span class=\"fechaActividad\">" + plantillaDto.getFechaActividad() + "</span> en <span class=\"ubicacionActividad\">" + plantillaDto.getUbicacionActividad() + "</span>. La constancia a continuación se emite por un total de <span class=\"horasActivdad\">" + plantillaDto.getHorasActividad() + "</span> horas de trabajo voluntario.</p>\n" +
@@ -141,7 +137,7 @@ public class Plantillas {
                 "</html>";
     }
 
-    public static void convertirHTMLaPDF(String html, String rutaPDF) throws Exception {
+    public static void convertirHTMLaPDF(String html, String rutaPDF)   {
         System.out.println("Iniciando proceso de conversión");
 
         // Obtenemos la ruta del directorio

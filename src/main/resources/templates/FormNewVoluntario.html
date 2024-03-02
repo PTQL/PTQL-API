@@ -26,17 +26,28 @@
          <!-- Campo Correo-->
          <div class="mb-3">
              <label for="correo" class="form-label">Correo del Voluntario</label>
-             <input type="text" th:field="*{correo}" class="form-control" id="correo" name="correo" required>
+             <input type="text" th:field="*{correo}" class="form-control" id="correo" name="correo"  >
          </div>
         <!-- Campo Nombre-->
         <div class="mb-3">
             <label for="nombre" class="form-label">Nombre del Voluntario</label>
             <input type="text" th:field="*{nombre}" class="form-control" id="nombre" name="nombre" required>
 		</div>
+         <!-- Campo Nombre-->
+         <div class="mb-3">
+             <label for="celular" class="form-label">Celular del Voluntario</label>
+             <input type="number" th:field="*{telefono}" class="form-control" id="celular" name="celular">
+         </div>
 		<!-- Campo Edad-->
         <div class="mb-3">
             <label for="edad" class="form-label">Edad del Voluntario</label>
-            <input type="number" th:field="*{edad}" class="form-control" id="edad" name="edad" required>
+            <input type="number" th:field="*{edad}" class="form-control" id="edad" name="edad"  >
+		</div>
+		
+				<!-- Campo Edad-->
+        <div class="mb-3">
+            <label for="estado" class="form-label">Estado del Voluntario</label>
+            <input type="checkbox" th:field="*{estado}" class="form-check" id="estado" name="estado"  >
 		</div>
          <!-- Botón para enviar el formulario -->
         <button type="submit" class="btn btn-primary">Editar Voluntario</button>

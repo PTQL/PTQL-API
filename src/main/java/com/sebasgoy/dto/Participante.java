@@ -5,14 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 @Entity
 @Table(name="participante")
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 @Data
 public class Participante {
 

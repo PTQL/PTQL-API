@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -23,12 +23,12 @@
             <input type="text" th:field="${actividad.nombreActividad}" class="form-control" id="nombreActividad" name="nombreActividad" required>
         </div>
 
+
         <!-- Campo Ubicación de Actividad -->
         <div class="mb-3">
             <label for="ubicacionActividad" class="form-label">Ubicación de Actividad</label>
             <input type="text" th:field="${actividad.ubicacionActividad}" class="form-control" id="ubicacionActividad" name="ubicacionActividad" required>
         </div>
-
         <!-- Campo Fecha de Actividad -->
         <div class="mb-3">
             <label for="fechaActividad" class="form-label">Fecha de Actividad</label>
@@ -50,12 +50,20 @@
         <!-- Campo Estado-->
         <div class="mb-3">
             <label for="estado" class="form-label">Estado</label>
-            <input type="checkbox" checked th:field="${actividad.estado}" class="form-check" id="estado" name="estado" required>
+            <input type="checkbox" checked th:field="${actividad.estado}" class="form-check" id="estado" name="estado"  >
+        </div>
+
+        <!-- Campo Modulo de la  Actividad -->
+        <div class="mb-3"  >
+            <label for="moduloId" class="form-label">Modulo de la Actividad</label>
+            <input type="text" th:field="${actividad.idModuloActividad}" class="form-control" id="moduloId" name="moduloId" >
         </div>
 
         <!-- Botón para enviar el formulario -->
         <button type="submit" class="btn btn-primary">Guardar Actividad</button>
         <a class="btn btn-primary" th:href="@{/dashboard_actividad}">Cancelar</a>
+		<a th:value="${actividad.id}" class="btn btn-warning" th:href="@{/eliminar_actividad/}+${actividad.id}" >Eliminar</a>
+
     </form>
 </div>
 

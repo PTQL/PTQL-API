@@ -3,11 +3,13 @@ package com.sebasgoy.controller;
 import com.sebasgoy.dto.Actividad;
 import com.sebasgoy.dto.Participante;
 import com.sebasgoy.dto.Voluntario;
+import com.sebasgoy.dto.response.AsistenciaRespone;
 import com.sebasgoy.service.ActividadService;
 import com.sebasgoy.service.ParticipanteService;
-
+import com.sebasgoy.service.VoluntarioService;
 import com.sebasgoy.constantes.Mensajes;
 import com.sebasgoy.constantes.Modalidades;
+import com.sebasgoy.constantes.ValoresPersonaRegex;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
@@ -24,6 +26,7 @@ public class ParticipanteController {
 
 	private final ParticipanteService participanteService;
 	private final ActividadService actividadService;
+	private final VoluntarioService voluntarioService;
 
 	@GetMapping("/change_participacion/{id}")
 	public String change_participacion(@PathVariable("id") Long idParticipante ,Model model,
@@ -120,7 +123,7 @@ public class ParticipanteController {
 		String pagina_anterior = request.getHeader("referer");
 		try {
 
-			participanteService.saveVoluntariosToActividad(voluntariosSeleccionados, idActividad, Modalidades.ID_LIBRE);
+			participanteService.saveVoluntariosToActividad(voluntariosSeleccionados, idActividad, Modalidades.ID_LIBRE,true);
 			
 			
 			return "redirect:/info_actividad/"+idActividad;
@@ -139,24 +142,45 @@ public class ParticipanteController {
 			HttpServletRequest  request,
 			@PathVariable("id") Long idActividad,
 			Model model,
-			@RequestParam("nombres") String nombres
+    		@RequestParam(value="type") String action,
+			@RequestParam("dni") String dnis
 			){
+ 
+        AsistenciaRespone asistenciaResponse = participanteService.verDetallesListOfDni(idActividad, model, dnis);
 
-		String pagina_anterior = request.getHeader("referer");
+		if (action.equals("verDetalles")) {
+			try {
+				model.addAttribute("actividad",actividadService.findById(idActividad));
+				model.addAttribute("asistenciaRespone",asistenciaResponse 	);
+		        
+				return "gestorAsistencia/GestorAsistencia";
+			} catch (Exception e) {
+				System.out.println(Mensajes.error("VOLUNTARIO", "Registro") + e.getMessage());
+				return "redirect:/dashboard_voluntario";		
+			}
+	 
+		}else if (action.equals("marcarAsistencia")) {
 
-		try {
-			System.out.println("Iniciando lectura de Txt");
-	        List<String> listaNombres = Arrays.asList(nombres.split("\\r?\\n"));
-	        
+			List<Voluntario> voluntarios_guardados = voluntarioService.saveAndGetVoluntarios(asistenciaResponse.getLstNoRegistrados());
+			List<Participante> participante_creados_libre = participanteService.saveVoluntariosToActividadAndGetParticipantes(voluntarios_guardados,idActividad,Modalidades.ID_LIBRE);
 
-	        		
-		} catch (Exception e) {
-			System.out.println(Mensajes.error("VOLUNTARIO", "Registro") + e.getMessage());
-		} 
-		return "redirect:/dashboard_voluntario";		
-
+			participanteService.makeParticipantionTrue(participante_creados_libre);
+			participanteService.makeParticipantionTrue(asistenciaResponse.getLstRegistrados());
+			
+		}
 		
+		return "redirect:/info_actividad/"+idActividad;
 	}
+
+
+
+	
+ 
+	
+	
+	
+	
+
 
 
 	

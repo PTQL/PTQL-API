@@ -1,6 +1,7 @@
 package com.sebasgoy.dto;
 
 import com.sebasgoy.constantes.Modalidades;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -13,7 +14,6 @@ import java.util.List;
 @Entity
 @Builder
 @AllArgsConstructor
-@ToString
 @NoArgsConstructor
 @Table(name="actividad")
 public class Actividad {
@@ -28,18 +28,27 @@ public class Actividad {
 	@Column(name = "fechaActividad")
 	private Date fechaActividad;
 	@Column(name = "horaInicio")
-	private LocalTime   horaInicio;
+	private LocalTime horaInicio;
 	@Column(name = "horaFin")
-	private LocalTime  horaFin;
+	private LocalTime horaFin;
 	@Column(name = "estado")
 	private boolean estado = true;
-	
+
+	private Long idModuloActividad;
+
+
+	@Column
+	private Long idUbicacionConstancias;
+	@ManyToOne
+	@JoinColumn(name="idUbicacionConstancias" ,insertable = false,updatable = false)
+	private UbicacionConstancias ubicacionConstancias;
+
 	@OneToMany(mappedBy = "actividad" )
 	private List<Participante> participante;
 
 	@ManyToOne
-	@JoinColumn(name = "moduloId")
-	private Modulo modulo;
+ 	@JoinColumn(name = "idModuloActividad",insertable = false, updatable = false)
+ 	private Modulo modulo;
 
 	public int cantidadParticipanteOf(int modalidad) {
 		int contadorModulo = 0;
@@ -60,7 +69,7 @@ public class Actividad {
 		}
 	}
 
-	public long obtenerDuracionActividad(){
+	public Long obtenerDuracionActividad(){
  
 		return Duration.between(horaInicio,horaFin).toHours();
 	}

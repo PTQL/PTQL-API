@@ -1,7 +1,6 @@
 package com.sebasgoy.dto.response;
 
 
-import com.sebasgoy.dto.Actividad;
 import com.sebasgoy.dto.Voluntario;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +8,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -17,13 +15,13 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ActividadResponse {
+public class AsistenciExcelResponse {
 
-	
- 
     public LocalDateTime fecha;
-    public int totalActivadades;
-    public List<Actividad> listActividadValido;
-    public List<Actividad> listActividadInvalido;
+    public int totalPersonas;
+    public List<Voluntario> listVoluntarioValido;
+    public List<Voluntario> listVoluntarioInvalido;
+
+
 
 }

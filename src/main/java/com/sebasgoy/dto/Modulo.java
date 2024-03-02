@@ -1,5 +1,6 @@
 package com.sebasgoy.dto;
 
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,13 +17,17 @@ import java.util.List;
 public class Modulo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 	@Column(name = "nombre")
     private String nombre;
 	@Column(name = "estado")
 	private boolean estado = true;
-    
-    @OneToMany(mappedBy = "modulo")
+    @Column
+    private Long idUbicacionConstancias;
+    @ManyToOne
+    @JoinColumn(name="idUbicacionConstancias" ,insertable = false,updatable = false)
+    private UbicacionConstancias ubicacionConstancias;
+    @OneToMany(mappedBy = "idModuloActividad")
     private List<Actividad> actividad;
     
     

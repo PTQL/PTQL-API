@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
 <meta charset="ISO-8859-1">
 <title>Gestionar Actividades</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.datatables.net/2.0.1/css/dataTables.dataTables.css" />
 
 </head>
 <body>
@@ -15,12 +16,12 @@
  	</div>
 	<div class="container mt-5">
 		<h3>Listado General de Actividades</h3>
-		<table class="table">
+		<table class="table" id="TablaActividades">
 			<thead>
 				<tr>
 					<th>ID</th>
 	                <th>Nombre</th>
-	                <th>UbicaciÃ³n</th>
+	                <th>Ubicación</th>
 	                <th>Fecha</th>
 	                <th>Estado</th>
 	                <th>Opciones</th>
@@ -37,7 +38,6 @@
 						<a th:value="${actividad.id}" th:href="@{/editar_actividad/}+${actividad.id}">Editar</a>
 						<!--Solo deberia aparecer si no tiene voluntarios-->
 						<a th:value="${actividad.id}" th:href="@{/info_actividad/}+${actividad.id}" >Detalles</a>
-						<a th:value="${actividad.id}" th:href="@{/desactivar_actividad/}+${actividad.id}" >Desactivar</a>
 					</td>
            		</tr>
 
@@ -48,6 +48,17 @@
 	
 
 </body>
+<!--Boostrap-->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<!-- jQuery -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<!-- DataTable -->
+<script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
 
+<script>
+	$(document).ready( function () {
+    	$('#TablaActividades').DataTable();
+	} );
+</script>
 </html>

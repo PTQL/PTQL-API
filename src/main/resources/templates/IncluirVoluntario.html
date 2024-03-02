@@ -9,8 +9,8 @@
 <body>
 <div class="container mt-5">
     <a href="/dashboard_voluntario" class="btn btn-primary">Dashboard Voluntario</a>
-	<a class="btn btn-info" th:href="@{/herramienta_lectorParticipanteTexto/}+${actividad.id}">Agregar txt Asistentes</a>
-	<a class="btn btn-info" onclick="mostrarInput()">Agregar Excel Asistentes</a>
+	<a class="btn btn-info" th:if="${actividad.participante.size() > 0}" th:href="@{/herramienta_lectorParticipanteTexto/}+${actividad.id}">Agregar txt Asistentes</a>
+	<a class="btn btn-info" th:if="${actividad.participante.size() > 0}" onclick="mostrarInput()">Agregar Excel Asistentes</a>
 
     <a th:href="@{/info_actividad/}+${actividad.id}" class="btn btn-secondary">Regresar</a>
 
@@ -19,13 +19,14 @@
        		Subir Excel
     	</div>
 		<div class="card-body">		 
-			<form th:action="@{/cargarExcelVoluntariostoActividad/}+${actividad.id}" method="post" enctype="multipart/form-data">
+			<form th:action="@{/marcarAsistenciaFromExcel/}+${actividad.id}" method="post" enctype="multipart/form-data">
 				<div class="mb-3">
-					<label for="excelFile" class="form-label">Ingrese Archivo Excel:</label>
+                    <input type="hidden" th:name="idActividad" th:value="${actividad.id}">
+                    <label for="excelFile" class="form-label">Ingrese Archivo Excel:</label>
 					<input type="file" class="form-control" name="excelFile" id="excelFile" accept=".xlsx, .xls"  required>
 				</div>
 				<button type="submit" class="btn btn-primary" name="actionType" value="verEstado">Ver Estado</button>
-				<button type="submit" class="btn btn-primary" name="actionType" value="insertarVoluntario">Insertar Voluntarios</button>
+				<button type="submit" class="btn btn-primary" name="actionType" value="insertarAsistencia">Insertar Voluntarios</button>
 				<button type="button" class="btn btn-secondary ms-2" onclick="ocultarInput()">Cancelar</button>
 			</form>
 		</div>

@@ -41,8 +41,11 @@ public class ModuloService {
     public List<Modulo> findActivos(){
         return iModuloRepository.findByEstadoIsTrue();
     }
-    public Modulo saveModulo(Modulo modulo) {
-        return iModuloRepository.save(modulo);
+    public void saveModulo(Modulo modulo) {
+        if (modulo.getId() == null ){
+            modulo.setId(UltimoId());
+        }
+        iModuloRepository.save(modulo);
     }
     
     public void deleteModulo(Modulo modulo) {

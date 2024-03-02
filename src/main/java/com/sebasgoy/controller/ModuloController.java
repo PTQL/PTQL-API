@@ -3,24 +3,20 @@ package com.sebasgoy.controller;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.sebasgoy.Parser.PlantillaParser;
 import com.sebasgoy.constantes.Modalidades;
 import com.sebasgoy.dto.Participante;
 import com.sebasgoy.dto.Voluntario;
-import com.sebasgoy.service.ParticipanteService;
-import com.sebasgoy.service.VoluntarioService;
+import com.sebasgoy.dto.request.PlantillaDto;
+import com.sebasgoy.service.*;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.Part;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import com.sebasgoy.dto.Actividad;
 import com.sebasgoy.dto.Modulo;
-import com.sebasgoy.service.ActividadService;
-import com.sebasgoy.service.ModuloService;
 
 import com.sebasgoy.constantes.Mensajes;
  
@@ -32,6 +28,7 @@ public class ModuloController {
 	private final ActividadService actividadService;
 	private final VoluntarioService voluntarioService;
 	private final ParticipanteService participanteService;
+	private final UbicacionConstanciasService ubicacionConstanciasService;
 	@GetMapping("/dashboard_modulo")
 	public String cargarDashboardModulo(Model model) {
 		model.addAttribute("listaModulo", moduloService.findActivos() );
@@ -92,7 +89,7 @@ public class ModuloController {
 			System.out.println( Mensajes.success("MODULO", "BUSQUEDA"));
 			model.addAttribute("mensaje",  Mensajes.success("MODULO", "BUSQUEDA"));
 			
-			return "/InfoModulo";
+			return "InfoModulo";
 			
 		} catch (Exception e) {
 			System.out.println(Mensajes.error("MODULO", "BUSQUEDA").concat(e.toString()));
@@ -116,18 +113,24 @@ public class ModuloController {
 		List<Actividad> ListActividad = modulo.getActividad();
 
 		if (!ListActividad.contains(actividad) ) {
-			actividad.setModulo(modulo);
+			actividad.setIdModuloActividad(moduloId);
+			List<Long> lstaVoluntariosModulo =  voluntarioService.findVoluntarioOfModulo(moduloId).stream().map(Voluntario::getId).toList();
+
+			participanteService.saveVoluntariosToActividad(lstaVoluntariosModulo,actividadId,Modalidades.ID_MODULO,false);
+
+
 			actividadService.saveActividad(actividad);
-			
+
+
 			ListActividad.add(actividad);
 			modulo.setActividad(ListActividad );
-			model.addAttribute("modulo", modulo);
-			model.addAttribute("listaActividades",actividadService.findActivosSinModulo());
-		
-		}else {
-			model.addAttribute("modulo", modulo);
-			model.addAttribute("listaActividades",actividadService.findActivosSinModulo());
+
+
+
 		}
+		model.addAttribute("modulo", modulo);
+		model.addAttribute("listaActividades",actividadService.findActivosSinModulo());
+
 		return "FormNewModulo";
 	}
 	
@@ -139,7 +142,7 @@ public class ModuloController {
 
 		List<Actividad> ListActividad = modulo.getActividad();	
 		if (ListActividad.contains(actividad) ) {
-			actividad.setModulo(null);
+			actividad.setIdModuloActividad(null);
 			actividadService.saveActividad(actividad);
 			
 			ListActividad.remove(actividad);
@@ -161,7 +164,10 @@ public class ModuloController {
 		try {
 			
 			moduloService.saveModulo(modulo);
-			
+
+
+
+
 			
 			System.out.println( Mensajes.success("MODULO", "REGISTRO"));
 			model.addAttribute("mensaje", Mensajes.success("MODULO", "REGISTRO"));
@@ -179,9 +185,9 @@ public class ModuloController {
 	
 		try {
 			Modulo modulo = moduloService.findById(id);		
-			if (
-					modulo.getNombre().isEmpty() &&
-					modulo.getActividad().isEmpty()
+			if (	
+					modulo.getNombre()== null &&
+					modulo.getActividad().size() == 0
 					) {				
 				moduloService.deleteModulo(modulo);
 				System.out.println(Mensajes.error("MODULO", "ELIMINACION"));
@@ -235,21 +241,35 @@ public class ModuloController {
 		List<Actividad> listActividadFromModulo = modulo.getActividad();
 		System.out.println("ITERACION ACTIVIDADES DEL MODULO INICIO");
 		for (Actividad actividad: listActividadFromModulo ) {
-			Participante participante = participanteService.findParticipanteParaVoluntarioYActividad(voluntarioId,actividad.getId());
+			Participante participante = participanteService.findParticipantefromVoluntarioYActividad(voluntarioId,actividad.getId());
 			participanteService.deleteParticipante(participante);
 			System.out.println("Elminacion de actividad");
 
 		}
 		System.out.println("ITERACION ACTIVIDADES DEL MODULO FIN");
-
-
-
 		return "redirect:"+pagina_anterior;
 	}
 
 
+	@PostMapping("/generar_constancias_modulo/{id}")
+	public String generar_constancias_modulo(
+			@PathVariable("id") Long idModulo,
+			@RequestParam("pathFile") String path,
+			HttpServletRequest request,
+			Model model) {
+
+		try {
+			Modulo modulo = moduloService.findById(idModulo);
+			path = ubicacionConstanciasService.validarPath(path,modulo);
+			List<Voluntario> lstaVoluntario = voluntarioService.getVoluntarioFromModuloHoursOkAndIsParticipant(modulo);
+			//TODO solicitar plantilla para modulo
 
 
 
-	
+		}catch (Exception e) {
+			System.out.println(Mensajes.error("Archivo", "Generacion").concat(e.toString()));
+		}
+		return "redirect:" + request.getHeader("referer");
+	}
+
 }

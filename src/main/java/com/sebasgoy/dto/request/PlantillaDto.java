@@ -1,5 +1,6 @@
 package com.sebasgoy.dto.request;
 
+import com.sebasgoy.dto.Voluntario;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -8,7 +9,7 @@ import lombok.Data;
 @Builder
 @AllArgsConstructor
 public class PlantillaDto {
-    private String nombreVoluntario;
+    private Voluntario voluntario;
     private String nombreActividad;
     private String fechaActividad;
     private String ubicacionActividad;

@@ -16,6 +16,8 @@ import lombok.AllArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
@@ -38,8 +40,9 @@ public class VoluntarioController {
 	@GetMapping("/dashboard_voluntario")
 	public String dashboard_voluntario(Model model) {
 		try {
-			
-			model.addAttribute("listaVoluntarios",voluntarioService.getAll());
+			List<Voluntario> voluntarios = voluntarioService.getAll();
+			Collections.reverse(voluntarios);
+			model.addAttribute("listaVoluntarios",voluntarios);
 			
 			
 			
@@ -157,7 +160,7 @@ public class VoluntarioController {
 			System.out.println(Mensajes.error("VOLUNTARIO", "REGISTRO"));
 		}
 		
-		return "redirect:"+pagina_anterior;
+		return "redirect:/dashboard_voluntario";
 		
 	}
 

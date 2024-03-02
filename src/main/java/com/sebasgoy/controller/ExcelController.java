@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.sebasgoy.constantes.Modalidades;
 import com.sebasgoy.dto.Modulo;
+import com.sebasgoy.dto.response.AsistenciExcelResponse;
 import com.sebasgoy.service.*;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -43,8 +44,10 @@ public class ExcelController {
     		Model model) {
     	
     	 // Procesar el archivo Excel según tus necesidades
+		System.out.println("Solicitud de excel Mapper enviado");
 		VoluntarioResponse voluntarioResponse = ExcelMapper.DevolverEntidadFromExcel(file,VoluntarioResponse.class);
-        if (action.equals("verEstado")) {
+		System.out.println("Solicitud de excel Mapper recibido");
+		if (action.equals("verEstado")) {
         	try {
     			model.addAttribute("voluntarioResponse", voluntarioResponse);
     			return "GestorExcel";
@@ -54,7 +57,7 @@ public class ExcelController {
              }        	
 		}else if(action.equals("insertarVoluntario")) {
 			try {
-			    if (isValid(voluntarioResponse)) {
+			    if (participanteService.isValid(voluntarioResponse)) {
 			        Actividad actividad = actividadService.findByIdOptional(idActividad)
 							.orElseThrow(() -> new EntityNotFoundException("Actividad con ID " + idActividad + " no encontrada."));
 
@@ -69,7 +72,7 @@ public class ExcelController {
 						}
 
 						if (!participanteService.existeParticipanteParaVoluntarioYActividad( voluntario.getId(),actividad.getId())) {
-							Participante participante = crearParticipante(actividad.getId(), voluntario.getId(),Modalidades.LIBRE);
+							Participante participante = participanteService.crearParticipante(actividad.getId(), voluntario.getId(),Modalidades.LIBRE);
 							participanteService.saveParticipante(participante);
 							System.out.println("Registro de participante Ok :" + participante.toString());
 						} else {
@@ -79,7 +82,7 @@ public class ExcelController {
 
 					return "redirect:/info_actividad/" + idActividad;
 			    } else {
-					throw new InvalidMidiDataException("Error en el excel response");
+					throw new InvalidMidiDataException("Datos invalidos en el Excel response , revisar gestor ");
 			    }
 			} catch (Exception e) {
 			    model.addAttribute("result", "Error processing the Excel file." + e.toString());
@@ -100,8 +103,10 @@ public class ExcelController {
 	) {
 		String pagina_anterior =request.getHeader("referer");
 		try {
+			System.out.println("Solicitud de excel Mapper enviado");
 			VoluntarioResponse response = ExcelMapper.DevolverEntidadFromExcel(file,VoluntarioResponse.class);
-
+			System.out.println("Solicitud de excel Mapper recibido");
+	
 			if (action.equals("verEstado")) {
 				try {
 					model.addAttribute("voluntarioResponse", response);
@@ -111,7 +116,7 @@ public class ExcelController {
 					return "redirect:"+pagina_anterior;
 				}
 			}else if(action.equals("insertarVoluntario")){
-				if (isValid(response)){
+				if (participanteService.isValid(response)){
 					Modulo modulo = moduloService.findByIdOptional(idModulo)
 						.orElseThrow(() -> new EntityNotFoundException("Modulo con ID " + idModulo + " no encontrada."));
  					List<Voluntario> listaVoluntarios = response.getListVoluntarioValido();
@@ -134,7 +139,7 @@ public class ExcelController {
 									continue voluntario_loop;
 								}else {
 									if (!participanteService.existeParticipanteParaVoluntarioYActividad(voluntario.getId(),actividad.getId() )){
-										Participante participante = crearParticipante(actividad.getId(), voluntario.getId(),Modalidades.MODULO);
+										Participante participante =participanteService.crearParticipante(actividad.getId(), voluntario.getId(),Modalidades.MODULO);
 										participanteService.saveParticipante(participante);
 									}else {
 										System.out.println("Participante Existe");
@@ -166,19 +171,66 @@ public class ExcelController {
 
 	}
 
-	private Participante crearParticipante(Long idActividad, Long idVoluntario,String modalidad) {
-		return Participante.builder()
-				.idActividad(idActividad)
-				.isParticipant(false)
-				.idVoluntario(idVoluntario)
-				.idTipoParticipacion(tipoParticipacionService.findByDescripcion(modalidad).getId())
-				.build();
+	@PostMapping("/marcarAsistenciaFromExcel/{id}")
+	public String marcarAsistenciaFromExcel(
+
+			@PathVariable("id") Long idActividad,
+			@RequestParam("excelFile") MultipartFile file,
+			@RequestParam(value="actionType") String action,
+			Model model,
+			HttpServletRequest request
+	){
+		System.out.println("Solicitud de excel Mapper enviado");
+		AsistenciExcelResponse asistenciExcelResponse = ExcelMapper.DevolverEntidadFromExcel(file, AsistenciExcelResponse.class);
+		VoluntarioResponse voluntarioResponse = ExcelMapper.asistenciaToVoluntario(asistenciExcelResponse);
+		System.out.println("Solicitud de excel Mapper recibido");
+		if (action.equals("verEstado")) {
+			try {
+				model.addAttribute("voluntarioResponse", voluntarioResponse);
+				return "GestorExcel";
+			} catch (Exception e) {
+				model.addAttribute("result", "Error processing the Excel file."+ e);
+				return "redirect:/info_actividad/".concat(idActividad.toString());
+			}
+		}else if(action.equals("insertarAsistencia")) {
+			try {
+				if (participanteService.isValid(voluntarioResponse)) {
+					Actividad actividad = actividadService.findByIdOptional(idActividad)
+							.orElseThrow(() -> new EntityNotFoundException("Actividad con ID " + idActividad + " no encontrada."));
+					for (Voluntario voluntario:voluntarioResponse.getListVoluntarioValido()){
+						System.out.println("Iteracion para :"+voluntario.toString());
+						if ( !voluntarioService.existsByDni(voluntario.getDni())) {
+							voluntarioService.saveVoluntario(voluntario);
+						}else {
+							voluntario = voluntarioService.findByDni(voluntario.getDni());
+							voluntario.setEstado(true);
+						}
+						if (!participanteService.existeParticipanteParaVoluntarioYActividad( voluntario.getId(),actividad.getId())) {
+							Participante participante = participanteService.crearParticipante(actividad.getId(), voluntario.getId(),Modalidades.LIBRE);
+
+							participante.setIsParticipant(true);
+							participanteService.saveParticipante(participante);
+							System.out.println("Registro de asistencia Ok :" + participante.toString());
+						} else {
+							Participante participante = participanteService.findParticipantefromVoluntarioYActividadOptional(voluntario.getId(),actividad.getId()).get();
+							participante.setIsParticipant(true);
+							participanteService.saveParticipante(participante);
+							System.out.println("asistencia marcada");
+						}
+						return "redirect:/info_actividad/" + idActividad;
+					}
+				} else {
+					throw new InvalidMidiDataException("Datos invalidos en el Excel response , revisar gestor ");
+				}
+			} catch (Exception e) {
+				model.addAttribute("result", "Error processing the Excel file." + e.toString());
+				System.out.println("Error processing the Excel file." + e.toString());
+			}
+			return "redirect:/info_actividad/".concat(idActividad.toString());
+		}
+		return "redirect:/info_actividad/".concat(idActividad.toString());
 	}
 
-    private Boolean isValid(VoluntarioResponse voluntarioResponse) {
-    	
-    	return (voluntarioResponse.getListVoluntarioInvalido().isEmpty()) &&
-    			(!voluntarioResponse.getListVoluntarioValido().isEmpty());
-    	
-    }
+
+
 }

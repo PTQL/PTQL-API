@@ -28,7 +28,9 @@ public class Voluntario {
 	private String edad;
 	@Column(name = "estado")
 	private boolean estado = false;
-	
+	@Column(name="numero")
+	private String telefono;
+
 	@OneToMany(mappedBy = "voluntario" )
 	private List<Participante> participante;
 

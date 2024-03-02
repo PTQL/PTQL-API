@@ -2,11 +2,16 @@ package com.sebasgoy.controller;
 
 import com.sebasgoy.Parser.PlantillaParser;
 import com.sebasgoy.constantes.Plantillas;
-import com.sebasgoy.dto.Participante;
+import com.sebasgoy.dto.UbicacionConstancias;
+import com.sebasgoy.dto.Voluntario;
 import com.sebasgoy.dto.request.PlantillaDto;
 import com.sebasgoy.service.ParticipanteService;
+import com.sebasgoy.service.UbicacionConstanciasService;
+
+import com.sebasgoy.service.VoluntarioService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -15,8 +20,8 @@ import com.sebasgoy.service.ActividadService;
 import com.sebasgoy.constantes.Mensajes;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 @Controller
@@ -24,13 +29,12 @@ import java.util.List;
 public class ActividadController {
 
 	private final ActividadService actividadService;
-
+	private final VoluntarioService voluntarioService;
 	private final ParticipanteService participanteService;
+	private final UbicacionConstanciasService ubiConstanciasService;
  	
 	@GetMapping("/generar_actividad")
 	public String cargarCrudActividad(Model model) {
-		
-		
 		model.addAttribute("actividad", Actividad
 				.builder()
 				.id(actividadService.UltimoId())
@@ -95,8 +99,7 @@ public class ActividadController {
 			Actividad actividad =  actividadService.findById(id);
 			
 			actividad.setEstado(false);
-			
-			
+
 			actividadService.saveActividad(actividad);
 			
 			System.out.println(Mensajes.success("ACTIVIDAD", "REGISTRO"));
@@ -112,6 +115,34 @@ public class ActividadController {
 		
 	}
 
+	@GetMapping("/eliminar_actividad/{id}")
+	public String eliminar_actividad(@PathVariable("id") Long id,Model model  ){
+		try {
+			Actividad actividad =  actividadService.findById(id);
+			
+			participanteService.deleteListOfParticipante(actividad.getParticipante());
+			
+			System.out.println(Mensajes.success("Participacion", "Eliminacion"));
+			model.addAttribute("mensaje", Mensajes.success("Participacion", "Eliminacion"));
+			
+			
+			actividadService.deleteActividad(actividad);
+			
+			
+			System.out.println(Mensajes.success("Actividad", "Eliminacion"));
+			model.addAttribute("mensaje", Mensajes.success("Actividad", "Eliminacion"));
+			
+			
+		} catch (Exception e) {
+			System.out.println(Mensajes.error("ACTIVIDAD", "REGISTRO").concat(e.toString()));
+			model.addAttribute("mensaje", Mensajes.error("ACTIVIDAD", "REGISTRO").concat(e.toString()) );
+		}
+		
+		
+		return "redirect:/dashboard_actividad";
+		
+	}
+	
 	@PostMapping("/generar_constancia_actividad/{id}")
 	public String generar_constancia_actividad(
 	        @PathVariable("id") Long idActividad,
@@ -119,38 +150,26 @@ public class ActividadController {
 	        HttpServletRequest request,
 	        Model model) {
 	    String pagina_anterior = request.getHeader("referer");
-	    String plantilla = "";
+
 	    try {
 	        Actividad actividad = actividadService.findById(idActividad);
-	        if (path == null || path.isEmpty()) {
-	            System.out.println(Mensajes.error("Archivo", "Generacion", "No se seleccionó carpeta"));
-	            return "redirect:" + pagina_anterior;
-	        }
-
-	        path = path.concat("\\" + actividad.getNombreActividad().trim()+actividad.getFechaActividad().toString().trim());
-	        System.out.println("Ruta : " + path);
-
-	        File carpeta = new File(path);
-	        if (!carpeta.exists()) {
-	            if (carpeta.mkdirs()) {
-	                System.out.println("Carpeta creada exitosamente.");
-	            } else {
-	                System.out.println("Error al crear la carpeta.");
-	                return "redirect:" + pagina_anterior;
-	            }
-	        }
-
-	        List<PlantillaDto> listPlantillaDto = PlantillaParser.listParticipanteToPlantillaDto(participanteService.getLibresFromListParticipante(idActividad), actividad);
+			path = ubiConstanciasService.validarPath(path,actividad);
+			List<Voluntario> lstVoluntarios =voluntarioService.getListVoluntarioFromListParticipante(
+					participanteService.getLibresFromListParticipante(idActividad)
+			) ;
+	        List<PlantillaDto> listPlantillaDto = PlantillaParser.listParticipanteToPlantillaDto(lstVoluntarios, actividad);
 	        for (PlantillaDto plantillaDto : listPlantillaDto) {
-	            plantilla = Plantillas.GenerarPlantilla(plantillaDto);
-	            String rutaUnitaria = path + "/" + plantillaDto.getNombreVoluntario() + ".pdf";
-	            Plantillas.convertirHTMLaPDF(plantilla, rutaUnitaria);
+
+	            Plantillas.convertirHTMLaPDF(
+						Plantillas.GenerarPlantilla(plantillaDto),
+						path + "/" + plantillaDto.getVoluntario().getDni()+ ".pdf");
 	        }
 	    } catch (Exception e) {
 	        System.out.println(Mensajes.error("Archivo", "Generacion").concat(e.toString()));
 	    }
 	    return "redirect:" + pagina_anterior;
 	}
+
 
 
 

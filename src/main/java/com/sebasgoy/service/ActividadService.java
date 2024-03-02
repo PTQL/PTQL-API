@@ -25,7 +25,7 @@ public class ActividadService {
 	    }
 	     
 	    Actividad ultimoElemento = activos.get(activos.size() - 1);
-	    
+ 
 	    return ultimoElemento.getId() + 1;
 	}
 	
@@ -43,7 +43,10 @@ public class ActividadService {
 		return iActividadRepository.findByEstadoIsTrue();
 	}
 	
-
+	public void deleteActividad(Actividad actividad) {
+		iActividadRepository.delete(actividad);
+	}
+	
 	public List<Actividad> findAll(){
 		return iActividadRepository.findAll();
 	}
@@ -51,7 +54,11 @@ public class ActividadService {
 	
 	public List<Actividad> findActivosSinModulo(){
 
-		return iActividadRepository.findByModuloIdIsNull();
+		return iActividadRepository.findAll().stream().filter(
+				
+				actividad -> (actividad.getIdModuloActividad() == null )
+					&& (actividad.isEstado())
+				).toList();
 	}
 	public void saveActividad(Actividad actividad) {
 		iActividadRepository.save(actividad);

@@ -45,8 +45,6 @@ public class ParticipanteController {
 			return "redirect:/info_actividad/".concat(participante.getIdActividad().toString());
 		} catch (Exception e) {
 			// TODO: handle exception
-			
-
 			System.out.println(Mensajes.error("PARTICIPANTE", "BUSQUEDA").concat(e.getMessage()));
 
 		}

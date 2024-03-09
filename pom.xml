@@ -33,14 +33,12 @@
 		</dependency>
 
 
-		<!-- https://mvnrepository.com/artifact/org.xhtmlrenderer/flying-saucer-pdf -->
-		<dependency>
+ 		<dependency>
 			<groupId>org.xhtmlrenderer</groupId>
 			<artifactId>flying-saucer-pdf</artifactId>
 			<version>9.1.22</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.xhtmlrenderer/flying-saucer-core -->
-		<dependency>
+ 		<dependency>
 			<groupId>org.xhtmlrenderer</groupId>
 			<artifactId>flying-saucer-core</artifactId>
 			<version>9.2.2</version>

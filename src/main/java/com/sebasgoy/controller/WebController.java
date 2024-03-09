@@ -23,21 +23,8 @@ public class WebController {
 	
 
 	
-	@GetMapping("/herramienta_lectorTexto")
-	public String herramienta_lectorTexto(){
-		return "lectores/lectorVoluntarios";
-	}
-	
-	@GetMapping("/herramienta_lectorParticipanteTexto/{id}")
-	public String herramienta_lectorParticipanteTexto(@PathVariable("id")Long idActividad,Model model){
-		
- 
-		model.addAttribute("actividad",actividadService.findById(idActividad));
-		
-		model.addAttribute("asistenciaRespone",new AsistenciaRespone());
-		
-		return "lectores/lectorParticipantes";
-	}
+
+
 	
 
 }

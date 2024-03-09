@@ -180,10 +180,10 @@ public class ParticipanteService {
 
     }
 
-    public Participante crearParticipante(Long idActividad , Long idVoluntario , String modalidad) {
+    public Participante crearParticipante(Long idActividad , Long idVoluntario , String modalidad,Boolean participacion) {
         return Participante.builder()
                 .idActividad(idActividad)
-                .isParticipant(false)
+                .isParticipant(participacion)
                 .idVoluntario(idVoluntario)
                 .idTipoParticipacion(tipoParticipacionService.findByDescripcion(modalidad).getId())
                 .build();

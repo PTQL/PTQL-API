@@ -14,9 +14,20 @@
     <div class="row">		
 		<div class="col-md-10 offset-md-1">
 			<a class="btn btn-primary mb-3" th:href="@{/dashboard_actividad}">Regresar</a>
-			<a class="btn btn-secondary mb-3" th:href="@{/editar_actividad/}+${actividad.id}">Editar Actvidad</a> 
-			<a  class="btn btn-secondary mb-3" th:if="${actividad.participante.size() >= 1}" >Generar Constancias Modalidad Libre</a>
+			<a class="btn btn-secondary mb-3" th:href="@{/editar_actividad/}+${actividad.id}">Editar Actvidad</a>
+			<a  class="btn btn-secondary mb-3" onclick="mostrarInput2()" th:if="${actividad.participante.size() >= 1}" >Generar Constancias Modalidad Libre</a>
 
+			<div class="card mt-3 mb-3 p-3 m-3" id="inputContainer2" style="display: none;">
+				<form th:action="@{/generar_constancia_actividad/}+${actividad.id}" method="post" enctype="multipart/form-data">
+					<div class="mb-3">
+						<label for="pathFile" class="form-label">Seleccione Ubicacion:</label>
+						<input type="text" class="form-control" name="pathFile" id="pathFile" placeholder="Ingrese la ruta de la carpeta vacía" required>
+
+					</div>
+					<button type="submit" class="btn btn-primary">Guardar Constancias</button>
+					<button type="button" class="btn btn-secondary ms-2" onclick="ocultarInput2()">Cancelar</button>
+				</form>
+			</div>
 			<div class="card">
                 <div class="card-header">
                     Detalle de Actividad
@@ -105,5 +116,14 @@
 $(document).ready( function () {
 	$('#tablaVoluntarios').DataTable();
 } );
+
+
+function mostrarInput2() {
+		document.getElementById('inputContainer2').style.display = 'block';
+	}
+
+	function ocultarInput2() {
+		document.getElementById('inputContainer2').style.display = 'none';
+	}
 </script>
 </html>

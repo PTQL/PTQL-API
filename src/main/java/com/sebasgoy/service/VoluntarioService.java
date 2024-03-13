@@ -66,16 +66,21 @@ public class VoluntarioService {
         return lstParticipante.stream().map(
                 Participante::getVoluntario).collect(Collectors.toList());
     }
+
     public Voluntario findByDni(String dni){
-        return  iVoluntarioRepository.findByDni(dni);
+        return  iVoluntarioRepository.findByDni(dni).orElse(null);
     }
     public boolean existsByDni(String dni){
         return  iVoluntarioRepository.existsByDni(dni);
     }
-    
-    
-    
-    
+
+
+
+    public boolean validarExistencia(Voluntario voluntario) {
+
+        return findByDni(voluntario.getDni()) != null;
+
+    }
     public List<Voluntario> getAll(){
 
         return iVoluntarioRepository.findAll();
@@ -97,12 +102,15 @@ public class VoluntarioService {
 		}
         iVoluntarioRepository.save(voluntario);
     }
-    
+    public void persistirVoluntario(Voluntario voluntario) {
+        voluntario.setId(findByDni(voluntario.getDni()).getId());
+        voluntario.setEstado(true);
+        saveVoluntario(voluntario);
+    }
 	public void  saveVoluntarios(List<Voluntario> lstVoluntarios) {
 
 		lstVoluntarios.forEach(
-				(voluntario)->{ saveVoluntario(voluntario);
-			}
+                this::saveVoluntario
 		);
 	}
     
@@ -146,9 +154,7 @@ public class VoluntarioService {
 		 List<Voluntario> v = new ArrayList<>();
 		 
 		 lstVoluntarios.forEach(
-				 (x)->{			 
-					 v.add(saveAndGetVoluntario(x));
-				 });
+				 x-> v.add(saveAndGetVoluntario(x)));
 		 return v;
 	}
     

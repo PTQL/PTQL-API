@@ -5,10 +5,8 @@ import com.sebasgoy.constantes.Plantillas;
 import com.sebasgoy.dto.UbicacionConstancias;
 import com.sebasgoy.dto.Voluntario;
 import com.sebasgoy.dto.request.PlantillaDto;
-import com.sebasgoy.service.ParticipanteService;
-import com.sebasgoy.service.UbicacionConstanciasService;
+import com.sebasgoy.service.*;
 
-import com.sebasgoy.service.VoluntarioService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 
@@ -16,13 +14,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import com.sebasgoy.dto.Actividad;
-import com.sebasgoy.service.ActividadService;
 import com.sebasgoy.constantes.Mensajes;
 
-import java.io.File;
 import java.util.List;
-import java.util.Optional;
-
 
 @Controller
 @AllArgsConstructor
@@ -32,6 +26,7 @@ public class ActividadController {
 	private final VoluntarioService voluntarioService;
 	private final ParticipanteService participanteService;
 	private final UbicacionConstanciasService ubiConstanciasService;
+	private final ModuloService moduloService;
  	
 	@GetMapping("/generar_actividad")
 	public String cargarCrudActividad(Model model) {
@@ -41,6 +36,8 @@ public class ActividadController {
 				.estado(true)
 				.build()
 				);
+
+		model.addAttribute("modulos",moduloService.findActivos()) ;
 		return "FormNewActividad";
 	}
 	
@@ -61,7 +58,6 @@ public class ActividadController {
 	
 	@PostMapping("/guardar_actividad")
 	public String guardar_actividad(@ModelAttribute Actividad actividad,Model model) {
-	
 		try {
 			
 			actividadService.saveActividad(actividad);
@@ -150,13 +146,13 @@ public class ActividadController {
 	        HttpServletRequest request,
 	        Model model) {
 	    String pagina_anterior = request.getHeader("referer");
-
+		//TODO generar carpeta automaticamente
 	    try {
 	        Actividad actividad = actividadService.findById(idActividad);
 			path = ubiConstanciasService.validarPath(path,actividad);
 			List<Voluntario> lstVoluntarios =voluntarioService.getListVoluntarioFromListParticipante(
 					participanteService.getLibresFromListParticipante(idActividad)
-			) ;
+			);
 	        List<PlantillaDto> listPlantillaDto = PlantillaParser.listParticipanteToPlantillaDto(lstVoluntarios, actividad);
 	        for (PlantillaDto plantillaDto : listPlantillaDto) {
 

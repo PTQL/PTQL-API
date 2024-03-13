@@ -57,18 +57,17 @@ public class ExcelController {
              }        	
 		}else if(action.equals("insertarVoluntario")) {
 			try {
-			    if (participanteService.isValid(voluntarioResponse)) {
+			    if (Boolean.TRUE.equals(participanteService.isValid(voluntarioResponse))) {
 			        Actividad actividad = actividadService.findByIdOptional(idActividad)
 							.orElseThrow(() -> new EntityNotFoundException("Actividad con ID " + idActividad + " no encontrada."));
 
 			        for (Voluntario voluntario: voluntarioResponse.getListVoluntarioValido()) {
 						System.out.println("Iteracion para :"+voluntario.toString());
 						// Validar duplicación con DNI
-						if ( !voluntarioService.existsByDni(voluntario.getDni())) {
+						if ( !voluntarioService.validarExistencia(voluntario)) {
 							voluntarioService.saveVoluntario(voluntario);
 						}else {
-							voluntario = voluntarioService.findByDni(voluntario.getDni());
-							voluntario.setEstado(true);
+							voluntarioService.persistirVoluntario(voluntario);
 						}
 
 						if (!participanteService.existeParticipanteParaVoluntarioYActividad( voluntario.getId(),actividad.getId())) {
@@ -76,6 +75,9 @@ public class ExcelController {
 							participanteService.saveParticipante(participante);
 							System.out.println("Registro de participante Ok :" + participante.toString());
 						} else {
+							Participante participante = participanteService.findByDniAndActividad(voluntario.getDni(),actividad);
+							participante.setIsParticipant(true);
+							participanteService.saveParticipante(participante);
 							System.out.println("Participante Existe");
 						}
 					}
@@ -92,6 +94,9 @@ public class ExcelController {
 		}
         return "redirect:/info_actividad/".concat(idActividad.toString());
     }
+
+
+
 
 	@PostMapping("/cargarExcelVoluntariostoModulo/{id}")
 	public String cargarExcelVoluntariostoModulo(

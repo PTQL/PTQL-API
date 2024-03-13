@@ -13,57 +13,59 @@
     <form action="/guardar_actividad" method="post" th:object="${actividad}">
 		
         <!-- Campo Id de Actividad -->
-        <div class="mb-3">
+        <div class="mb-3 form-group"  >
             <label for="idActividad" class="form-label">Id de Actividad</label>
             <input type="text" th:field="${actividad.Id}" class="form-control" id="idActividad" name="idActividad" readonly>
         </div>
         <!-- Campo Nombre de Actividad -->
-        <div class="mb-3">
+        <div class="mb-3 form-group"  >
             <label for="nombreActividad" class="form-label">Nombre de Actividad</label>
             <input type="text" th:field="${actividad.nombreActividad}" class="form-control" id="nombreActividad" name="nombreActividad" required>
         </div>
 
 
         <!-- Campo Ubicación de Actividad -->
-        <div class="mb-3">
+        <div class="mb-3 form-group"  >
             <label for="ubicacionActividad" class="form-label">Ubicación de Actividad</label>
             <input type="text" th:field="${actividad.ubicacionActividad}" class="form-control" id="ubicacionActividad" name="ubicacionActividad" required>
         </div>
         <!-- Campo Fecha de Actividad -->
-        <div class="mb-3">
+        <div class="mb-3 form-group"  >
             <label for="fechaActividad" class="form-label">Fecha de Actividad</label>
             <input type="date" th:field="${actividad.fechaActividad}" class="form-control" id="fechaActividad" name="fechaActividad" required>
         </div>
 
         <!-- Campo Hora de Inicio -->
-        <div class="mb-3">
+        <div class="mb-3 form-group"  >
             <label for="horaInicio" class="form-label">Hora de Inicio</label>
             <input type="time" th:field="${actividad.horaInicio}" class="form-control" id="horaInicio" name="horaInicio" required>
         </div>
 
         <!-- Campo Hora de Fin -->
-        <div class="mb-3">
+        <div class="mb-3 form-group"  >
             <label for="horaFin" class="form-label">Hora de Fin</label>
             <input type="time" th:field="${actividad.horaFin}" class="form-control" id="horaFin" name="horaFin" required>
         </div>
         
         <!-- Campo Estado-->
-        <div class="mb-3">
+        <div class="mb-3 form-group"  >
             <label for="estado" class="form-label">Estado</label>
             <input type="checkbox" checked th:field="${actividad.estado}" class="form-check" id="estado" name="estado"  >
         </div>
 
         <!-- Campo Modulo de la  Actividad -->
-        <div class="mb-3"  >
-            <label for="moduloId" class="form-label">Modulo de la Actividad</label>
-            <input type="text" th:field="${actividad.idModuloActividad}" class="form-control" id="moduloId" name="moduloId" >
+        <div class="mb-3 form-group"  >
+             <label for="moduloId" class="form-label">Modulo de la Actividad</label>
+             <select th:field="${actividad.idModuloActividad}" class="form-control" id="moduloId" >
+                <option value="-1">Seleccione</option>
+                <option th:each="c : ${modulos}" th:value="${c.id}" th:text="${c.nombre}"></option>
+            </select>
         </div>
 
         <!-- Botón para enviar el formulario -->
         <button type="submit" class="btn btn-primary">Guardar Actividad</button>
         <a class="btn btn-primary" th:href="@{/dashboard_actividad}">Cancelar</a>
 		<a th:value="${actividad.id}" class="btn btn-warning" th:href="@{/eliminar_actividad/}+${actividad.id}" >Eliminar</a>
-
     </form>
 </div>
 

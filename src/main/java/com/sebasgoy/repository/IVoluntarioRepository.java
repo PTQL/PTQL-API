@@ -6,6 +6,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
  import com.sebasgoy.dto.Voluntario;
 import java.util.List;
+import java.util.Optional;
 
 
 @Repository
@@ -14,5 +15,5 @@ public interface IVoluntarioRepository extends JpaRepository<Voluntario, Long>{
 	List<Voluntario> findVoluntarioByModuloId(@Param("idModulo") Long idModulo);
 
 	boolean existsByDni(String dni);
-	Voluntario findByDni(String dni);
+	Optional<Voluntario> findByDni(String dni);
 }

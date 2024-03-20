@@ -45,7 +45,8 @@ public class ActividadController {
 	public String cargarCrudActividadEdit(@PathVariable("id") Long id, Model model) {
 		
 		model.addAttribute("actividad", actividadService.findById(id));
-		
+		model.addAttribute("modulos",moduloService.findActivos()) ;
+
 		return "FormNewActividad";
 	}
 	

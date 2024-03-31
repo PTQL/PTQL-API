@@ -6,17 +6,13 @@ import com.sebasgoy.dto.Actividad;
 import com.sebasgoy.dto.Modulo;
 import com.sebasgoy.dto.Participante;
 import com.sebasgoy.dto.Voluntario;
+import com.sebasgoy.dto.response.StatusVoluntarioModulo;
 import com.sebasgoy.repository.IParticipanteRepository;
 import com.sebasgoy.repository.IVoluntarioRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -124,30 +120,71 @@ public class VoluntarioService {
     	voluntario.setEstado(true);
         return iVoluntarioRepository.save(voluntario);
     }
-    public List<Voluntario> getVoluntarioFromModuloHoursOkAndIsParticipant(Modulo modulo ){
-
-        List<Voluntario> listaVoluntarios = iVoluntarioRepository.findVoluntarioByModuloId(modulo.getId());
-        return listaVoluntarios.stream().filter(
-                voluntario -> cumpleHoras(voluntario,modulo.getActividad())
-        ).toList();
+    public List<StatusVoluntarioModulo> getVoluntarioFromModuloHoursOkAndIsParticipant(Modulo modulo){
+        Long horasMin = ObtenerHorasMinimasModulo(modulo);
+        return findVoluntarioByModuloId(modulo.getId()).stream()
+                .map(voluntario -> {
+                    long horas = obtenerHoras(voluntario, modulo.getActividad());
+                    return new AbstractMap.SimpleEntry<>(voluntario, horas);
+                })
+                .filter(entry -> cumpleHoras(horasMin, entry.getValue())) //ES SOLO UN EQUALS
+                .map(entry -> new StatusVoluntarioModulo(entry.getKey(), entry.getValue()))
+                .toList();
     }
 
-    public Boolean cumpleHoras(Voluntario voluntario, List<Actividad> actividadList){
-        Long horasMix = Modalidades.MIN_HORAS_MODULO;
+    private Long ObtenerHorasMinimasModulo(Modulo modulo) {
+        /**
+         * Ejemplo:
+         * Actividades de modulo : 7
+         * MinimoActividaes : 5
+         * Valor a iterar  : 2
+         */
+
+        Long totalHoras = 0L;
+        List<Actividad> actividades = modulo.getActividad();
+        int iterador = actividades.size()-modulo.getMinimoActividades();
+        // Si hay menos de dos actividades, simplemente suma todas las horas
+        if (actividades.size() <= 2) {
+            for (Actividad actividad : actividades) {
+                totalHoras += actividad.obtenerDuracionActividad();
+            }
+        } else {
+            // Itera sobre las actividades exceptuando las dos primeras
+            for (int i = iterador; i < actividades.size(); i++) {
+                totalHoras += actividades.get(i).obtenerDuracionActividad();
+            }
+        }
+
+        return totalHoras;
+    }
+
+    public List<Voluntario> findVoluntarioByModuloId(Long id){
+        return iVoluntarioRepository.findVoluntarioByModuloId(id);
+    }
+
+    public Long obtenerHoras(Voluntario voluntario, List<Actividad> actividadList){
         Long hrsVoluntario = 0L;
         for (Actividad a:
              actividadList) {
-            Optional<Participante> participante = iParticipanteRepository.findByVoluntarioIdAndActividadId(voluntario.getId(),a.getId());
-            if (participante.isPresent() &&
-                    (participante.get().getIsParticipant() && participante.get().getTipoParticipacion().getId().equals(Modalidades.ID_MODULO))
-            ){
-                hrsVoluntario += a.obtenerDuracionActividad();
+            try {
+                Participante participante = iParticipanteRepository.findByVoluntarioIdAndActividadId(voluntario.getId(),a.getId());
+                if ((participante.getIsParticipant() && participante.getTipoParticipacion().getId().equals(Modalidades.ID_MODULO))){
+                    hrsVoluntario += a.obtenerDuracionActividad();
+                }
+            }catch (Exception e){
+                System.out.println(e +"\n"+ voluntario.toString() );//Porsiaca aca venia el error de stackoverflow
+                //TODO crear metodos toString en todos los dto
             }
+
         }
-        return Objects.equals(horasMix , hrsVoluntario);
-
-
+        return hrsVoluntario;
     }
+    public Boolean cumpleHoras( Long horasMin,Long hrsVoluntario){
+        return hrsVoluntario>=horasMin;
+    }
+
+
+
 
 	public List<Voluntario>  saveAndGetVoluntarios(List<Voluntario> lstVoluntarios) {
 

@@ -76,14 +76,14 @@ public class ParticipanteService {
     }
 
     public boolean existeParticipanteParaVoluntarioYActividad(Long idVoluntario, Long idActividad) {
-        return iParticipanteRepository.findByVoluntarioIdAndActividadId(idVoluntario, idActividad).isPresent();
+        return iParticipanteRepository.findByVoluntarioIdAndActividadIdOptional(idVoluntario, idActividad).isPresent();
     }
 
     public Participante findParticipantefromVoluntarioYActividad(Long idVoluntario, Long idActividad) {
-        return iParticipanteRepository.findByVoluntarioIdAndActividadId(idVoluntario, idActividad).orElse(null);
+        return iParticipanteRepository.findByVoluntarioIdAndActividadIdOptional(idVoluntario, idActividad).orElse(null);
     }
     public Optional<Participante> findParticipantefromVoluntarioYActividadOptional(Long idVoluntario, Long idActividad) {
-        return iParticipanteRepository.findByVoluntarioIdAndActividadId(idVoluntario, idActividad);
+        return iParticipanteRepository.findByVoluntarioIdAndActividadIdOptional(idVoluntario, idActividad);
     }
     public void deleteParticipante(Participante participante) {
     	iParticipanteRepository.delete(participante);

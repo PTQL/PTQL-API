@@ -2,14 +2,12 @@ package com.sebasgoy.Parser;
 
 import com.sebasgoy.constantes.Mensajes;
 import com.sebasgoy.dto.Actividad;
-import com.sebasgoy.dto.Participante;
+import com.sebasgoy.dto.Modulo;
 import com.sebasgoy.dto.Voluntario;
 import com.sebasgoy.dto.request.PlantillaDto;
 
 import java.sql.Date;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -26,7 +24,7 @@ public class PlantillaParser {
         return "Lima, " + formatoSalida.format(fechaActividad);
 
     }
-    public static List<PlantillaDto> listParticipanteToPlantillaDto(List<Voluntario> listVoluntarios , Actividad actividad) {
+    public static List<PlantillaDto> listParticipanteToPlantillaDtoActividad(List<Voluntario> listVoluntarios , Actividad actividad) {
 
         List<PlantillaDto> dtos = new ArrayList<>();
 
@@ -61,7 +59,11 @@ public class PlantillaParser {
 
         return dtos;
     }
+    public static List<PlantillaDto> listParticipanteToPlantillaDtoModulo(List<Voluntario> listVoluntarios , Modulo actividad,Long horas) {
 
+        List<PlantillaDto> dtos = new ArrayList<>();
+        return null;
+    }
     public static PlantillaDto participanteToPlantillaDto(Voluntario voluntario , Actividad actividad) {
 
         String fechaActividad = PlantillaParser.parserFechaActividad(actividad.getFechaActividad());

@@ -23,7 +23,10 @@
             <label for="nombre" class="form-label">Nombre del Módulo</label>
             <input type="text" th:field="${modulo.nombre}" class="form-control" id="nombre" name="nombre" required>
 		</div>
-        
+		 <div class="mb-3">
+			 <label for="minActividades" class="form-label">Minimo Activides</label>
+			 <input type="number" th:field="${modulo.minimoActividades}" class="form-control" id="minActividades" name="minActividades" required>
+		 </div>
         <div class="row">
 	        <div class="col">
 				<h3>Lista de Actividades para agregar</h3>

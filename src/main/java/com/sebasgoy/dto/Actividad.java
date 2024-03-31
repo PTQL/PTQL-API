@@ -36,7 +36,6 @@ public class Actividad {
 
 	private Long idModuloActividad;
 
-
 	@Column
 	private Long idUbicacionConstancias;
 	@ManyToOne
@@ -49,29 +48,24 @@ public class Actividad {
 	@ManyToOne
  	@JoinColumn(name = "idModuloActividad",insertable = false, updatable = false)
  	private Modulo modulo;
-
-	public int cantidadParticipanteOf(int modalidad) {
-		int contadorModulo = 0;
-		int contadorLibre = 0;
-
-		for (Participante participante : participante) {
-			if (participante.getIdTipoParticipacion() == (Modalidades.ID_MODULO)) {
-				contadorModulo++;
-			} else if (participante.getIdTipoParticipacion()  == (Modalidades.ID_LIBRE)) {
-				contadorLibre++;
-			}
-		}
-
-		if (modalidad == 1) {
-			return contadorModulo;
-		} else {
-			return contadorLibre;
-		}
-	}
-
 	public Long obtenerDuracionActividad(){
  
 		return Duration.between(horaInicio,horaFin).toHours();
+	}
+
+	@Override
+	public String toString() {
+		return "Actividad{" +
+				"id=" + id +
+				", nombreActividad='" + nombreActividad + '\'' +
+				", ubicacionActividad='" + ubicacionActividad + '\'' +
+				", fechaActividad=" + fechaActividad +
+				", horaInicio=" + horaInicio +
+				", horaFin=" + horaFin +
+				", estado=" + estado +
+				", idModuloActividad=" + idModuloActividad +
+				", idUbicacionConstancias=" + idUbicacionConstancias +
+				'}';
 	}
 
 }

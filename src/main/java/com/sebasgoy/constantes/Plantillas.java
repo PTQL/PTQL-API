@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 public class Plantillas {
-
+    private static final String urlImg = "https://i.postimg.cc/L8wxNcQT/CONSTANCIA-DE-PARTICIPACI-N-ACTUALIZADA-2.png";
     public static String GenerarPlantilla(PlantillaDto plantillaDto) {
         return "<!DOCTYPE html>\n" +
                 "<html lang=\"en\">\n" +
@@ -116,7 +116,7 @@ public class Plantillas {
                 "</head>\n" +
                 "<body>\n" +
                 "    <div class=\"fondo\">\n" +
-                "    <img class=\"img_fondo\" src=\"https://i.postimg.cc/L8wxNcQT/CONSTANCIA-DE-PARTICIPACI-N-ACTUALIZADA-2.png\"></img>"+
+                "    <img class=\"img_fondo\" src=\""+urlImg+"\"></img>"+
                 "        <div class=\"titulo1\">\n" +
                 "            <p>La ONG <span class=\"verde\">\"Perú Te Quiero Limpio\"</span> dedicada a la preservación del medio ambiente</p>\n" +
                 "        </div>\n" +

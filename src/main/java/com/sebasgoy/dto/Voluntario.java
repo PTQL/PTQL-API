@@ -9,7 +9,6 @@ import jakarta.persistence.*;
 @Data
 @Entity
 @Builder
-@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name="voluntario")

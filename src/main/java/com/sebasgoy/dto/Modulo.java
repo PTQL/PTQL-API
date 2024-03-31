@@ -24,6 +24,9 @@ public class Modulo {
 	private boolean estado = true;
     @Column
     private Long idUbicacionConstancias;
+    @Column
+    private int minimoActividades;
+
     @ManyToOne
     @JoinColumn(name="idUbicacionConstancias" ,insertable = false,updatable = false)
     private UbicacionConstancias ubicacionConstancias;

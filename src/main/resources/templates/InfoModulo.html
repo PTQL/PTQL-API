@@ -35,6 +35,7 @@
                 <div class="card-body">
                     <p><strong>ID:</strong> <span th:text="${modulo.id}"></span></p>
                     <p><strong>Nombre de Modulo:</strong> <span th:text="${modulo.nombre}"></span></p>
+                    <p><strong>Minimo de Actividades permitidas:</strong> <span th:text="${modulo.minimoActividades}"></span></p>
                     <p><strong>Estado:</strong> <span th:text="${modulo.estado} ? 'Activo' : 'Inactivo'"></span></p>
 					<p th:if="${modulo.actividad != null}"><strong>Actividades Asociadas</strong> <span th:text="${modulo.actividad.size()}">0</span></p>
 					<p th:if="${modulo.actividad == null}"><strong>Sin Actividades Asociadas</strong></p>
@@ -85,6 +86,8 @@
                     Listado de Voluntarios del Modulo
                 </div>
                 <div class="card-body">
+					<a class="btn btn-primary" th:href="@{/ver_estatus_voluntarios/}+${modulo.id}" > Estatus Voluntarios </a>
+
 					<table class="table" id="tablaVoluntariosModulo">
 						<thead>
 							<tr>

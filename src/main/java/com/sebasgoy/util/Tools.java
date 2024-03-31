@@ -27,8 +27,10 @@ public class Tools {
 	private static final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
 
 	public static String paginaAnterior (HttpServletRequest request) {
-		return request.getHeader("referer");
+		return "redirect:"+request.getHeader("referer");
 	}
+
+
 	public static String getStringFromCell(Row fila , int ubicacion) {
 		DataFormatter dataFormatter = new DataFormatter();
 		return dataFormatter.formatCellValue(fila.getCell(ubicacion)).trim();

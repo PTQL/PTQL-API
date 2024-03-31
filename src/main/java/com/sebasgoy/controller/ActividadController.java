@@ -2,7 +2,6 @@ package com.sebasgoy.controller;
 
 import com.sebasgoy.Parser.PlantillaParser;
 import com.sebasgoy.constantes.Plantillas;
-import com.sebasgoy.dto.UbicacionConstancias;
 import com.sebasgoy.dto.Voluntario;
 import com.sebasgoy.dto.request.PlantillaDto;
 import com.sebasgoy.service.*;
@@ -154,7 +153,7 @@ public class ActividadController {
 			List<Voluntario> lstVoluntarios =voluntarioService.getListVoluntarioFromListParticipante(
 					participanteService.getLibresFromListParticipante(idActividad)
 			);
-	        List<PlantillaDto> listPlantillaDto = PlantillaParser.listParticipanteToPlantillaDto(lstVoluntarios, actividad);
+	        List<PlantillaDto> listPlantillaDto = PlantillaParser.listParticipanteToPlantillaDtoActividad(lstVoluntarios, actividad);
 	        for (PlantillaDto plantillaDto : listPlantillaDto) {
 
 	            Plantillas.convertirHTMLaPDF(

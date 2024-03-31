@@ -1,5 +1,6 @@
 package com.sebasgoy.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -8,7 +9,9 @@ import com.sebasgoy.constantes.Modalidades;
 import com.sebasgoy.dto.Participante;
 import com.sebasgoy.dto.Voluntario;
 import com.sebasgoy.dto.request.PlantillaDto;
+import com.sebasgoy.dto.response.StatusVoluntarioModulo;
 import com.sebasgoy.service.*;
+import com.sebasgoy.util.Tools;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -100,10 +103,6 @@ public class ModuloController {
 		
 		
 	}
-
-
-
-	
 	@GetMapping("/addActividadToModulo/{actividadId}")
 	public String agregarActividad(@PathVariable Long actividadId , @RequestParam Long moduloId ,Model model){
 		
@@ -133,7 +132,6 @@ public class ModuloController {
 
 		return "FormNewModulo";
 	}
-	
 	@GetMapping("/deleteActividadToModulo/{actividadId}")
 	public String quitarActividad(@PathVariable Long actividadId , @RequestParam Long moduloId ,Model model){
 		
@@ -157,7 +155,6 @@ public class ModuloController {
 		}
 		return "FormNewModulo";
 	}
-	
 	@PostMapping("/guardar_modulo")
 	public String guardar_modulo(@ModelAttribute Modulo modulo,Model model) {
 	
@@ -179,7 +176,6 @@ public class ModuloController {
 		
 		return "redirect:/dashboard_modulo";
 	}
-
 	@GetMapping("/regresar_dashboard/{id}")
 	public String regresar_dashboard(@PathVariable("id") Long id,Model model) {
 	
@@ -204,7 +200,6 @@ public class ModuloController {
 		
 		return "redirect:/dashboard_modulo";
 	}
-
 	@GetMapping("/retirarActividadFromModulo/{actividadId}")
 	public String retirarActividadFromModulo(@PathVariable Long actividadId , @RequestParam Long moduloId , Model model, HttpServletRequest request){
 		String pagina_anterior = request.getHeader("referer");
@@ -230,8 +225,6 @@ public class ModuloController {
 		}
 		return "redirect:"+pagina_anterior;
 	}
-
-
 	@GetMapping("/removeVoluntarioFromModulo/{voluntarioId}")
 	public String removeVoluntarioFromModulo(@PathVariable Long voluntarioId , @RequestParam Long moduloId ,Model model,HttpServletRequest request){
 		System.out.println("Volutnario id :" + voluntarioId);
@@ -261,7 +254,7 @@ public class ModuloController {
 		try {
 			Modulo modulo = moduloService.findById(idModulo);
 			path = ubicacionConstanciasService.validarPath(path,modulo);
-			List<Voluntario> lstaVoluntario = voluntarioService.getVoluntarioFromModuloHoursOkAndIsParticipant(modulo);
+			List<StatusVoluntarioModulo> lstaVoluntario = voluntarioService.getVoluntarioFromModuloHoursOkAndIsParticipant(modulo);
 			//TODO solicitar plantilla para modulo
 
 
@@ -271,5 +264,35 @@ public class ModuloController {
 		}
 		return "redirect:" + request.getHeader("referer");
 	}
+
+	@GetMapping("/ver_estatus_voluntarios/{id}")
+	public String ver_estatus_voluntarios(
+			@PathVariable("id") Long idModulo,
+			HttpServletRequest request,
+			Model model
+	){
+		try {
+			Modulo modulo = moduloService.findById(idModulo);
+
+			System.out.println("Inicio de verificacion de horas");
+			List<StatusVoluntarioModulo> lstResponse = voluntarioService.getVoluntarioFromModuloHoursOkAndIsParticipant(modulo);
+
+			System.out.println(lstResponse.toString());
+			model.addAttribute("lstResponse",lstResponse);
+			model.addAttribute("modulo",modulo);
+
+			System.out.println("Fin de verificacion de horas");
+
+			return "EstatusModulo";
+		}catch (Exception e){
+			System.out.println(Mensajes.error("Status", "Generacion").concat(e.toString()));
+			return Tools.paginaAnterior(request);
+
+		}
+
+	}
+
+
+
 
 }

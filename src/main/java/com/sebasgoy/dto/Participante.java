@@ -39,6 +39,16 @@ public class Participante {
 	public void changeParticipacion() {
 		setIsParticipant(!isParticipant);
 	}
-	
+
+	@Override
+	public String toString() {
+		return "Participante{" +
+				"Id=" + Id +
+				", isParticipant=" + isParticipant +
+				", idActividad=" + idActividad +
+				", idVoluntario=" + idVoluntario +
+				", idTipoParticipacion=" + idTipoParticipacion +
+				'}';
+	}
 
 }

@@ -32,7 +32,8 @@
                         <tr>
                             <th>ID</th>
                             <th>Nombre</th>
-                            <th>DNI</th>
+                            <th>Cel</th>
+
                             <th>Horas </th>
                             <th> </th>
                         </tr>
@@ -41,7 +42,7 @@
                             <tr th:each="status : ${lstResponse}">
                                 <td th:text="${status.voluntario.Id}"></td>
                                 <td th:text="${status.voluntario.nombre}"></td>
-                                <td th:text="${status.voluntario.dni}"></td>
+                                <td th:text="${status.voluntario.telefono}"></td>
                                 <td th:text="${status.horas}"></td>
                                  <td>
                                     <a class="btn btn-primary" th:value="${status.voluntario.Id}" th:href="@{/info_voluntario/}+${status.voluntario.id}">Detalles</a>

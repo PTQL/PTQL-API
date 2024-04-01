@@ -1,13 +1,15 @@
 package com.sebasgoy.dto;
 
-import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
+
 @Data
 @Entity
 @AllArgsConstructor
@@ -32,9 +34,8 @@ public class Modulo {
     private UbicacionConstancias ubicacionConstancias;
     @OneToMany(mappedBy = "idModuloActividad")
     private List<Actividad> actividad;
-    
-    
-    
-    
+
+
+
 
 }

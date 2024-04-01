@@ -1,14 +1,14 @@
 package com.sebasgoy.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import com.sebasgoy.Parser.PlantillaParser;
 import com.sebasgoy.constantes.Modalidades;
+import com.sebasgoy.constantes.Plantillas;
 import com.sebasgoy.dto.Participante;
 import com.sebasgoy.dto.Voluntario;
-import com.sebasgoy.dto.request.PlantillaDto;
+import com.sebasgoy.dto.request.PlantillaModuloDto;
 import com.sebasgoy.dto.response.StatusVoluntarioModulo;
 import com.sebasgoy.service.*;
 import com.sebasgoy.util.Tools;
@@ -17,10 +17,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 import com.sebasgoy.dto.Actividad;
 import com.sebasgoy.dto.Modulo;
-
 import com.sebasgoy.constantes.Mensajes;
  
 @Controller
@@ -100,15 +98,12 @@ public class ModuloController {
 			model.addAttribute("mensaje", Mensajes.error("MODULO", "BUSQUEDA").concat(e.toString()) );
 		}
 		return "redirect:/dashboard_modulo";
-		
-		
 	}
 	@GetMapping("/addActividadToModulo/{actividadId}")
 	public String agregarActividad(@PathVariable Long actividadId , @RequestParam Long moduloId ,Model model){
 		
 		Modulo modulo = moduloService.findById(moduloId);		
 		Actividad actividad = actividadService.findById(actividadId);
-
 		List<Actividad> ListActividad = modulo.getActividad();
 
 		if (!ListActividad.contains(actividad) ) {
@@ -116,15 +111,10 @@ public class ModuloController {
 			List<Long> lstaVoluntariosModulo =  voluntarioService.findVoluntarioOfModulo(moduloId).stream().map(Voluntario::getId).toList();
 
 			participanteService.saveVoluntariosToActividad(lstaVoluntariosModulo,actividadId,Modalidades.ID_MODULO,false);
-
-
 			actividadService.saveActividad(actividad);
-
 
 			ListActividad.add(actividad);
 			modulo.setActividad(ListActividad );
-
-
 
 		}
 		model.addAttribute("modulo", modulo);
@@ -159,21 +149,13 @@ public class ModuloController {
 	public String guardar_modulo(@ModelAttribute Modulo modulo,Model model) {
 	
 		try {
-			
 			moduloService.saveModulo(modulo);
-
-
-
-
-			
 			System.out.println( Mensajes.success("MODULO", "REGISTRO"));
 			model.addAttribute("mensaje", Mensajes.success("MODULO", "REGISTRO"));
 		} catch (Exception e) {
 			System.out.println( Mensajes.error("MODULO", "REGISTRO").concat(e.toString()) );
-
 			model.addAttribute("mensaje",Mensajes.error("MODULO", "REGISTRO").concat(e.toString()) );
 		}
-		
 		return "redirect:/dashboard_modulo";
 	}
 	@GetMapping("/regresar_dashboard/{id}")
@@ -250,19 +232,22 @@ public class ModuloController {
 			@RequestParam("pathFile") String path,
 			HttpServletRequest request,
 			Model model) {
-
 		try {
 			Modulo modulo = moduloService.findById(idModulo);
 			path = ubicacionConstanciasService.validarPath(path,modulo);
 			List<StatusVoluntarioModulo> lstaVoluntario = voluntarioService.getVoluntarioFromModuloHoursOkAndIsParticipant(modulo);
-			//TODO solicitar plantilla para modulo
+ 			List<PlantillaModuloDto> listPlantillaDto = PlantillaParser.listParticipanteToPlantillaDtoModulo(lstaVoluntario,modulo);
+			for (PlantillaModuloDto plantillaDto : listPlantillaDto) {
 
-
-
+				Plantillas.convertirHTMLaPDF(
+						Plantillas.GenerarPlantillaModulo(plantillaDto),
+						path + "/" + plantillaDto.getStatusVoluntarioModulo().getVoluntario().getDni()+ ".pdf");
+			}
+			System.out.println(Mensajes.success("Archivo", "Generacion"));
 		}catch (Exception e) {
 			System.out.println(Mensajes.error("Archivo", "Generacion").concat(e.toString()));
 		}
-		return "redirect:" + request.getHeader("referer");
+		return "redirect:/dashboard_modulo";
 	}
 
 	@GetMapping("/ver_estatus_voluntarios/{id}")

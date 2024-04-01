@@ -8,7 +8,7 @@ import lombok.Data;
 @Data
 @Builder
 @AllArgsConstructor
-public class PlantillaDto {
+public class PlantillaActividadDto {
     private Voluntario voluntario;
     private String nombreActividad;
     private String fechaActividad;

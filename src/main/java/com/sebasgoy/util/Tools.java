@@ -1,6 +1,7 @@
 package com.sebasgoy.util;
 
 import com.sebasgoy.dto.Actividad;
+import com.sebasgoy.dto.Modulo;
 import com.sebasgoy.dto.Voluntario;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -19,6 +20,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Iterator;
+import java.util.Locale;
 import java.util.Objects;
 @Component
 public class Tools {
@@ -28,6 +30,13 @@ public class Tools {
 
 	public static String paginaAnterior (HttpServletRequest request) {
 		return "redirect:"+request.getHeader("referer");
+	}
+	public static String getMes(Date fecha){
+		if (fecha != null) {
+			SimpleDateFormat dateForma = new SimpleDateFormat("MMMM", new Locale("es", "ES"));
+			return dateForma.format(fecha);
+		}
+		return null;
 	}
 
 
@@ -79,5 +88,12 @@ public class Tools {
 	}
 
 
+    public static Date ObtenerPrimerDateModulo(Modulo modulo) {
+		return modulo.getActividad().get(0).getFechaActividad();
+    }
 
+	public static Date ObtenerUltimoDateModulo(Modulo modulo) {
+		int size = modulo.getActividad().size();
+		return modulo.getActividad().get(size-1).getFechaActividad();
+	}
 }

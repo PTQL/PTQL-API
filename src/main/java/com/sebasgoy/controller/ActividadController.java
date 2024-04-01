@@ -3,7 +3,7 @@ package com.sebasgoy.controller;
 import com.sebasgoy.Parser.PlantillaParser;
 import com.sebasgoy.constantes.Plantillas;
 import com.sebasgoy.dto.Voluntario;
-import com.sebasgoy.dto.request.PlantillaDto;
+import com.sebasgoy.dto.request.PlantillaActividadDto;
 import com.sebasgoy.service.*;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -153,11 +153,11 @@ public class ActividadController {
 			List<Voluntario> lstVoluntarios =voluntarioService.getListVoluntarioFromListParticipante(
 					participanteService.getLibresFromListParticipante(idActividad)
 			);
-	        List<PlantillaDto> listPlantillaDto = PlantillaParser.listParticipanteToPlantillaDtoActividad(lstVoluntarios, actividad);
-	        for (PlantillaDto plantillaDto : listPlantillaDto) {
+	        List<PlantillaActividadDto> listPlantillaDto = PlantillaParser.listParticipanteToPlantillaDtoActividad(lstVoluntarios, actividad);
+	        for (PlantillaActividadDto plantillaDto : listPlantillaDto) {
 
 	            Plantillas.convertirHTMLaPDF(
-						Plantillas.GenerarPlantilla(plantillaDto),
+						Plantillas.GenerarPlantillaActividad(plantillaDto),
 						path + "/" + plantillaDto.getVoluntario().getDni()+ ".pdf");
 	        }
 	    } catch (Exception e) {

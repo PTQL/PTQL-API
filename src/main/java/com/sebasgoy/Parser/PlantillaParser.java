@@ -4,7 +4,10 @@ import com.sebasgoy.constantes.Mensajes;
 import com.sebasgoy.dto.Actividad;
 import com.sebasgoy.dto.Modulo;
 import com.sebasgoy.dto.Voluntario;
-import com.sebasgoy.dto.request.PlantillaDto;
+import com.sebasgoy.dto.request.PlantillaActividadDto;
+import com.sebasgoy.dto.request.PlantillaModuloDto;
+import com.sebasgoy.dto.response.StatusVoluntarioModulo;
+import com.sebasgoy.util.Tools;
 
 import java.sql.Date;
 import java.text.SimpleDateFormat;
@@ -24,10 +27,8 @@ public class PlantillaParser {
         return "Lima, " + formatoSalida.format(fechaActividad);
 
     }
-    public static List<PlantillaDto> listParticipanteToPlantillaDtoActividad(List<Voluntario> listVoluntarios , Actividad actividad) {
-
-        List<PlantillaDto> dtos = new ArrayList<>();
-
+    public static List<PlantillaActividadDto> listParticipanteToPlantillaDtoActividad(List<Voluntario> listVoluntarios , Actividad actividad) {
+        List<PlantillaActividadDto> dtos = new ArrayList<>();
         String fechaActividad = PlantillaParser.parserFechaActividad(actividad.getFechaActividad());
         String fechaGeneralActividad = PlantillaParser.parserFechaGeneralActividad(actividad.getFechaActividad());
         String horasActividad = String.valueOf( actividad.obtenerDuracionActividad());
@@ -35,9 +36,8 @@ public class PlantillaParser {
         String ubicacionActividad = actividad.getUbicacionActividad();
         try {
             for (Voluntario voluntario : listVoluntarios) {
-
                 dtos.add(
-                        PlantillaDto.builder()
+                        PlantillaActividadDto.builder()
                                 .fechaActividad(fechaActividad)
                                 .fechaGeneralActividad(fechaGeneralActividad)
                                 .horasActividad(horasActividad)
@@ -46,25 +46,41 @@ public class PlantillaParser {
                                 .ubicacionActividad(ubicacionActividad)
                                 .build()
                 );
-
             }
-
             System.out.println("Parseo de entidades a PlantillaDTO ok");
+        }catch (Exception e){
+            System.out.println(Mensajes.error("Error al convertir participante a plantillaDTo").concat(e.toString()));
+        }
+        return dtos;
+    }
+    public static List<PlantillaModuloDto> listParticipanteToPlantillaDtoModulo(List<StatusVoluntarioModulo> listVoluntarios , Modulo modulo) {
 
-
+        List<PlantillaModuloDto> lstaPlantillas = new ArrayList<>();
+        String fechaGeneralActividad = PlantillaParser.parserFechaGeneralActividad(Tools.ObtenerUltimoDateModulo(modulo));
+        String nombreModulo = modulo.getNombre();
+        String mesInicio = Tools.getMes(Tools.ObtenerPrimerDateModulo(modulo));
+        String mesFin =Tools.getMes(Tools.ObtenerUltimoDateModulo(modulo));
+        try {
+            for (StatusVoluntarioModulo voluntario : listVoluntarios) {
+                lstaPlantillas.add(
+                        PlantillaModuloDto.builder()
+                                .fechaGeneralActividad(fechaGeneralActividad)
+                                .nombreModulo(nombreModulo)
+                                .statusVoluntarioModulo(voluntario)
+                                .mesInicio(mesInicio)
+                                .mesFin(mesFin)
+                                .build()
+                );
+            }
+            System.out.println("Parseo de entidades a PlantillaDTO ok");
         }catch (Exception e){
             System.out.println(Mensajes.error("Error al convertir participante a plantillaDTo").concat(e.toString()));
         }
 
-
-        return dtos;
+        return lstaPlantillas;
     }
-    public static List<PlantillaDto> listParticipanteToPlantillaDtoModulo(List<Voluntario> listVoluntarios , Modulo actividad,Long horas) {
 
-        List<PlantillaDto> dtos = new ArrayList<>();
-        return null;
-    }
-    public static PlantillaDto participanteToPlantillaDto(Voluntario voluntario , Actividad actividad) {
+    public static PlantillaActividadDto participanteToPlantillaDto(Voluntario voluntario , Actividad actividad) {
 
         String fechaActividad = PlantillaParser.parserFechaActividad(actividad.getFechaActividad());
         String fechaGeneralActividad = PlantillaParser.parserFechaGeneralActividad(actividad.getFechaActividad());
@@ -73,8 +89,7 @@ public class PlantillaParser {
         String ubicacionActividad = actividad.getUbicacionActividad();
 
         try {
-
-            return PlantillaDto.builder()
+            return PlantillaActividadDto.builder()
                     .fechaActividad(fechaActividad)
                     .fechaGeneralActividad(fechaGeneralActividad)
                     .horasActividad(horasActividad)
@@ -82,10 +97,9 @@ public class PlantillaParser {
                     .voluntario(voluntario)
                     .ubicacionActividad(ubicacionActividad)
                     .build();
-
         }catch (Exception e){
             System.out.println(Mensajes.error("Error al convertir participante a plantillaDTo").concat(e.toString()));
-            throw  new RuntimeException("Error al convertir participante a plantillaDto");
+            throw new RuntimeException("Error al convertir participante a plantillaDto");
         }
 
     }

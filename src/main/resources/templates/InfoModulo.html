@@ -17,11 +17,10 @@
 			<a class="btn btn-secondary mb-3" onclick="mostrarInput3()" >Generar Constancias Modalidad Modulo</a>
 
 			<div class="card mt-3 mb-3 p-3 m-3" id="inputContainer3" style="display: none;">
-				<form  th:href="@{/generar_constancias_modulo/}+${modulo.id}" method="post" enctype="multipart/form-data">
+				<form  th:action="@{/generar_constancias_modulo/}+${modulo.id}" method="post" enctype="multipart/form-data">
 					<div class="mb-3">
 						<label for="pathFile" class="form-label">Seleccione Ubicacion:</label>
 						<input type="text" class="form-control" name="pathFile" id="pathFile" placeholder="Ingrese la ruta de la carpeta vacía" required>
-
 					</div>
 					<button type="submit" class="btn btn-primary">Guardar Constancias</button>
 					<button type="button" class="btn btn-secondary ms-2" onclick="ocultarInput3()">Cancelar</button>

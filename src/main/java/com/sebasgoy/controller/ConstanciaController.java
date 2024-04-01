@@ -5,7 +5,6 @@ import com.sebasgoy.constantes.Plantillas;
 import com.sebasgoy.dto.Participante;
 import com.sebasgoy.dto.UbicacionConstancias;
 import com.sebasgoy.service.ParticipanteService;
-import com.sebasgoy.service.UbicacionConstanciasService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -20,8 +19,7 @@ import java.util.Optional;
 public class ConstanciaController {
 
     private final ParticipanteService participanteService;
-    private final UbicacionConstanciasService ubicacionConstanciasService;
-    @GetMapping("/generar_voluntario_constancia/{id}")
+     @GetMapping("/generar_voluntario_constancia/{id}")
     public String generar_voluntario_constancia(@PathVariable("id") Long idParticipante,
     	        HttpServletRequest request,Model model) throws Exception {
         String paginaAnterior = request.getHeader("referer");
@@ -30,7 +28,7 @@ public class ConstanciaController {
         if (ubicacionConstancias.isPresent() && Boolean.TRUE.equals(participante.getIsParticipant())){
             System.out.println("Ruta : " + ubicacionConstancias.get().getUbicacion()+"<--");
             Plantillas.convertirHTMLaPDF(
-                    Plantillas.GenerarPlantilla(
+                    Plantillas.GenerarPlantillaActividad(
                             PlantillaParser.participanteToPlantillaDto(participante.getVoluntario(),participante.getActividad())
                     ),ubicacionConstancias.get().getUbicacion()+ "/" + participante.getVoluntario().getDni() + ".pdf");
         }

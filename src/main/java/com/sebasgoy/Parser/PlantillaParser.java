@@ -53,7 +53,7 @@ public class PlantillaParser {
         }
         return dtos;
     }
-    public static List<PlantillaModuloDto> listParticipanteToPlantillaDtoModulo(List<StatusVoluntarioModulo> listVoluntarios , Modulo modulo) {
+    public static List<PlantillaModuloDto> listStatusVoluntarioToPlantillaDtoModulo(List<StatusVoluntarioModulo> listVoluntarios , Modulo modulo) {
 
         List<PlantillaModuloDto> lstaPlantillas = new ArrayList<>();
         String fechaGeneralActividad = PlantillaParser.parserFechaGeneralActividad(Tools.ObtenerUltimoDateModulo(modulo));
@@ -80,6 +80,29 @@ public class PlantillaParser {
         return lstaPlantillas;
     }
 
+    public static PlantillaModuloDto statusVoluntarioToPlantillaDtoModulo(StatusVoluntarioModulo statusVoluntario , Modulo modulo) {
+
+
+        String fechaGeneralActividad = PlantillaParser.parserFechaGeneralActividad(Tools.ObtenerUltimoDateModulo(modulo));
+        String nombreModulo = modulo.getNombre();
+        String mesInicio = Tools.getMes(Tools.ObtenerPrimerDateModulo(modulo));
+        String mesFin =Tools.getMes(Tools.ObtenerUltimoDateModulo(modulo));
+        try {
+            System.out.println("Parseo de entidades a PlantillaDTO ok");
+            return PlantillaModuloDto.builder()
+                                .fechaGeneralActividad(fechaGeneralActividad)
+                                .nombreModulo(nombreModulo)
+                                .statusVoluntarioModulo(statusVoluntario)
+                                .mesInicio(mesInicio)
+                                .mesFin(mesFin)
+                                .build();
+
+        }catch (Exception e){
+            System.out.println(Mensajes.error("Error al convertir participante a plantillaDTo").concat(e.toString()));
+            throw new RuntimeException("Error al convertir participante a plantillaDto");
+        }
+
+    }
     public static PlantillaActividadDto participanteToPlantillaDto(Voluntario voluntario , Actividad actividad) {
 
         String fechaActividad = PlantillaParser.parserFechaActividad(actividad.getFechaActividad());

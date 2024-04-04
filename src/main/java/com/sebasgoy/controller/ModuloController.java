@@ -240,7 +240,7 @@ public class ModuloController {
 			Modulo modulo = moduloService.findById(idModulo);
 			path = ubicacionConstanciasService.validarPath(path,modulo);
 			List<StatusVoluntarioModulo> lstaVoluntario = voluntarioService.getVoluntarioFromModuloHoursOkAndIsParticipant(modulo);
- 			List<PlantillaModuloDto> listPlantillaDto = PlantillaParser.listParticipanteToPlantillaDtoModulo(lstaVoluntario,modulo);
+ 			List<PlantillaModuloDto> listPlantillaDto = PlantillaParser.listStatusVoluntarioToPlantillaDtoModulo(lstaVoluntario,modulo);
 			for (PlantillaModuloDto plantillaDto : listPlantillaDto) {
 
 				Plantillas.convertirHTMLaPDF(

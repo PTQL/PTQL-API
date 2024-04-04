@@ -35,7 +35,16 @@ public class Modulo {
     @OneToMany(mappedBy = "idModuloActividad")
     private List<Actividad> actividad;
 
-
-
-
+    @Override
+    public String toString() {
+        return "Modulo{" +
+                "id=" + id +
+                ", nombre='" + nombre + '\'' +
+                ", estado=" + estado +
+                ", idUbicacionConstancias=" + idUbicacionConstancias +
+                ", minimoActividades=" + minimoActividades +
+                ", ubicacionConstancias=" + ubicacionConstancias +
+                ", actividad=" + actividad +
+                '}';
+    }
 }

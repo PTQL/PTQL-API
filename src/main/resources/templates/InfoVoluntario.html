@@ -55,8 +55,9 @@
 				                <td th:text="${participante.isParticipant ? 'Participó' : 'No Participo' }"></td>
 				                <td th:text="${participante.tipoParticipacion.descripcionParticipacion}"></td>
 	 							<td>
-									<a th:href="@{/change_participacion/}+${participante.id} " >Ver</a>
-									<a th:href="@{/retirar_voluntario/}+${participante.id}">Retirar Participacion</a>
+									<a th:href="@{/change_participacion/}+${participante.id}" class="btn btn-primary" >Cambiar Participacion</a>
+									<a th:href="@{/retirar_voluntario/}+${participante.id}" class="btn btn-secondary" >Retirar Participacion</a>
+									<a th:href="@{/convertir_modulo/}+${participante.id}" class="btn btn-info">Convertir a Modulo</a>
 	 							</td>
 								<!--Agregrar boton de generar constancia para todos y unitario , solo si la actividad es libre -->
 			           		</tr>

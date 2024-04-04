@@ -1,16 +1,19 @@
 package com.sebasgoy.controller;
 
 import com.sebasgoy.dto.Actividad;
+import com.sebasgoy.dto.Modulo;
 import com.sebasgoy.dto.Participante;
 import com.sebasgoy.dto.Voluntario;
 import com.sebasgoy.dto.response.AsistenciaRespone;
 import com.sebasgoy.service.ActividadService;
+import com.sebasgoy.service.ModuloService;
 import com.sebasgoy.service.ParticipanteService;
 import com.sebasgoy.service.VoluntarioService;
 import com.sebasgoy.constantes.Mensajes;
 import com.sebasgoy.constantes.Modalidades;
 import com.sebasgoy.constantes.ValoresPersonaRegex;
 
+import com.sebasgoy.util.Tools;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -27,7 +30,6 @@ public class ParticipanteController {
 	private final ParticipanteService participanteService;
 	private final ActividadService actividadService;
 	private final VoluntarioService voluntarioService;
-
 	@GetMapping("/change_participacion/{id}")
 	public String change_participacion(@PathVariable("id") Long idParticipante ,Model model,
 			HttpServletRequest request) {
@@ -42,14 +44,13 @@ public class ParticipanteController {
 			
 			System.out.println(Mensajes.success("PARTICIPANTE", "BUSQUEDA"));
 
-			return "redirect:/info_actividad/".concat(participante.getIdActividad().toString());
 		} catch (Exception e) {
 			// TODO: handle exception
 			System.out.println(Mensajes.error("PARTICIPANTE", "BUSQUEDA").concat(e.getMessage()));
 
 		}
 		
-		return "redirect:"+pagina_anterior;
+		return Tools.paginaAnterior(request);
 	}
 	
 	
@@ -118,8 +119,7 @@ public class ParticipanteController {
 			@RequestParam("idActividad") Long idActividad,
 			@RequestParam("voluntariosSeleccionados") List<Long> voluntariosSeleccionados
 	){
-		String pagina_anterior = request.getHeader("referer");
-		try {
+ 		try {
 
 			participanteService.saveVoluntariosToActividad(voluntariosSeleccionados, idActividad, Modalidades.ID_LIBRE,true);
 			
@@ -130,7 +130,7 @@ public class ParticipanteController {
 
 		}catch (Exception e){
 			System.out.println(Mensajes.error("VOLUNTARIO", "Registro"));
-			return "redirect:"+pagina_anterior;
+			return Tools.paginaAnterior(request);
 		}
 	}
 
@@ -169,6 +169,9 @@ public class ParticipanteController {
 		
 		return "redirect:/info_actividad/"+idActividad;
 	}
+
+
+
 
 
 

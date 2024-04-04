@@ -208,7 +208,11 @@ public class ModuloController {
 		return "redirect:"+pagina_anterior;
 	}
 	@GetMapping("/removeVoluntarioFromModulo/{voluntarioId}")
-	public String removeVoluntarioFromModulo(@PathVariable Long voluntarioId , @RequestParam Long moduloId ,Model model,HttpServletRequest request){
+	public String removeVoluntarioFromModulo(
+			@PathVariable Long voluntarioId ,
+			@RequestParam Long moduloId ,
+			Model model,
+			HttpServletRequest request){
 		System.out.println("Volutnario id :" + voluntarioId);
 		System.out.println("Modulo id :" + moduloId);
 		String pagina_anterior = request.getHeader("referer");
@@ -277,6 +281,59 @@ public class ModuloController {
 
 	}
 
+	@GetMapping("/convertir_modulo/{id}")
+	public String convertir_modulo(
+			HttpServletRequest  request,
+			@PathVariable("id") Long idParticipante,
+			Model model){
+		try {
+			Participante participante = participanteService.findById(idParticipante);
+			Long idModulo = participante.getActividad().getIdModuloActividad();
+			Modulo modulo = moduloService.findById(idModulo);
+			if ( modulo != null ){
+				//Aca estan las actividades que participo de manera "libre"
+				List<Participante> lstActividadesParticipadas = participanteService.obtenerParticipacionAsociadasByModuloId(participante.getIdVoluntario(),idModulo);
+
+				//Se busca primero cambiar el tipo de participacion a modulo
+				for (Participante p :
+					 lstActividadesParticipadas) {
+					p.setIdTipoParticipacion(Modalidades.ID_MODULO);
+					participanteService.saveParticipante(p);
+				}
+
+				List<Actividad> lstActividadesFaltantes =
+					actividadService.recuperarFaltantes(
+						actividadService.obtenerActividesFromParticipaciones(
+							lstActividadesParticipadas),
+						modulo.getActividad());
+
+				for (Actividad actividad:
+					lstActividadesFaltantes) {
+
+					participanteService.saveParticipante(
+							Participante.builder()
+									.isParticipant(Boolean.FALSE)
+									.idActividad(actividad.getId())
+									.idVoluntario(participante.getIdVoluntario())
+									.idTipoParticipacion(Modalidades.ID_MODULO)
+									.build()
+					);
+
+				}
+				System.out.println("Se asocio el voluntario al modulo :"+ modulo.toString());
+			}else {
+				System.out.println("La actividad no esta asociada a un modulo");
+ 			}
+			return Tools.paginaAnterior(request);
+
+		}catch (Exception e){
+			System.out.println(Mensajes.error("Error al convertir tipo de participacion a modulo").concat(e.toString()));
+			return Tools.paginaAnterior(request);
+
+		}
+
+
+	}
 
 
 

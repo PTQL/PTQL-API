@@ -1,8 +1,10 @@
 package com.sebasgoy.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import com.sebasgoy.dto.Participante;
 import com.sebasgoy.repository.IActividadRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -62,6 +64,25 @@ public class ActividadService {
 	}
 	public void saveActividad(Actividad actividad) {
 		iActividadRepository.save(actividad);
+	}
+
+	public List<Actividad> obtenerActividesFromParticipaciones(List<Participante> lstParticipante){
+		return lstParticipante.stream().map(
+				Participante::getActividad
+		).toList();
+
+	}
+    public List<Actividad> recuperarFaltantes(List<Actividad> actividadesParticipadas ,List<Actividad> totalActivides) {
+		List<Actividad> faltantes = new ArrayList<>();
+		for (Actividad a: totalActivides) {
+			if ( !actividadesParticipadas.contains(a)){
+				faltantes.add(a);
+			}
+		}
+
+		return faltantes;
+
+
 	}
 
 

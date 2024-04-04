@@ -102,7 +102,7 @@
 				                <td th:text="${voluntario.nombre}"></td>
 				                <td th:text="${voluntario.correo}"></td>
   								<td>
-									<a th:href="@{/generarConstanciaUnitariaModulo}" class="btn btn-sm btn-primary mb-1 mr-3" >Generar Constancia</a>
+									<a th:href="@{/generarConstanciaUnitariaModulo/{voluntarioId}(voluntarioId=${voluntario.id}, moduloId=${modulo.Id})}" class="btn btn-sm btn-primary mb-1 mr-3" >Generar Constancia</a>
 									<a th:href="@{/verEstadoVoluntarioFromModulo}" class="btn btn-sm btn-secondary mb-1 mr-2">Ver Participaciones</a>
 									<a th:href="@{/removeVoluntarioFromModulo/{voluntarioId}(voluntarioId=${voluntario.id}, moduloId=${modulo.Id})}" class="btn btn-sm btn-warning mb-1 mr-2" >Remover</a>
 								</td>

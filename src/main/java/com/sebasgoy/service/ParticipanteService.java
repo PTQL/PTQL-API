@@ -14,10 +14,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -187,6 +184,17 @@ public class ParticipanteService {
                 .idVoluntario(idVoluntario)
                 .idTipoParticipacion(tipoParticipacionService.findByDescripcion(modalidad).getId())
                 .build();
+    }
+
+
+    public List<Participante> obtenerParticipacionAsociadasByModuloId(Long idVoluntario ,Long idModulo){
+        //Se busca retornar las activiades de un voluntario que haya participado de manera Libre
+        //que esten en un modulo para realizar el cambio de tipo de participacion
+
+       return  voluntarioService.findById(idVoluntario).getParticipante()
+                .stream().filter(
+                        participante -> Objects.equals(participante.getActividad().getIdModuloActividad() , idModulo)
+               ).toList();
     }
 
     public Boolean isValid(VoluntarioResponse voluntarioResponse) {

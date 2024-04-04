@@ -44,8 +44,6 @@ public class VoluntarioController {
 			Collections.reverse(voluntarios);
 			model.addAttribute("listaVoluntarios",voluntarios);
 			
-			
-			
 			return "DashboardVoluntarios";
 		} catch (Exception e) {
 			// TODO: handle exception

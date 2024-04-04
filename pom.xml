@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.sebasgoy</groupId>
 	<artifactId>com.sebasgoy</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0-SNAPSHOT</version>
 		<name>PTQL-BackOffice</name>
 	<description>PTQL-BackOffice project for Spring Boot</description>
 	<properties>
@@ -31,8 +31,6 @@
 		    <artifactId>poi-ooxml</artifactId>
 		    <version>5.2.0</version> 
 		</dependency>
-
-
  		<dependency>
 			<groupId>org.xhtmlrenderer</groupId>
 			<artifactId>flying-saucer-pdf</artifactId>
@@ -43,8 +41,6 @@
 			<artifactId>flying-saucer-core</artifactId>
 			<version>9.2.2</version>
 		</dependency>
-
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
@@ -63,8 +59,7 @@
 			<groupId>com.mysql</groupId>
 			<artifactId>mysql-connector-j</artifactId>
 			<scope>runtime</scope>
-		</dependency> 
-
+		</dependency>
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>

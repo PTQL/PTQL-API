@@ -34,6 +34,7 @@ public class Actividad {
 	@Column(name = "estado")
 	private boolean estado = true;
 
+	@Nullable
 	private Long idModuloActividad;
 
 	@Column

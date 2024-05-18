@@ -30,7 +30,6 @@ public class ExcelMapper {
         try {
             Iterator<Row> filas = getRowIterator(archivoExcel);
             filas.next(); // Salta la primera fila (encabezados)
-           
             while (filas.hasNext()){
                 Row fila = filas.next();
                 /*Depende de la estructura del Excel

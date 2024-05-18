@@ -1,0 +1,22 @@
+{
+    "sourceFile": "src/main/resources/templates/GeneradorQr.html",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1715991777978,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1715992368401,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,9 +17,9 @@\n             <div class=\"form-group\">\r\n                 <label for=\"path\">File Path</label>\r\n                 <input type=\"text\" class=\"form-control\" id=\"path\" name=\"path\" required>\r\n             </div>\r\n-            <button type=\"submit\" class=\"btn btn-primary\">Generate QR Code</button>\r\n+            <button type=\"submit\" class=\"btn btn-primary\">Generar QR Code</button>\r\n         </form>\r\n         <div th:if=\"${message}\">\r\n             <p th:text=\"${message}\" class=\"mt-3\"></p>\r\n         </div>\r\n"
+                }
+            ],
+            "date": 1715991777978,
+            "name": "Commit-0",
+            "content": "<!DOCTYPE html>\r\n<html lang=\"es\">\r\n<head>\r\n    <meta charset=\"UTF-8\">\r\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\r\n    <title>Página Principal</title>\r\n    <link href=\"https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css\" rel=\"stylesheet\">\r\n</head>\r\n<body>\r\n    <div class=\"container\">\r\n        <h1>Generate QR Code</h1>\r\n        <form th:action=\"@{/generate-qr}\" method=\"post\">\r\n            <div class=\"form-group\">\r\n                <label for=\"text\">Text</label>\r\n                <input type=\"text\" class=\"form-control\" id=\"text\" name=\"text\" required>\r\n            </div>\r\n            <div class=\"form-group\">\r\n                <label for=\"path\">File Path</label>\r\n                <input type=\"text\" class=\"form-control\" id=\"path\" name=\"path\" required>\r\n            </div>\r\n            <button type=\"submit\" class=\"btn btn-primary\">Generate QR Code</button>\r\n        </form>\r\n        <div th:if=\"${message}\">\r\n            <p th:text=\"${message}\" class=\"mt-3\"></p>\r\n        </div>\r\n    </div>\r\n</body>\r\n</html>\r\n"
+        }
+    ]
+}

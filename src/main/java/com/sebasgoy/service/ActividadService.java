@@ -63,6 +63,10 @@ public class ActividadService {
 				).toList();
 	}
 	public void saveActividad(Actividad actividad) {
+
+		if (actividad.getIdModuloActividad() == null || actividad.getIdModuloActividad()==-1){
+			actividad.setIdModuloActividad(null);
+		}
 		iActividadRepository.save(actividad);
 	}
 

@@ -1,0 +1,34 @@
+{
+    "sourceFile": "src/main/java/com/sebasgoy/service/qrCodeService.java",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 4,
+            "patches": [
+                {
+                    "date": 1715992168522,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1715992174266,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,10 @@\n package com.sebasgoy.service;\r\n \r\n public class qrCodeService {\r\n \r\n+    public static void generateQRCode(String text, String path) {\r\n+        // TODO Auto-generated method stub\r\n+        throw new UnsupportedOperationException(\"Unimplemented method 'generateQRCode'\");\r\n+    }\r\n+\r\n }\r\n"
+                },
+                {
+                    "date": 1715992200858,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,10 +1,18 @@\n package com.sebasgoy.service;\r\n \r\n+import java.io.IOException;\r\n+import java.nio.file.FileSystems;\r\n+\r\n public class qrCodeService {\r\n \r\n-    public static void generateQRCode(String text, String path) {\r\n-        // TODO Auto-generated method stub\r\n-        throw new UnsupportedOperationException(\"Unimplemented method 'generateQRCode'\");\r\n+public void generateQRCode(String text, String filePath) throws WriterException, IOException {\r\n+        int width = 350;\r\n+        int height = 350;\r\n+        QRCodeWriter qrCodeWriter = new QRCodeWriter();\r\n+        BitMatrix bitMatrix = qrCodeWriter.encode(text, BarcodeFormat.QR_CODE, width, height);\r\n+\r\n+        Path path = FileSystems.getDefault().getPath(filePath);\r\n+        MatrixToImageWriter.writeToPath(bitMatrix, \"PNG\", path);\r\n     }\r\n \r\n }\r\n"
+                },
+                {
+                    "date": 1715992290252,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,8 +2,10 @@\n \r\n import java.io.IOException;\r\n import java.nio.file.FileSystems;\r\n \r\n+import com.google.zxing.qrcode.QRCodeWriter;\r\n+\r\n public class qrCodeService {\r\n \r\n     public void generateQRCode(String text, String filePath) throws WriterException, IOException {\r\n         int width = 350;\r\n"
+                },
+                {
+                    "date": 1715992296296,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n import com.google.zxing.qrcode.QRCodeWriter;\r\n \r\n public class qrCodeService {\r\n \r\n-    public void generateQRCode(String text, String filePath) throws WriterException, IOException {\r\n+    public void generateQRCode(String text, String filePath) throws  IOException {\r\n         int width = 350;\r\n         int height = 350;\r\n         QRCodeWriter qrCodeWriter = new QRCodeWriter();\r\n         BitMatrix bitMatrix = qrCodeWriter.encode(text, BarcodeFormat.QR_CODE, width, height);\r\n"
+                }
+            ],
+            "date": 1715992168522,
+            "name": "Commit-0",
+            "content": "package com.sebasgoy.service;\r\n\r\npublic class qrCodeService {\r\n\r\n}\r\n"
+        }
+    ]
+}

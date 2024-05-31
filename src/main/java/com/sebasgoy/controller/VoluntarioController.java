@@ -14,9 +14,7 @@ import com.sebasgoy.constantes.Modalidades;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -145,8 +143,7 @@ public class VoluntarioController {
 	}
 	@PostMapping("/guardar_voluntario")
 	public String guardar_voluntario(HttpServletRequest  request ,@ModelAttribute Voluntario voluntario,
-			 Model model ) {
-		String pagina_anterior = request.getHeader("referer");
+	Model model ) {
 		try {
 			
 			voluntarioService.saveVoluntario(voluntario);
@@ -196,8 +193,6 @@ public class VoluntarioController {
 			Model model,
 			@RequestParam("nombres") String nombres
 			){
-
-		String pagina_anterior = request.getHeader("referer");
 
 		try {
 			System.out.println("Iniciando lectura de Txt");

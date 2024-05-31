@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.sebasgoy.constantes.Modalidades;
 import com.sebasgoy.dto.Modulo;
-import com.sebasgoy.dto.response.AsistenciExcelResponse;
 import com.sebasgoy.service.*;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -34,7 +33,6 @@ public class ExcelController {
 	private final VoluntarioService voluntarioService;
 	private final ModuloService moduloService;
 	private final ParticipanteService participanteService;
-	private final TipoParticipacionService tipoParticipacionService;
 	
     @PostMapping("/cargarExcelVoluntariostoActividad/{id}")
     public String cargarExceltoActividad(
@@ -51,10 +49,10 @@ public class ExcelController {
         	try {
     			model.addAttribute("voluntarioResponse", voluntarioResponse);
     			return "GestorExcel";
-             } catch (Exception e) {
+            } catch (Exception e) {
                 model.addAttribute("result", "Error processing the Excel file."+ e);
                 return "redirect:/info_actividad/".concat(idActividad.toString());
-             }        	
+            }        	
 		}else if(action.equals("insertarVoluntario")) {
 			try {
 			    if (Boolean.TRUE.equals(participanteService.isValid(voluntarioResponse))) {
@@ -90,7 +88,7 @@ public class ExcelController {
 			    model.addAttribute("result", "Error processing the Excel file." + e.toString());
 			    System.out.println("Error processing the Excel file." + e.toString());
 			}        	
-        	 return "redirect:/info_actividad/".concat(idActividad.toString());
+        	return "redirect:/info_actividad/".concat(idActividad.toString());
 		}
         return "redirect:/info_actividad/".concat(idActividad.toString());
     }

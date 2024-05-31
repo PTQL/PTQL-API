@@ -2,13 +2,11 @@ package com.sebasgoy.service;
 
 import java.util.List;
 
-import com.sebasgoy.repository.IActividadRepository;
 import com.sebasgoy.repository.ITipoParticipacionRepository;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import com.sebasgoy.dto.Actividad;
 import com.sebasgoy.dto.TipoParticipacion;
 
 

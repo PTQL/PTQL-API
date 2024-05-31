@@ -1,0 +1,18 @@
+{
+    "sourceFile": "src/main/java/com/sebasgoy/dto/TipoParticipacion.java",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1717176878294,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1717176878294,
+            "name": "Commit-0",
+            "content": "package com.sebasgoy.dto;\r\n\r\n\r\nimport jakarta.persistence.Column;\r\nimport jakarta.persistence.Entity;\r\nimport jakarta.persistence.GeneratedValue;\r\nimport jakarta.persistence.GenerationType;\r\nimport jakarta.persistence.Table;\r\nimport jakarta.persistence.Id;\r\nimport lombok.AllArgsConstructor;\r\nimport lombok.Builder;\r\nimport lombok.Data;\r\nimport lombok.NoArgsConstructor;\r\n\r\n@Entity\r\n@Data\r\n@AllArgsConstructor\r\n@NoArgsConstructor\r\n@Builder\r\n@Table(name=\"tipoParticipacion\")\r\npublic class TipoParticipacion {\r\n\r\n\t\r\n\t@Id\r\n\t@GeneratedValue(strategy = GenerationType.IDENTITY)\r\n\tprivate Long Id;\r\n\t@Column(name=\"descripcionParticipacion\")\r\n\tprivate String descripcionParticipacion;\r\n\t\r\n\t\r\n}\r\n"
+        }
+    ]
+}

@@ -1,0 +1,22 @@
+{
+    "sourceFile": "src/main/java/com/sebasgoy/dto/Actividad.java",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1717176765486,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1717176780228,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -48,9 +48,9 @@\n \t@ManyToOne\r\n  \t@JoinColumn(name = \"idModuloActividad\",insertable = false, updatable = false)\r\n  \tprivate Modulo modulo;\r\n \tpublic Long obtenerDuracionActividad(){\r\n- \r\n+\r\n \t\treturn Duration.between(horaInicio,horaFin).toHours();\r\n \t}\r\n \r\n \t@Override\r\n"
+                }
+            ],
+            "date": 1717176765486,
+            "name": "Commit-0",
+            "content": "package com.sebasgoy.dto;\r\n\r\nimport jakarta.annotation.Nullable;\r\nimport jakarta.persistence.*;\r\nimport lombok.*;\r\n\r\nimport java.time.Duration;\r\nimport java.time.LocalTime;\r\nimport java.sql.Date;\r\nimport java.util.List;\r\n\r\n@Data\r\n@Entity\r\n@Builder\r\n@AllArgsConstructor\r\n@NoArgsConstructor\r\n@Table(name=\"actividad\")\r\npublic class Actividad {\r\n\t\r\n\t@Id\r\n\t@GeneratedValue(strategy = GenerationType.IDENTITY)\r\n\tprivate Long id;\r\n\t@Column(name = \"nombreActividad\")\r\n\tprivate String nombreActividad;\r\n\t@Column(name = \"ubicacionActividad\")\r\n\tprivate String ubicacionActividad;\r\n\t@Column(name = \"fechaActividad\")\r\n\tprivate Date fechaActividad;\r\n\t@Column(name = \"horaInicio\")\r\n\tprivate LocalTime horaInicio;\r\n\t@Column(name = \"horaFin\")\r\n\tprivate LocalTime horaFin;\r\n\t@Column(name = \"estado\")\r\n\tprivate boolean estado = true;\r\n\r\n\t@Nullable\r\n\tprivate Long idModuloActividad;\r\n\r\n\t@Column\r\n\tprivate Long idUbicacionConstancias;\r\n\t@ManyToOne\r\n\t@JoinColumn(name=\"idUbicacionConstancias\" ,insertable = false,updatable = false)\r\n\tprivate UbicacionConstancias ubicacionConstancias;\r\n\r\n\t@OneToMany(mappedBy = \"actividad\" )\r\n\tprivate List<Participante> participante;\r\n\r\n\t@ManyToOne\r\n \t@JoinColumn(name = \"idModuloActividad\",insertable = false, updatable = false)\r\n \tprivate Modulo modulo;\r\n\tpublic Long obtenerDuracionActividad(){\r\n \r\n\t\treturn Duration.between(horaInicio,horaFin).toHours();\r\n\t}\r\n\r\n\t@Override\r\n\tpublic String toString() {\r\n\t\treturn \"Actividad{\" +\r\n\t\t\t\t\"id=\" + id +\r\n\t\t\t\t\", nombreActividad='\" + nombreActividad + '\\'' +\r\n\t\t\t\t\", ubicacionActividad='\" + ubicacionActividad + '\\'' +\r\n\t\t\t\t\", fechaActividad=\" + fechaActividad +\r\n\t\t\t\t\", horaInicio=\" + horaInicio +\r\n\t\t\t\t\", horaFin=\" + horaFin +\r\n\t\t\t\t\", estado=\" + estado +\r\n\t\t\t\t\", idModuloActividad=\" + idModuloActividad +\r\n\t\t\t\t\", idUbicacionConstancias=\" + idUbicacionConstancias +\r\n\t\t\t\t'}';\r\n\t}\r\n\r\n}\r\n"
+        }
+    ]
+}

@@ -1,0 +1,22 @@
+{
+    "sourceFile": "src/main/java/com/sebasgoy/controller/WebController.java",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1717176729615,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1717176736853,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,9 +5,8 @@\n import org.springframework.ui.Model;\r\n import org.springframework.web.bind.annotation.GetMapping;\r\n import org.springframework.web.bind.annotation.PathVariable;\r\n \r\n-import com.sebasgoy.service.ActividadService;\r\n \r\n import lombok.AllArgsConstructor;\r\n \r\n   \r\n"
+                }
+            ],
+            "date": 1717176729615,
+            "name": "Commit-0",
+            "content": "package com.sebasgoy.controller;\r\n\r\nimport com.sebasgoy.dto.response.AsistenciaRespone;\r\nimport org.springframework.stereotype.Controller;\r\nimport org.springframework.ui.Model;\r\nimport org.springframework.web.bind.annotation.GetMapping;\r\nimport org.springframework.web.bind.annotation.PathVariable;\r\n\r\nimport com.sebasgoy.service.ActividadService;\r\n\r\nimport lombok.AllArgsConstructor;\r\n\r\n  \r\n@Controller\r\n@AllArgsConstructor\r\npublic class WebController {\r\n\r\n\t@GetMapping(\"/\")\r\n\tpublic String cargarPaginaPrincipal() {\r\n\t\treturn \"PaginaPrincipal\";\r\n\t}\r\n\t\r\n\r\n\t\r\n\r\n\r\n\t\r\n\r\n}\r\n"
+        }
+    ]
+}

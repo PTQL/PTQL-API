@@ -5,10 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import java.sql.Date;
-import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.Locale;
 
 @Data
 @Entity

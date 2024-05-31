@@ -1,6 +1,5 @@
 package com.sebasgoy.dto;
 
-import com.sebasgoy.constantes.Modalidades;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.*;
@@ -50,7 +49,7 @@ public class Actividad {
  	@JoinColumn(name = "idModuloActividad",insertable = false, updatable = false)
  	private Modulo modulo;
 	public Long obtenerDuracionActividad(){
- 
+
 		return Duration.between(horaInicio,horaFin).toHours();
 	}
 

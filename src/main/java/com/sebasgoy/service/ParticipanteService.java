@@ -9,7 +9,6 @@ import com.sebasgoy.dto.Voluntario;
 import com.sebasgoy.dto.response.AsistenciaRespone;
 import com.sebasgoy.dto.response.VoluntarioResponse;
 import com.sebasgoy.repository.IParticipanteRepository;
-import com.sebasgoy.repository.IVoluntarioRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -22,7 +21,6 @@ import java.util.stream.Collectors;
 public class ParticipanteService {
 	
     private IParticipanteRepository iParticipanteRepository;
-    private IVoluntarioRepository iVoluntarioRepository;
     private ActividadService actividadService;
     private VoluntarioService voluntarioService;
     private TipoParticipacionService tipoParticipacionService;

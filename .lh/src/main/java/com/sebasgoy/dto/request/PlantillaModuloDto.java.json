@@ -1,0 +1,18 @@
+{
+    "sourceFile": "src/main/java/com/sebasgoy/dto/request/PlantillaModuloDto.java",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1717176761684,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1717176761684,
+            "name": "Commit-0",
+            "content": "package com.sebasgoy.dto.request;\r\n\r\nimport com.sebasgoy.dto.response.StatusVoluntarioModulo;\r\nimport lombok.AllArgsConstructor;\r\nimport lombok.Builder;\r\nimport lombok.Data;\r\n\r\n@Data\r\n@Builder\r\n@AllArgsConstructor\r\npublic class PlantillaModuloDto {\r\n    private StatusVoluntarioModulo statusVoluntarioModulo;\r\n    private String nombreModulo ;\r\n    private String mesInicio;\r\n    private String mesFin;\r\n    private String fechaGeneralActividad;\r\n}\r\n"
+        }
+    ]
+}

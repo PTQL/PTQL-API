@@ -1,6 +1,5 @@
 package com.sebasgoy.dto.request;
 
-import com.sebasgoy.dto.Voluntario;
 import com.sebasgoy.dto.response.StatusVoluntarioModulo;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

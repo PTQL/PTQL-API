@@ -1,0 +1,22 @@
+{
+    "sourceFile": "src/main/java/com/sebasgoy/repository/IActividadRepository.java",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1717176893641,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1717177010946,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,10 +9,8 @@\n \r\n \r\n @Repository\r\n public interface IActividadRepository extends JpaRepository<Actividad, Long>{\r\n-    @Override\r\n-    Optional<Actividad> findById(Long aLong);\r\n     \r\n     List<Actividad> findByEstadoIsTrue();\r\n     \r\n \r\n"
+                }
+            ],
+            "date": 1717176893641,
+            "name": "Commit-0",
+            "content": "package com.sebasgoy.repository;\r\n\r\nimport org.springframework.data.jpa.repository.JpaRepository;\r\nimport org.springframework.stereotype.Repository;\r\nimport com.sebasgoy.dto.Actividad;\r\n\r\nimport java.util.List;\r\nimport java.util.Optional;\r\n\r\n\r\n@Repository\r\npublic interface IActividadRepository extends JpaRepository<Actividad, Long>{\r\n    @Override\r\n    Optional<Actividad> findById(Long aLong);\r\n    \r\n    List<Actividad> findByEstadoIsTrue();\r\n    \r\n\r\n \r\n}\r\n\r\n\r\n"
+        }
+    ]
+}

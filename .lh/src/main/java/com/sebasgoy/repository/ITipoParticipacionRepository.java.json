@@ -1,0 +1,22 @@
+{
+    "sourceFile": "src/main/java/com/sebasgoy/repository/ITipoParticipacionRepository.java",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1717176901423,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1717176939281,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,20 +1,17 @@\n package com.sebasgoy.repository;\r\n \r\n import org.springframework.data.jpa.repository.JpaRepository;\r\n import org.springframework.stereotype.Repository;\r\n-import com.sebasgoy.dto.Actividad;\r\n import com.sebasgoy.dto.TipoParticipacion;\r\n \r\n-import java.util.List;\r\n import java.util.Optional;\r\n \r\n \r\n @Repository\r\n public interface ITipoParticipacionRepository extends JpaRepository<TipoParticipacion, Long>{\r\n     \r\n-\t@Override\r\n-    Optional<TipoParticipacion> findById(Long aLong);\r\n+\r\n \tOptional<TipoParticipacion> findByDescripcionParticipacion(String descripcionParticipacion);\r\n }\r\n \r\n \r\n"
+                }
+            ],
+            "date": 1717176901423,
+            "name": "Commit-0",
+            "content": "package com.sebasgoy.repository;\r\n\r\nimport org.springframework.data.jpa.repository.JpaRepository;\r\nimport org.springframework.stereotype.Repository;\r\nimport com.sebasgoy.dto.Actividad;\r\nimport com.sebasgoy.dto.TipoParticipacion;\r\n\r\nimport java.util.List;\r\nimport java.util.Optional;\r\n\r\n\r\n@Repository\r\npublic interface ITipoParticipacionRepository extends JpaRepository<TipoParticipacion, Long>{\r\n    \r\n\t@Override\r\n    Optional<TipoParticipacion> findById(Long aLong);\r\n\tOptional<TipoParticipacion> findByDescripcionParticipacion(String descripcionParticipacion);\r\n}\r\n\r\n\r\n"
+        }
+    ]
+}

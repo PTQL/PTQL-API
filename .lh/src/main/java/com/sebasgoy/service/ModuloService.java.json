@@ -1,0 +1,18 @@
+{
+    "sourceFile": "src/main/java/com/sebasgoy/service/ModuloService.java",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1717176991293,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1717176991293,
+            "name": "Commit-0",
+            "content": "package com.sebasgoy.service;\r\n\r\nimport java.util.List;\r\nimport java.util.Optional;\r\n\r\nimport org.springframework.stereotype.Service;\r\n\r\nimport com.sebasgoy.dto.Modulo;\r\nimport com.sebasgoy.repository.IModuloRepository;\r\n\r\nimport lombok.AllArgsConstructor;\r\n\r\n@Service\r\n@AllArgsConstructor\r\npublic class ModuloService {\r\n    private IModuloRepository iModuloRepository;\r\n\tpublic Long UltimoId() {\r\n\t\tList<Modulo> activos = findAll();\r\n\t\t    \r\n\t    if (activos.isEmpty()) {\r\n\t        return 1L;\r\n\t    }\r\n\t     \r\n\t    Modulo ultimoElemento = activos.get(activos.size() - 1);\r\n\t    \r\n\t    return ultimoElemento.getId() + 1;\r\n\t}\r\n    \r\n    public Modulo findById(Long id){\r\n        return iModuloRepository.findById(id).orElse(new Modulo());\r\n    }\r\n    public Optional<Modulo> findByIdOptional(Long id){\r\n        return iModuloRepository.findById(id);\r\n    }\r\n\r\n    public List<Modulo> findAll(){\r\n    \treturn iModuloRepository.findAll();\r\n    }\r\n    \r\n    public List<Modulo> findActivos(){\r\n        return iModuloRepository.findByEstadoIsTrue();\r\n    }\r\n    public void saveModulo(Modulo modulo) {\r\n        if (modulo.getId() == null ){\r\n            modulo.setId(UltimoId());\r\n        }\r\n        iModuloRepository.save(modulo);\r\n    }\r\n    \r\n    public void deleteModulo(Modulo modulo) {\r\n    \t\r\n    \tiModuloRepository.delete(modulo);\r\n    }\r\n}\r\n"
+        }
+    ]
+}

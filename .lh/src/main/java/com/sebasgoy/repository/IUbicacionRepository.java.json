@@ -1,0 +1,30 @@
+{
+    "sourceFile": "src/main/java/com/sebasgoy/repository/IUbicacionRepository.java",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 3,
+            "patches": [
+                {
+                    "date": 1717176913957,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1717176919540,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,10 +1,8 @@\n package com.sebasgoy.repository;\r\n \r\n import org.springframework.data.jpa.repository.JpaRepository;\r\n-import org.springframework.data.jpa.repository.Query;\r\n import org.springframework.stereotype.Repository;\r\n-import com.sebasgoy.dto.Actividad;\r\n import com.sebasgoy.dto.UbicacionConstancias;\r\n \r\n import java.util.Optional;\r\n \r\n@@ -12,8 +10,8 @@\n @Repository\r\n public interface IUbicacionRepository extends JpaRepository<UbicacionConstancias, Long>{\r\n     @Override\r\n     Optional<UbicacionConstancias> findById(Long aLong);\r\n- \r\n+\r\n }\r\n \r\n \r\n"
+                },
+                {
+                    "date": 1717176946660,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,10 +8,8 @@\n \r\n \r\n @Repository\r\n public interface IUbicacionRepository extends JpaRepository<UbicacionConstancias, Long>{\r\n-    @Override\r\n-    Optional<UbicacionConstancias> findById(Long aLong);\r\n \r\n }\r\n \r\n \r\n"
+                },
+                {
+                    "date": 1717177005399,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,11 +3,8 @@\n import org.springframework.data.jpa.repository.JpaRepository;\r\n import org.springframework.stereotype.Repository;\r\n import com.sebasgoy.dto.UbicacionConstancias;\r\n \r\n-import java.util.Optional;\r\n-\r\n-\r\n @Repository\r\n public interface IUbicacionRepository extends JpaRepository<UbicacionConstancias, Long>{\r\n \r\n }\r\n"
+                }
+            ],
+            "date": 1717176913957,
+            "name": "Commit-0",
+            "content": "package com.sebasgoy.repository;\r\n\r\nimport org.springframework.data.jpa.repository.JpaRepository;\r\nimport org.springframework.data.jpa.repository.Query;\r\nimport org.springframework.stereotype.Repository;\r\nimport com.sebasgoy.dto.Actividad;\r\nimport com.sebasgoy.dto.UbicacionConstancias;\r\n\r\nimport java.util.Optional;\r\n\r\n\r\n@Repository\r\npublic interface IUbicacionRepository extends JpaRepository<UbicacionConstancias, Long>{\r\n    @Override\r\n    Optional<UbicacionConstancias> findById(Long aLong);\r\n \r\n}\r\n\r\n\r\n"
+        }
+    ]
+}

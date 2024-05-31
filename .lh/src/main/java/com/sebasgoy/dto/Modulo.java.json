@@ -1,0 +1,18 @@
+{
+    "sourceFile": "src/main/java/com/sebasgoy/dto/Modulo.java",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1717176587650,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1717176587650,
+            "name": "Commit-0",
+            "content": "package com.sebasgoy.dto;\r\n\r\nimport jakarta.persistence.*;\r\nimport lombok.AllArgsConstructor;\r\nimport lombok.Builder;\r\nimport lombok.Data;\r\nimport lombok.NoArgsConstructor;\r\nimport java.sql.Date;\r\nimport java.text.SimpleDateFormat;\r\nimport java.util.List;\r\n\r\n@Data\r\n@Entity\r\n@AllArgsConstructor\r\n@NoArgsConstructor\r\n@Builder\r\n@Table(name=\"modulo\")\r\npublic class Modulo {\r\n    @Id\r\n    @GeneratedValue(strategy = GenerationType.IDENTITY)\r\n    private Long id;\r\n\t@Column(name = \"nombre\")\r\n    private String nombre;\r\n\t@Column(name = \"estado\")\r\n\tprivate boolean estado = true;\r\n    @Column\r\n    private Long idUbicacionConstancias;\r\n    @Column\r\n    private int minimoActividades;\r\n\r\n    @ManyToOne\r\n    @JoinColumn(name=\"idUbicacionConstancias\" ,insertable = false,updatable = false)\r\n    private UbicacionConstancias ubicacionConstancias;\r\n    @OneToMany(mappedBy = \"idModuloActividad\")\r\n    private List<Actividad> actividad;\r\n\r\n    @Override\r\n    public String toString() {\r\n        return \"Modulo{\" +\r\n                \"id=\" + id +\r\n                \", nombre='\" + nombre + '\\'' +\r\n                \", estado=\" + estado +\r\n                \", idUbicacionConstancias=\" + idUbicacionConstancias +\r\n                \", minimoActividades=\" + minimoActividades +\r\n                \", ubicacionConstancias=\" + ubicacionConstancias +\r\n                \", actividad=\" + actividad +\r\n                '}';\r\n    }\r\n}\r\n"
+        }
+    ]
+}

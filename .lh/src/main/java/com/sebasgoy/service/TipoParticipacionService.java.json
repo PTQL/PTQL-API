@@ -1,0 +1,18 @@
+{
+    "sourceFile": "src/main/java/com/sebasgoy/service/TipoParticipacionService.java",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1717176978241,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1717176978241,
+            "name": "Commit-0",
+            "content": "package com.sebasgoy.service;\r\n\r\nimport java.util.List;\r\n\r\nimport com.sebasgoy.repository.IActividadRepository;\r\nimport com.sebasgoy.repository.ITipoParticipacionRepository;\r\n\r\nimport lombok.AllArgsConstructor;\r\nimport org.springframework.stereotype.Service;\r\n\r\nimport com.sebasgoy.dto.TipoParticipacion;\r\n\r\n\r\n/*En un service va la logica de negocio*/\r\n@Service\r\n@AllArgsConstructor\r\npublic class TipoParticipacionService {\r\n\r\n\tprivate final ITipoParticipacionRepository iTipoParticipacionRepository;\r\n\r\n\tpublic Long UltimoId() {\r\n\t\tList<TipoParticipacion> activos = findActivos();\r\n\t\t    \r\n\t    if (activos.isEmpty()) {\r\n\t        return 1L;\r\n\t    }\r\n\t    TipoParticipacion ultimoElemento = activos.get(activos.size() - 1);\r\n\t    return ultimoElemento.getId() + 1;\r\n\t}\r\n\t\r\n\t\r\n\tpublic TipoParticipacion findById(Long id){\r\n\t\treturn  iTipoParticipacionRepository.findById(id).orElse(new TipoParticipacion());\r\n\t}\r\n\r\n\tpublic TipoParticipacion findByDescripcion(String des){\r\n\t\treturn  iTipoParticipacionRepository.findByDescripcionParticipacion(des).orElse(new TipoParticipacion());\r\n\t}\r\n\t\r\n\tpublic List<TipoParticipacion> findActivos(){\r\n\t\treturn iTipoParticipacionRepository.findAll();\r\n\t}\r\n\t\r\n\tpublic TipoParticipacion saveTipoParticipacion(TipoParticipacion tipoParticipacion) {\r\n\t\treturn iTipoParticipacionRepository.save(tipoParticipacion);\r\n\t}\r\n\r\n\r\n}\r\n"
+        }
+    ]
+}

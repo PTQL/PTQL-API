@@ -1,0 +1,18 @@
+{
+    "sourceFile": "src/main/java/com/sebasgoy/repository/IModuloRepository.java",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1717176898410,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1717176898410,
+            "name": "Commit-0",
+            "content": "package com.sebasgoy.repository;\r\n\r\nimport org.springframework.data.jpa.repository.JpaRepository;\r\n\r\nimport com.sebasgoy.dto.Modulo;\r\nimport java.util.List;\r\n\r\n\r\npublic interface IModuloRepository  extends JpaRepository<Modulo, Long>{\r\n\tList<Modulo> findByEstadoIsTrue();\r\n\r\n\r\n\r\n}\r\n"
+        }
+    ]
+}

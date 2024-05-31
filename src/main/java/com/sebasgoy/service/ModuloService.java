@@ -5,7 +5,6 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.sebasgoy.dto.Actividad;
 import com.sebasgoy.dto.Modulo;
 import com.sebasgoy.repository.IModuloRepository;
 

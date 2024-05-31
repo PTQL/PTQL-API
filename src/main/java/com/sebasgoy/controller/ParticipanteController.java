@@ -1,17 +1,14 @@
 package com.sebasgoy.controller;
 
 import com.sebasgoy.dto.Actividad;
-import com.sebasgoy.dto.Modulo;
 import com.sebasgoy.dto.Participante;
 import com.sebasgoy.dto.Voluntario;
 import com.sebasgoy.dto.response.AsistenciaRespone;
 import com.sebasgoy.service.ActividadService;
-import com.sebasgoy.service.ModuloService;
 import com.sebasgoy.service.ParticipanteService;
 import com.sebasgoy.service.VoluntarioService;
 import com.sebasgoy.constantes.Mensajes;
 import com.sebasgoy.constantes.Modalidades;
-import com.sebasgoy.constantes.ValoresPersonaRegex;
 
 import com.sebasgoy.util.Tools;
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,7 +17,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -33,7 +29,6 @@ public class ParticipanteController {
 	@GetMapping("/change_participacion/{id}")
 	public String change_participacion(@PathVariable("id") Long idParticipante ,Model model,
 			HttpServletRequest request) {
-		String pagina_anterior = request.getHeader("referer");
 
 		try {
 			Participante participante = participanteService.findById(idParticipante);

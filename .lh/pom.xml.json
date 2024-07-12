@@ -3,11 +3,15 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 0,
+            "activePatchIndex": 1,
             "patches": [
                 {
                     "date": 1715992220687,
                     "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1720824948355,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n \t</parent>\r\n \t<groupId>com.sebasgoy</groupId>\r\n \t<artifactId>com.sebasgoy</artifactId>\r\n \t<version>1.0.0-SNAPSHOT</version>\r\n-\t\t<name>PTQL-BackOffice</name>\r\n+\t<name>PTQL-BackOffice</name>\r\n \t<description>PTQL-BackOffice project for Spring Boot</description>\r\n \t<properties>\r\n  \t\t<java.version>17</java.version>\r\n \t</properties>\r\n@@ -31,17 +31,17 @@\n \t\t    <artifactId>poi-ooxml</artifactId>\r\n \t\t    <version>5.2.0</version> \r\n \t\t</dependency>\r\n \t\t<dependency>\r\n-    <groupId>com.google.zxing</groupId>\r\n-    <artifactId>core</artifactId>\r\n-    <version>3.4.1</version>\r\n-</dependency>\r\n-<dependency>\r\n-    <groupId>com.google.zxing</groupId>\r\n-    <artifactId>javase</artifactId>\r\n-    <version>3.4.1</version>\r\n-</dependency>\r\n+\t\t\t<groupId>com.google.zxing</groupId>\r\n+\t\t\t<artifactId>core</artifactId>\r\n+\t\t\t<version>3.4.1</version>\r\n+\t\t</dependency>\r\n+\t\t<dependency>\r\n+\t\t\t<groupId>com.google.zxing</groupId>\r\n+\t\t\t<artifactId>javase</artifactId>\r\n+\t\t\t<version>3.4.1</version>\r\n+\t\t</dependency>\r\n \r\n  \t\t<dependency>\r\n \t\t\t<groupId>org.xhtmlrenderer</groupId>\r\n \t\t\t<artifactId>flying-saucer-pdf</artifactId>\r\n"
                 }
             ],
             "date": 1715992220687,

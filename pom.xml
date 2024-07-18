@@ -11,7 +11,7 @@
 	<groupId>com.sebasgoy</groupId>
 	<artifactId>com.sebasgoy</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
-		<name>PTQL-BackOffice</name>
+	<name>PTQL-BackOffice</name>
 	<description>PTQL-BackOffice project for Spring Boot</description>
 	<properties>
  		<java.version>17</java.version>

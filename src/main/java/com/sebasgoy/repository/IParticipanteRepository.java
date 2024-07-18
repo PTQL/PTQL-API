@@ -17,9 +17,9 @@ public interface IParticipanteRepository extends JpaRepository<Participante, Lon
 
     Participante findByVoluntario_DniAndActividad(String dni, Actividad actividad);
 
-
     @Query("SELECT p FROM Participante p WHERE p.voluntario.id = :idVoluntario AND p.actividad.id = :idActividad")
     Optional<Participante> findByVoluntarioIdAndActividadIdOptional(@Param("idVoluntario") Long idVoluntario, @Param("idActividad") Long idActividad);
+
     @Query("SELECT DISTINCT p FROM Participante p WHERE p.voluntario.id = :idVoluntario AND p.actividad.id = :idActividad")
     Participante findByVoluntarioIdAndActividadId(@Param("idVoluntario") Long idVoluntario, @Param("idActividad") Long idActividad);
 

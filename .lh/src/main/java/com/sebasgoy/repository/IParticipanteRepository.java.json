@@ -1,0 +1,22 @@
+{
+    "sourceFile": "src/main/java/com/sebasgoy/repository/IParticipanteRepository.java",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1720326451591,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1720326462575,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,9 +16,8 @@\n public interface IParticipanteRepository extends JpaRepository<Participante, Long>{\r\n \r\n     Participante findByVoluntario_DniAndActividad(String dni, Actividad actividad);\r\n \r\n-\r\n     @Query(\"SELECT p FROM Participante p WHERE p.voluntario.id = :idVoluntario AND p.actividad.id = :idActividad\")\r\n     Optional<Participante> findByVoluntarioIdAndActividadIdOptional(@Param(\"idVoluntario\") Long idVoluntario, @Param(\"idActividad\") Long idActividad);\r\n \r\n     @Query(\"SELECT DISTINCT p FROM Participante p WHERE p.voluntario.id = :idVoluntario AND p.actividad.id = :idActividad\")\r\n"
+                }
+            ],
+            "date": 1720326451591,
+            "name": "Commit-0",
+            "content": "package com.sebasgoy.repository;\r\n\r\nimport org.springframework.data.jpa.repository.JpaRepository;\r\nimport org.springframework.data.jpa.repository.Query;\r\nimport org.springframework.data.repository.query.Param;\r\nimport org.springframework.stereotype.Repository;\r\n\r\nimport com.sebasgoy.dto.Actividad;\r\nimport com.sebasgoy.dto.Participante;\r\n\r\nimport java.util.List;\r\nimport java.util.Optional;\r\n\r\n\r\n@Repository\r\npublic interface IParticipanteRepository extends JpaRepository<Participante, Long>{\r\n\r\n    Participante findByVoluntario_DniAndActividad(String dni, Actividad actividad);\r\n\r\n\r\n    @Query(\"SELECT p FROM Participante p WHERE p.voluntario.id = :idVoluntario AND p.actividad.id = :idActividad\")\r\n    Optional<Participante> findByVoluntarioIdAndActividadIdOptional(@Param(\"idVoluntario\") Long idVoluntario, @Param(\"idActividad\") Long idActividad);\r\n    \r\n    @Query(\"SELECT DISTINCT p FROM Participante p WHERE p.voluntario.id = :idVoluntario AND p.actividad.id = :idActividad\")\r\n    Participante findByVoluntarioIdAndActividadId(@Param(\"idVoluntario\") Long idVoluntario, @Param(\"idActividad\") Long idActividad);\r\n\r\n    @Query(\"SELECT p From Participante p WHERE p.actividad.id = :idActividad\")\r\n    List<Participante> findByIdActividad(@Param(\"idActividad\") Long idActividad);\r\n\r\n}\r\n"
+        }
+    ]
+}

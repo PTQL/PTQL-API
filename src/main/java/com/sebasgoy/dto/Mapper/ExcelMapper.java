@@ -1,4 +1,4 @@
-package com.sebasgoy.Mapper;
+package com.sebasgoy.dto.Mapper;
 
 import com.sebasgoy.dto.Voluntario;
 import com.sebasgoy.dto.response.VoluntarioResponse;
